@@ -1,8 +1,8 @@
-package Graphics;
+package com.esiea.tetris.Graphics;
 
-import Model.Layout;
+import com.esiea.tetris.Model.Layout;
 
-public class Renderer {
+public abstract class Renderer {
     public void Draw(Layout _layout) throws Exception{
         
     }

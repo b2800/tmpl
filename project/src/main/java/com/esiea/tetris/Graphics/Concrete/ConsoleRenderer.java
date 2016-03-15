@@ -1,32 +1,33 @@
-package Graphics;
+package com.esiea.tetris.Graphics.Concrete;
 
-import Model.Tetrimino;
-import Graphics.Exceptions.OutOfBoundsDrawException;
-import Model.Layout;
-import Utils.vec2;
+import com.esiea.tetris.Model.Tetrimino;
+import com.esiea.tetris.Graphics.Renderer;
+import com.esiea.tetris.Graphics.Exceptions.OutOfBoundsDrawException;
+import com.esiea.tetris.Model.Layout;
+import com.esiea.tetris.Utils.vec2;
+
+import com.googlecode.lanterna.TextColor;
+import com.googlecode.lanterna.gui2.*;
+import com.googlecode.lanterna.screen.Screen;
+import com.googlecode.lanterna.screen.TerminalScreen;
+import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
+import com.googlecode.lanterna.terminal.Terminal;
+import com.googlecode.lanterna.gui2.EmptySpace;
+
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ConsoleRenderer extends Renderer{
-
-    private vec2 size;
-    private boolean draw_walls;
     private char[][] grid;
     
     public ConsoleRenderer(){
-        size = new vec2(0,0);
-        this.setWidth(10);
-        this.setHeight(50);
-        this.setDrawWalls(true);
+        this.createWindow();
     }
-    
-    public ConsoleRenderer(int _width, int _height, boolean _draw_walls){
-        this.setWidth(_width);
-        this.setHeight(_height);
-        this.setDrawWalls(_draw_walls);
-    }
-    
-    public ConsoleRenderer(vec2 _size, boolean _draw_walls){
-        this.setSize(_size);
-        this.setDrawWalls(_draw_walls);
+        
+    @Override
+    public void Draw(Layout _layout) throws OutOfBoundsDrawException{
+        
     }
     
     private void DrawTetrimino(Tetrimino _block, vec2 _position) 
@@ -42,42 +43,23 @@ public class ConsoleRenderer extends Renderer{
     private void DrawChar(char _c, vec2 _position){
         
     }
-    
-    @Override
-    public void Draw(Layout _layout) throws OutOfBoundsDrawException{
+
+    private void createWindow(){
         
-    }
+        try {
+            // Setup terminal and screen layers
+            Terminal terminal = new DefaultTerminalFactory().createTerminal();
+            Screen screen = new TerminalScreen(terminal);
+            screen.startScreen();
             
-    // Getters and setters
-    public int getWidth() {
-        return (int)size.x;
-    }
-
-    public final void setWidth(int width) {
-        this.size.x = width;
-    }
-
-    public int getHeight() {
-        return (int)this.size.y;
-    }
-
-    public final void setHeight(int height) {
-        this.size.y = height;
-    }
-    
-    public vec2 getSize() {
-        return size;
-    }
-
-    public final void setSize(vec2 size) {
-        this.size = size;
-    }
-    
-    public boolean isDrawWalls() {
-        return draw_walls;
-    }
-
-    public final void setDrawWalls(boolean draw_walls) {
-        this.draw_walls = draw_walls;
+            // Create window to hold the panel
+            BasicWindow window = new BasicWindow();
+            
+            // Create gui and start gui
+            MultiWindowTextGUI gui = new MultiWindowTextGUI(screen, new DefaultWindowManager(), new EmptySpace(TextColor.ANSI.DEFAULT));
+            gui.addWindowAndWait(window);
+        } catch (IOException ex) {
+            Logger.getLogger(ConsoleRenderer.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

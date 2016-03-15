@@ -1,6 +1,6 @@
-package Model;
+package com.esiea.tetris.Model;
 
-import Utils.vec2;
+import com.esiea.tetris.Utils.vec2;
 
 public abstract class Tetrimino {
     private vec2 position;
