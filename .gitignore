@@ -16,3 +16,7 @@ project/nbproject/
 project/build.xml
 project/manifest.mf
 /project/build/
+/project/target/
+
+#dia backup files
+**/*.dia.autosave
