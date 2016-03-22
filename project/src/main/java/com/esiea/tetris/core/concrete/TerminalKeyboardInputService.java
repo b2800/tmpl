@@ -1,6 +1,6 @@
-package com.esiea.tetris.Core.Concrete;
+package com.esiea.tetris.core.concrete;
 
-import com.esiea.tetris.Core.Updatable;
+import com.esiea.tetris.core.Updatable;
 
 public class TerminalKeyboardInputService implements Updatable {
     

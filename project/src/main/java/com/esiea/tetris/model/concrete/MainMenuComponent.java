@@ -1,6 +1,6 @@
-package com.esiea.tetris.Model.Concrete;
+package com.esiea.tetris.model.concrete;
 
-import com.esiea.tetris.Model.Component;
+import com.esiea.tetris.model.Component;
 
 public class MainMenuComponent extends Component{
     
