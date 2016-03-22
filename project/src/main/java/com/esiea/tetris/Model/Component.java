@@ -1,5 +1,6 @@
 package com.esiea.tetris.Model;
 
+import com.esiea.tetris.Core.Updatable;
 import com.esiea.tetris.Utils.vec2;
 
 /*
@@ -11,14 +12,16 @@ import com.esiea.tetris.Utils.vec2;
    Concrete components defines the logic to run on each updates.
  */
 
-public abstract class Component {
-    private vec2 position;
-    private vec2 size;
+public abstract class Component implements Updatable{
+    protected vec2 position;
+    protected vec2 size;
+    protected Layout parent;
     
-    public Component Component(){
-        return this;
+    public Component(){
+
     }
     
+    @Override
     public void update(){
         
     }
@@ -27,17 +30,27 @@ public abstract class Component {
         return position;
     }
 
-    public Component withPosition(vec2 position) {
+    public void setPosition(vec2 position) {
         this.position = position;
-        return this;
     }
 
     public vec2 getSize() {
         return size;
     }
 
-    public Component withSize(vec2 size) {
+    public void setSize(vec2 size) {
         this.size = size;
-        return this;
+    }
+    
+    public void setParent(Layout _parent){
+        this.parent = _parent;
+    }
+    
+    public Layout getParent(){
+        return this.parent;
+    }
+    
+    public ArrayList<Drawable> getDrawables(){
+        
     }
 }
