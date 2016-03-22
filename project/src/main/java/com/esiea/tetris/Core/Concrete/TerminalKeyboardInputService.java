@@ -1,10 +1,8 @@
 package com.esiea.tetris.Core.Concrete;
 
-import com.esiea.tetris.Communication.Message;
-import com.esiea.tetris.Communication.MessageBus;
-import com.esiea.tetris.Core.Service;
+import com.esiea.tetris.Core.Updatable;
 
-public class TerminalKeyboardInputService extends Service {
+public class TerminalKeyboardInputService implements Updatable {
     
     @Override
     public void update(){
