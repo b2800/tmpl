@@ -1,14 +1,11 @@
 package com.esiea.tetris.Core;
 
-import com.esiea.tetris.Communication.Message;
-import com.esiea.tetris.Communication.MessageBus;
 import com.esiea.tetris.Core.Concrete.TerminalKeyboardInputService;
 import com.esiea.tetris.Core.Concrete.NetworkServiceV1;
 import com.esiea.tetris.Graphics.Concrete.ConsoleRenderer;
 import com.esiea.tetris.Graphics.Renderer;
 import com.esiea.tetris.Model.Builder.LayoutBuilder;
 import com.esiea.tetris.Model.Layout;
-import java.util.ArrayList;
 
 /* Main class
     Responsability : Update the instanciated services until the game ends.
@@ -17,14 +14,14 @@ import java.util.ArrayList;
 public class Tetris {
     
     private Layout current_layout;
-    private final Renderer renderer;    // 
-    private final Service inputService;
-    private final Service networkService;
+    private final Renderer renderer;
+    private final Updatable inputService;
+    private final Updatable networkService;
     private Boolean application_should_close;
     
     public Tetris(){
         application_should_close = false;
-        current_layout = LayoutBuilder.BuildMainMenuLayout();
+        current_layout = LayoutBuilder.buildMainMenuLayout();
         inputService = new TerminalKeyboardInputService();
         networkService = new NetworkServiceV1();
         renderer = new ConsoleRenderer();
@@ -38,7 +35,6 @@ public class Tetris {
                 networkService.update();
                 current_layout.update();
                 current_layout.draw(renderer);
-                MessageBus.clear();
             }
             
             if(current_layout.next() == null){
