@@ -50,7 +50,4 @@ public abstract class Component implements Updatable{
         return this.parent;
     }
     
-    public ArrayList<Drawable> getDrawables(){
-        
-    }
 }

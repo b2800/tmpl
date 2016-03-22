@@ -1,4 +1,4 @@
-package com.esiea.tetris.Communication;
+package com.esiea.tetris.communication;
 
 import org.json.JSONObject;
 

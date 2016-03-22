@@ -1,9 +1,10 @@
 package com.esiea.tetris.Model;
 
-import com.esiea.tetris.Communication.Message;
 import com.esiea.tetris.Graphics.Exceptions.OutOfBoundsDrawException;
 import com.esiea.tetris.Graphics.Renderer;
 import com.esiea.tetris.Utils.vec2;
+import com.esiea.tetris.communication.Message;
+
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
