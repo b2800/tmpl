@@ -22,26 +22,27 @@ import java.util.logging.Logger;
 public class Layout{
     private vec2 size;
     private ArrayList<Component> components;
-    private boolean should_close;
-    private Layout next_layout;
+    private boolean shouldClose;
+    private Layout nextLayout;
     
-    public Layout Layout(){
+    public Layout(){
         components = new ArrayList<>();
         size = new vec2(10, 10);
-        return this;
     }
     
-    public Layout withSize(vec2 _size){
+    public void setSize(vec2 _size){
         this.size = _size;
-        return this;
     }
     
-    public Layout withSize(int _width, int _height){
+    public void setSize(int _width, int _height){
         size = new vec2(_width, _height);
-        return this;
     }
     
     public void addComponent(Component _c){
+        if(_c == null){
+            System.out.println("Problem here");
+        }
+        _c.setParent(this);
         this.components.add(_c);
     }
     
@@ -62,18 +63,22 @@ public class Layout{
     }
     
     public boolean shouldClose(){
-        return this.should_close;
+        return this.shouldClose;
     }
     
     public Layout next(){
-        return this.next_layout;
+        return this.nextLayout;
     }
     
     public void setNextLayout(Layout next){
-        this.next_layout = next;
+        this.nextLayout = next;
     }
     
     public ArrayList<Component> getComponents(){
         return this.components;
+    }
+    
+    public void setShouldClose(boolean _val){
+        this.shouldClose = _val;
     }
 }

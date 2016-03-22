@@ -6,27 +6,38 @@ import com.esiea.tetris.Utils.vec2;
 
 public class LayoutBuilder {
 
-    public static Layout BuildMainMenuLayout() {
-        Layout menu = new Layout();
-        menu.addComponent( new MainMenuComponent()
-                                .withPosition(new vec2(10,10))
-                                .withSize(new vec2(100,50))
-                         );
+    public static Layout buildMainMenuLayout() {
+        Layout menu_layout = new Layout();
         
-        return menu;
+        MainMenuComponent main_menu = new MainMenuComponent();
+        main_menu.setPosition(new vec2(10,10));
+        main_menu.setSize(new vec2(100,50));
+        
+        menu_layout.addComponent(main_menu);
+        return menu_layout;
     }
     
-    public static Layout BuildSoloPlayerLayout(){
-        
-        return null;
-    }
-    
-    public static Layout BuildLocalMultiplayerLayout(int player_count){
+    public static Layout buildMultiplayerLobby(){
         
         return null;
     }
     
-    public static Layout BuildNetworkMultiplayerLayout(boolean is_server){
+    public static Layout buildSoloPlayerLayout(){
+        
+        return null;
+    }
+    
+    public static Layout buildLocalMultiplayerLayout(int player_count){
+        
+        return null;
+    }
+    
+    public static Layout buildNetworkMultiplayerLayout(boolean is_server){
+        
+        return null;
+    }
+    
+    public static Layout buildHighScoresScreen(){
         
         return null;
     }
