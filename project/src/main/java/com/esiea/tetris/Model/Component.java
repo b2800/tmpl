@@ -49,8 +49,4 @@ public abstract class Component implements Updatable{
     public Layout getParent(){
         return this.parent;
     }
-    
-    public ArrayList<Drawable> getDrawables(){
-        
-    }
 }
