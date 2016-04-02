@@ -1,4 +1,4 @@
-package com.esiea.tetris.Utils;
+package com.esiea.tetris.utils;
 
 public class vec2<T>{
     public T x;

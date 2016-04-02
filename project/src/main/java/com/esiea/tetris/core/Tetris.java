@@ -1,11 +1,11 @@
-package com.esiea.tetris.Core;
+package com.esiea.tetris.core;
 
-import com.esiea.tetris.Core.Concrete.TerminalKeyboardInputService;
-import com.esiea.tetris.Core.Concrete.NetworkServiceV1;
-import com.esiea.tetris.Graphics.Concrete.ConsoleRenderer;
-import com.esiea.tetris.Graphics.Renderer;
-import com.esiea.tetris.Model.Builder.LayoutBuilder;
-import com.esiea.tetris.Model.Layout;
+import com.esiea.tetris.core.concrete.TerminalKeyboardInputService;
+import com.esiea.tetris.core.concrete.NetworkServiceV1;
+import com.esiea.tetris.graphics.concrete.ConsoleRenderer;
+import com.esiea.tetris.graphics.Renderer;
+import com.esiea.tetris.model.builder.LayoutBuilder;
+import com.esiea.tetris.model.Layout;
 
 /* Main class
     Responsability : Update the instanciated services until the game ends.

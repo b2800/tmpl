@@ -1,10 +1,10 @@
-package com.esiea.tetris.Graphics.Concrete;
+package com.esiea.tetris.graphics.concrete;
 
-import com.esiea.tetris.Model.Tetrimino;
-import com.esiea.tetris.Graphics.Renderer;
-import com.esiea.tetris.Graphics.Exceptions.OutOfBoundsDrawException;
-import com.esiea.tetris.Model.Layout;
-import com.esiea.tetris.Utils.vec2;
+import com.esiea.tetris.model.Tetrimino;
+import com.esiea.tetris.graphics.Renderer;
+import com.esiea.tetris.graphics.exceptions.OutOfBoundsDrawException;
+import com.esiea.tetris.model.Layout;
+import com.esiea.tetris.utils.vec2;
 
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.gui2.*;

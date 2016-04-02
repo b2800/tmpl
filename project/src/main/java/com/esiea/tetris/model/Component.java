@@ -1,7 +1,7 @@
-package com.esiea.tetris.Model;
+package com.esiea.tetris.model;
 
-import com.esiea.tetris.Core.Updatable;
-import com.esiea.tetris.Utils.vec2;
+import com.esiea.tetris.core.Updatable;
+import com.esiea.tetris.utils.vec2;
 
 /*
  * A component defines : 

@@ -1,8 +1,8 @@
-package com.esiea.tetris.Model.Builder;
+package com.esiea.tetris.model.builder;
 
-import com.esiea.tetris.Model.Concrete.MainMenuComponent;
-import com.esiea.tetris.Model.Layout;
-import com.esiea.tetris.Utils.vec2;
+import com.esiea.tetris.model.concrete.MainMenuComponent;
+import com.esiea.tetris.model.Layout;
+import com.esiea.tetris.utils.vec2;
 
 public class LayoutBuilder {
 

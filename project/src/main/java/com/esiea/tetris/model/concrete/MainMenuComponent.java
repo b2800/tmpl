@@ -1,9 +1,9 @@
-package com.esiea.tetris.Model.Concrete;
+package com.esiea.tetris.model.concrete;
 
-import com.esiea.tetris.Model.Builder.LayoutBuilder;
-import com.esiea.tetris.Model.Button;
-import com.esiea.tetris.Model.Component;
-import com.esiea.tetris.Model.Layout;
+import com.esiea.tetris.model.builder.LayoutBuilder;
+import com.esiea.tetris.model.Button;
+import com.esiea.tetris.model.Component;
+import com.esiea.tetris.model.Layout;
 
 /*
     Responsability : Guide the player when launching the application
