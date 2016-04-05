@@ -4,6 +4,8 @@ import com.esiea.tetris.graphics.exceptions.OutOfBoundsDrawException;
 import com.esiea.tetris.graphics.Renderer;
 import com.esiea.tetris.utils.vec2;
 import com.esiea.tetris.communication.Message;
+import com.esiea.tetris.graphics.Drawable;
+import com.esiea.tetris.graphics.TPanel;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -31,36 +33,17 @@ public class Layout{
         size = new vec2(10, 10);
     }
     
-    public void setSize(vec2 _size){
-        this.size = _size;
-    }
-    
-    public void setSize(int _width, int _height){
-        size = new vec2(_width, _height);
-    }
-    
     public void addComponent(Component _c){
-        if(_c == null){
-            System.out.println("Problem here");
+        if(_c != null){
+            _c.setParent(this);
+            this.components.add(_c);
         }
-        _c.setParent(this);
-        this.components.add(_c);
     }
     
     public void update(){
         this.components.stream().forEach((c) -> {
             c.update();
         });
-    }
-    
-    public void draw(Renderer renderer){
-        try{
-            renderer.Draw(this);
-        } catch(OutOfBoundsDrawException e){
-            System.out.println("Tried to draw something outside the map");
-        } catch (Exception ex) {
-            Logger.getLogger(Layout.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
     public boolean shouldClose(){
@@ -81,5 +64,23 @@ public class Layout{
     
     public void setShouldClose(boolean _val){
         this.shouldClose = _val;
+    }
+    
+    public void setSize(vec2 _size){
+        this.size = _size;
+    }
+    
+    public void setSize(int _width, int _height){
+        size = new vec2(_width, _height);
+    }
+    
+    public ArrayList<TPanel> getDrawableContainers(){
+        ArrayList<TPanel> panels = new ArrayList<>();
+        
+        this.components.stream().forEach((c) -> {
+            panels.add( c.getDrawableContainer() );
+        });
+        
+        return panels;
     }
 }

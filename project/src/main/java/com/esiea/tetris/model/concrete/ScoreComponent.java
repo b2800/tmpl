@@ -4,9 +4,14 @@ import net.engio.mbassy.listener.Handler;
 
 import com.esiea.tetris.communication.MessageBus;
 import com.esiea.tetris.communication.concrete.LineNotification;
+import com.esiea.tetris.graphics.Drawable;
+import com.esiea.tetris.graphics.TPanel;
 import com.esiea.tetris.model.Component;
+import com.esiea.tetris.utils.vec2;
 
-public class ScoreComponent extends Component{
+import java.util.ArrayList;
+
+public class ScoreComponent extends Component implements Drawable{
 	
 	private int score;
 	private int idJoueur;
@@ -56,4 +61,28 @@ public class ScoreComponent extends Component{
 		this.idJoueur = numJoueur;
 	}
 
+    @Override
+    public void update() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public TPanel getDrawableContainer() {
+        TPanel panel = new TPanel();
+        panel.setPosition(position);
+        panel.setSize(size);
+        panel.add(this);
+        return panel;
+    }
+
+    @Override
+    public String[] getDrawableText() {
+        String[] text = { Integer.toString(score) };
+        return text;
+    }
+
+    @Override
+    public vec2 getDrawableRelativePosition() {
+        return new vec2(0,0);
+    }
 }

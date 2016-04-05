@@ -34,7 +34,7 @@ public class Tetris {
                 inputService.update();
                 networkService.update();
                 current_layout.update();
-                current_layout.draw(renderer);
+                renderer.draw(current_layout);
             }
             
             if(current_layout.next() == null){
