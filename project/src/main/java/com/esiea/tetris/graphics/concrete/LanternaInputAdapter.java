@@ -4,6 +4,7 @@ package com.esiea.tetris.graphics.concrete;
 
 import com.esiea.tetris.communication.MessageBus;
 import com.esiea.tetris.communication.concrete.KeyboardInput;
+import com.esiea.tetris.communication.concrete.KeyboardInput.Type;
 import com.esiea.tetris.utils.KeyUtil;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.terminal.Terminal;
@@ -16,10 +17,12 @@ public class LanternaInputAdapter {
     public void transferInput(Terminal terminal){
         try {
             KeyStroke key; 
-            do{
-                key = terminal.readInput();
+            key = terminal.pollInput();
+
+            while(key != null){
                 handleKeyStroke(key);
-            }while(key != null);
+                key = terminal.pollInput();
+            }
         } catch (IOException ex) {
             Logger.getLogger(ConsoleRenderer.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -27,8 +30,10 @@ public class LanternaInputAdapter {
     
     private void handleKeyStroke(KeyStroke key){
         KeyboardInput msg = new KeyboardInput();
-        msg.setCharacter(key.getCharacter());
         KeyUtil.defineType(msg, key);
-        MessageBus.getInstance().post(msg);
+        if(msg.getKeyType() == Type.CHARACTER){
+            msg.setCharacter(key.getCharacter());
+        }
+        MessageBus.getInstance().publish(msg);
     }
 }

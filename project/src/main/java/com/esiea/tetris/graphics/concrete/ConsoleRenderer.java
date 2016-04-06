@@ -32,26 +32,27 @@ public class ConsoleRenderer extends Renderer{
     
     public ConsoleRenderer(){
         this.createWindow();
-        grid = new char[100][150]();
+        inputAdapter = new LanternaInputAdapter();
+        grid = new char[terminalSize.getRows()][terminalSize.getColumns()];
+        clearGrid();
     }
     
+    @Override
     public void update(Layout _layout){
         inputAdapter.transferInput(terminal);
         draw(_layout);
     }
         
-    @Override
-    public void draw(Layout _layout){
-        
+    private void draw(Layout _layout){
         // Changes an internal grid with the new data.
         _layout.getDrawableContainers().stream().forEach((panel) -> {
             drawPanel(panel);
         });
         
         try {
-            terminal.clearScreen();
             drawToTerminal();   // Actually sends the data to the terminal
             terminal.flush();
+            clearGrid();
         } catch (IOException ex) {
             Logger.getLogger(ConsoleRenderer.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -67,16 +68,19 @@ public class ConsoleRenderer extends Renderer{
     
     private void drawText(String[] text, vec2 position, vec2 offset){
         for(int i = 0; i < text.length; i++){
-            vec2 pos = position;
+            vec2 pos = new vec2(position);
             pos.y += i;
-            pos.y += position.y;
-            pos.x += position.x;
+            pos.y += offset.y;
+            pos.x += offset.x;
             insertLineAt(text[i], pos);
         }
     }
     
     private void insertLineAt(String text, vec2 pos){
         for(int i = 0; i < text.length(); i++){
+            if(pos.x + i >= grid.length || pos.y >= grid[0].length){
+                continue;
+            }
             grid[pos.x+i][pos.y] = text.charAt(i);
         }
     }
@@ -87,6 +91,9 @@ public class ConsoleRenderer extends Renderer{
             terminal = new DefaultTerminalFactory().createTerminal();
             terminal.enterPrivateMode();
             terminal.getTerminalSize();
+            terminal.setCursorVisible(false);
+
+            terminalSize = terminal.getTerminalSize();
             
         } catch (IOException ex) {
             Logger.getLogger(ConsoleRenderer.class.getName()).log(Level.SEVERE, null, ex);
@@ -103,6 +110,15 @@ public class ConsoleRenderer extends Renderer{
             }
         } catch (IOException ex) {
             Logger.getLogger(ConsoleRenderer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //clearGrid();
+    }
+    
+    private void clearGrid(){
+        for(int i = 0; i < grid.length; i++){
+            for(int j = 0; j < grid.length; j++){
+                grid[i][j] = ' ';
+            }
         }
     }
 }

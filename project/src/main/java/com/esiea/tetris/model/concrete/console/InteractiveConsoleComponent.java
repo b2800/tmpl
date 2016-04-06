@@ -30,6 +30,7 @@ public class InteractiveConsoleComponent extends Component implements Drawable{
         history = new ArrayDeque<>();
         cursorPosition = 0;
         historyPosition = 0;
+        currentInput = "";
         MessageBus.getInstance().subscribe(this);
     }
 	
@@ -111,16 +112,20 @@ public class InteractiveConsoleComponent extends Component implements Drawable{
         }
         history.add(currentInput);
         currentInput = "";
+        cursorPosition = 0;
+        System.out.println("new input : " + currentInput);
     }
     
     @Override
     public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     @Override
     public TPanel getDrawableContainer() {
         TPanel panel = new TPanel();
+        panel.setPosition(this.position);
+        panel.setSize(this.size);
         panel.add(this);
         return panel; 
     }
@@ -131,10 +136,11 @@ public class InteractiveConsoleComponent extends Component implements Drawable{
         
         // Add the X last lines into the console output
         consoleOutput.stream().limit(10).forEach( (s) -> {
+            System.out.println("out: " + s);
             output.add(s);
         });
         output.add(getCurrentPrompt());
-        return (String[]) output.toArray();
+        return output.toArray(new String[output.size()]);
     }
 
     @Override

@@ -1,9 +1,12 @@
 package com.esiea.tetris.model.concrete;
 
+import com.esiea.tetris.graphics.Drawable;
+import com.esiea.tetris.graphics.TPanel;
 import com.esiea.tetris.model.builder.LayoutBuilder;
-import com.esiea.tetris.model.Button;
+import com.esiea.tetris.model.TButton;
 import com.esiea.tetris.model.Component;
 import com.esiea.tetris.model.Layout;
+import java.util.ArrayList;
 
 /*
     Responsability : Guide the player when launching the application
@@ -12,10 +15,10 @@ import com.esiea.tetris.model.Layout;
 */
 
 public class MainMenuComponent extends Component{
-    private Button soloPlayerButton;
-    private Button multiPlayerButton;
-    private Button highscoresButton;
-    private Button exitButton;
+    private TButton soloPlayerButton;
+    private TButton multiPlayerButton;
+    private TButton highscoresButton;
+    private TButton exitButton;
             
     public MainMenuComponent(){
         soloPlayerButton = createButton("Partie locale", 
@@ -28,8 +31,8 @@ public class MainMenuComponent extends Component{
     }
     
     // TODO : Move to a GUIBuilder 
-    private Button createButton(String text, Layout nextLayout){
-        return new Button().withText(text)
+    private TButton createButton(String text, Layout nextLayout){
+        return new TButton().withText(text)
                            .withCallback( new Runnable(){
             @Override public void run() { 
                 proceedToNextLayout(nextLayout);
@@ -40,5 +43,21 @@ public class MainMenuComponent extends Component{
     private void proceedToNextLayout(Layout _nextLayout){
         this.parent.setNextLayout(_nextLayout);
         this.parent.setShouldClose(true);
+    }
+
+    @Override
+    public void update() {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public TPanel getDrawableContainer() {
+        TPanel drawables = new TPanel();
+        
+        drawables.add(soloPlayerButton);
+        drawables.add(multiPlayerButton);
+        drawables.add(highscoresButton);
+        drawables.add(exitButton);
+        return drawables;
     }
 }

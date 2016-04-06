@@ -9,6 +9,7 @@ public class CommandInterpreter {
     
     public String[] execute(String command){
         String output = parseAndRun(command.toLowerCase());
+        System.out.println("output : " + output);
         return linesToArray(output);
     }
     
@@ -22,10 +23,10 @@ public class CommandInterpreter {
     
     private String parseAndRun(String command){
         String[] cmdTokens = command.split("\\s+");
-        if(cmdTokens.equals("help")){
+        if(cmdTokens[0].equals("help")){
             return displayHelp();
         }
-        return "";
+        return cmdTokens[0] + " : Command not found \n";
     }
     
     private String[] linesToArray(String text){
@@ -40,6 +41,6 @@ public class CommandInterpreter {
                 current += text.charAt(i);
             }
         }
-        return (String[]) lines.toArray();
+        return lines.toArray(new String[lines.size()]);
     }
 }
