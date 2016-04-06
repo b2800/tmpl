@@ -113,7 +113,6 @@ public class InteractiveConsoleComponent extends Component implements Drawable{
         history.add(currentInput);
         currentInput = "";
         cursorPosition = 0;
-        System.out.println("new input : " + currentInput);
     }
     
     @Override
@@ -136,7 +135,6 @@ public class InteractiveConsoleComponent extends Component implements Drawable{
         
         // Add the X last lines into the console output
         consoleOutput.stream().limit(10).forEach( (s) -> {
-            System.out.println("out: " + s);
             output.add(s);
         });
         output.add(getCurrentPrompt());

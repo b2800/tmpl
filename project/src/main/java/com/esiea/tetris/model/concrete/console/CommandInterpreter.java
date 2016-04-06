@@ -9,7 +9,6 @@ public class CommandInterpreter {
     
     public String[] execute(String command){
         String output = parseAndRun(command.toLowerCase());
-        System.out.println("output : " + output);
         return linesToArray(output);
     }
     
