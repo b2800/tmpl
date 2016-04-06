@@ -1,7 +1,10 @@
 package com.esiea.tetris.model;
 
 import com.esiea.tetris.core.Updatable;
+import com.esiea.tetris.graphics.Drawable;
+import com.esiea.tetris.graphics.TPanel;
 import com.esiea.tetris.utils.vec2;
+import java.util.ArrayList;
 
 /*
  * A component defines : 
@@ -18,13 +21,11 @@ public abstract class Component implements Updatable{
     protected Layout parent;
     
     public Component(){
-
+        
     }
     
     @Override
-    public void update(){
-        
-    }
+    public abstract void update();
     
     public vec2 getPosition() {
         return position;
@@ -50,4 +51,5 @@ public abstract class Component implements Updatable{
         return this.parent;
     }
     
+    public abstract TPanel getDrawableContainer();
 }

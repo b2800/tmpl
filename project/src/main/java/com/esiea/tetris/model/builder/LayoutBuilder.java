@@ -2,6 +2,7 @@ package com.esiea.tetris.model.builder;
 
 import com.esiea.tetris.model.concrete.MainMenuComponent;
 import com.esiea.tetris.model.Layout;
+import com.esiea.tetris.model.concrete.console.InteractiveConsoleComponent;
 import com.esiea.tetris.utils.vec2;
 
 public class LayoutBuilder {
@@ -9,11 +10,11 @@ public class LayoutBuilder {
     public static Layout buildMainMenuLayout() {
         Layout menu_layout = new Layout();
         
-        MainMenuComponent main_menu = new MainMenuComponent();
-        main_menu.setPosition(new vec2(10,10));
-        main_menu.setSize(new vec2(100,50));
+        InteractiveConsoleComponent console = new InteractiveConsoleComponent();
+        console.setPosition(new vec2(0,0));
+        console.setSize(new vec2(50,20));
         
-        menu_layout.addComponent(main_menu);
+        menu_layout.addComponent(console);
         return menu_layout;
     }
     
