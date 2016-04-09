@@ -55,14 +55,9 @@ public class ConsoleRenderer extends Renderer{
             drawPanel(panel);
         });
         
-        try {
-            drawToTerminal();   // Actually sends the data to the terminal
-            terminal.flush();
-            clearGrid();
-            lastRefreshTime = System.currentTimeMillis();
-        } catch (IOException ex) {
-            Logger.getLogger(ConsoleRenderer.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        drawToTerminal();   // Actually sends the data to the terminal
+        clearGrid();
+        lastRefreshTime = System.currentTimeMillis();
     }
     
     private void drawPanel(TPanel panel){
@@ -85,10 +80,10 @@ public class ConsoleRenderer extends Renderer{
     
     private void insertLineAt(String text, vec2 pos){
         for(int i = 0; i < text.length(); i++){
-            if(pos.x + i >= grid.length || pos.y >= grid[0].length){
+            if(pos.x + i >= grid[0].length || pos.y >= grid.length){
                 continue;
             }
-            grid[pos.x+i][pos.y] = text.charAt(i);
+            grid[pos.y][pos.x + i] = text.charAt(i);
         }
     }
 
@@ -109,16 +104,16 @@ public class ConsoleRenderer extends Renderer{
     
     private void drawToTerminal(){
         try {
-            for(int i = 0; i < grid.length; i++){
-                terminal.setCursorPosition(i, 0);
-                for(int j = 0; j < grid[i].length; j++){
-                    terminal.putCharacter(grid[i][j]);
+            for(int y = 0; y < grid.length; y++){
+                terminal.setCursorPosition(0, y);
+                for(int x = 0; x < grid[0].length; x++){
+                    terminal.putCharacter(grid[y][x]);
                 }
             }
+            terminal.flush();
         } catch (IOException ex) {
             Logger.getLogger(ConsoleRenderer.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //clearGrid();
     }
     
     private void clearGrid(){
@@ -127,6 +122,17 @@ public class ConsoleRenderer extends Renderer{
                 grid[i][j] = ' ';
             }
         }
+    }
+    
+    private void showGrid(){
+        System.out.println("----------------------------------");
+        for(int i = 0; i < grid.length; i++){
+            for(int j = 0; j < grid.length; j++){
+                System.out.print(grid[i][j]);
+            }
+            System.out.println(" ");
+        }
+        System.out.println("----------------------------------");
     }
     
     private boolean shouldDraw(){
