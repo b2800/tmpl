@@ -14,18 +14,18 @@ public class CollisionSolver {
 	public static boolean isInCollision(int[][] grid, Tetrimino t)
 	{
 		// On récupère les dimensions de la grille
-		int wGrid=grid.length;
-		int hGrid=grid[0].length;
+		int wGrid=grid[0].length;
+		int hGrid=grid.length;
 				
 		// Pour chaque point constituant le Tetrimino
 		for (vec2 pt : t.getPointList()) {
 
 			// On vérifie si la case n'est pas en dehors de la grille)
-			if(pt.x<0 || pt.x>wGrid || pt.y<0 || pt.y>hGrid)
+			if(pt.x<0 || pt.x>=wGrid || pt.y<0 || pt.y>=hGrid)
 				return true;
 						   
 			// On vérifie le contenu de la case de la grille
-			if(grid[pt.x][pt.y]!=0)
+			if(grid[pt.y][pt.x]!=0)
 				return true;
 		}
 		

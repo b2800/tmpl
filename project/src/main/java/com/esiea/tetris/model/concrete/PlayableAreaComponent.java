@@ -60,8 +60,10 @@ public class PlayableAreaComponent extends Component
                 break;
             case DOWN:
             	TetriminoMover.moveDown(currentTetrimino);
-            	if(CollisionSolver.isInCollision(grid, currentTetrimino))
+            	if(CollisionSolver.isInCollision(grid, currentTetrimino)){
             		TetriminoMover.moveUp(currentTetrimino);
+                        addTetriminoToGrid();
+                }
                 break;
         }
     }
@@ -75,8 +77,11 @@ public class PlayableAreaComponent extends Component
     {
     	// Pour chaque point constituant le Tetrimino
         for(vec2 pt : currentTetrimino.getPointList()) {
-            grid[pt.x][pt.y]=currentTetrimino.getIndiceCouleur();
+            System.out.println(pt.toString());
+            grid[pt.y][pt.x]=currentTetrimino.getIndiceCouleur();
         }
+        currentTetrimino = tetriminoSequence.pop();
+        updateTetriminoSequence();
     }
     
     @Override
@@ -94,6 +99,7 @@ public class PlayableAreaComponent extends Component
     	if(CollisionSolver.isInCollision(grid, currentTetrimino)) {   
             // On annule le mouvement
             TetriminoMover.moveUp(currentTetrimino);
+            addTetriminoToGrid();
     	}
         timer = System.currentTimeMillis();
     }
@@ -121,18 +127,18 @@ public class PlayableAreaComponent extends Component
                 }
             }
         }
-        int[][] tetrimino = currentTetrimino.getLayoutForActualOrientation();
-        vec2 pos = currentTetrimino.getPosition();
-        for(int y = 0; y < tetrimino.length; y++){
-            StringBuilder s = new StringBuilder(output[y + pos.y]);
-            for(int x = 0; x < tetrimino[0].length; x++){
-                if(tetrimino[y][x] == 1){
-                    s.setCharAt(x + pos.x, '\u2588');
-                }
+        for(vec2 pt : currentTetrimino.getPointList()){
+            if(isWithinGrid(pt)){
+                StringBuilder s = new StringBuilder(output[pt.y]);
+                s.setCharAt(pt.x, '\u2588');
+                output[pt.y] = s.toString();
             }
-            output[y + pos.y] = s.toString();
         }
         return output;
+    }
+    
+    public boolean isWithinGrid(vec2 pos){
+        return !(pos.x < 0 || pos.y < 0 || pos.x >= size.x || pos.y >= size.y);
     }
 
     @Override

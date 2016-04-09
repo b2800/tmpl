@@ -101,10 +101,10 @@ public class ConsoleRenderer extends Renderer{
             topRight.add(new vec2(1, -1));
         vec2  bottomLeft = new vec2(position);
             bottomLeft.y += size.y;
-            bottomLeft.add(new vec2(-1, 1));
+            bottomLeft.add(new vec2(-1, 0));
         vec2 bottomRight = new vec2(position);
             bottomRight.add(size);
-            bottomRight.add(new vec2(1, 1));
+            bottomRight.add(new vec2(1, 0));
         
         drawLine(topLeft, topRight);
         drawLine(bottomLeft, bottomRight);
