@@ -1,7 +1,7 @@
 package com.esiea.tetris.model.builder;
 
-import com.esiea.tetris.model.concrete.MainMenuComponent;
 import com.esiea.tetris.model.Layout;
+import com.esiea.tetris.model.concrete.PlayableAreaComponent;
 import com.esiea.tetris.model.concrete.console.InteractiveConsoleComponent;
 import com.esiea.tetris.utils.vec2;
 
@@ -18,14 +18,17 @@ public class LayoutBuilder {
         return menu_layout;
     }
     
-    public static Layout buildMultiplayerLobby(){
+    public static Layout buildMultiplayerLobby(String ip){
         
         return null;
     }
     
     public static Layout buildSoloPlayerLayout(){
+        Layout gameLayout = new Layout();
+        PlayableAreaComponent playZone = new PlayableAreaComponent();
         
-        return null;
+        gameLayout.addComponent(playZone);
+        return gameLayout;
     }
     
     public static Layout buildLocalMultiplayerLayout(int player_count){

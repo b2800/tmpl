@@ -9,6 +9,7 @@ import com.esiea.tetris.communication.MessageBus;
 import com.esiea.tetris.communication.concrete.KeyboardInput;
 import com.esiea.tetris.communication.concrete.KeyboardInput.Type;
 import com.esiea.tetris.communication.concrete.KeyboardInput.Direction;
+import com.esiea.tetris.communication.concrete.NavigationIntent;
 import com.esiea.tetris.utils.KeyUtil;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -54,6 +55,12 @@ public class InteractiveConsoleComponent extends Component
                 removePreCharacter();
                 break;
         }
+    }
+    
+    @Handler
+    public void handle(NavigationIntent msg){
+        parent.setNextLayout(msg.nextLayout);
+        parent.setShouldClose(true);
     }
     
     public void handleMove(Direction d){
