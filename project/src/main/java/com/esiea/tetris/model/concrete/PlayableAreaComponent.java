@@ -16,12 +16,10 @@ import net.engio.mbassy.listener.Handler;
 public class PlayableAreaComponent extends Component
                                    implements Drawable {
     
-    private TetriminoMover mover;
     private Tetrimino currentTetrimino;
     private char[][] grid;
 
     public PlayableAreaComponent(vec2 size) {
-        mover = new TetriminoMover();
         this.setSize(size);
         grid = new char[size.y][size.x];
         clearGrid();
@@ -40,19 +38,19 @@ public class PlayableAreaComponent extends Component
     private void moveTetrimino(Direction d){
         switch(d){
             case LEFT:
-                mover.moveLeft(currentTetrimino);
+            	TetriminoMover.moveLeft(currentTetrimino);
                 break;
             case RIGHT:
-                mover.moveRight(currentTetrimino);
+            	TetriminoMover.moveRight(currentTetrimino);
                 break;
             case DOWN:
-                mover.moveDown(currentTetrimino);
+            	TetriminoMover.moveDown(currentTetrimino);
                 break;
         }
     }
     
     private void dropTetrimino(){
-        mover.moveBottom(currentTetrimino, size.y);
+    	TetriminoMover.moveBottom(currentTetrimino, size.y);
     }
     
     @Override
