@@ -103,13 +103,13 @@ public class PlayableAreaComponent extends Component
         int[][] tetrimino = currentTetrimino.getCurrentRepresentation();
         vec2 pos = currentTetrimino.getPosition();
         for(int y = 0; y < tetrimino.length; y++){
-            StringBuilder s = new StringBuilder(output[y]);
+            StringBuilder s = new StringBuilder(output[y + pos.y]);
             for(int x = 0; x < tetrimino[0].length; x++){
                 if(tetrimino[y][x] == 1){
                     s.setCharAt(x + pos.x, '\u2588');
                 }
             }
-            output[y] = s.toString();
+            output[y + pos.y] = s.toString();
         }
         return output;
     }
