@@ -61,6 +61,7 @@ public class ConsoleRenderer extends Renderer{
     }
     
     private void drawPanel(TPanel panel){
+        if(panel == null){ return; }
         panel.getDrawables().stream().forEach( (d) -> {
             drawText(d.getDrawableText(), 
                      d.getDrawableRelativePosition(), 
