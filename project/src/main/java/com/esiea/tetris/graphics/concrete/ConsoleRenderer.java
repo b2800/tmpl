@@ -106,12 +106,6 @@ public class ConsoleRenderer extends Renderer{
             bottomRight.add(size);
             bottomRight.add(new vec2(1, 1));
         
-        System.out.println("--");
-        System.out.println(topLeft.toString());
-        System.out.println(topRight.toString());
-        System.out.println(bottomLeft.toString());
-        System.out.println(bottomRight.toString());
-        
         drawLine(topLeft, topRight);
         drawLine(bottomLeft, bottomRight);
         drawLine(topLeft, bottomLeft);
