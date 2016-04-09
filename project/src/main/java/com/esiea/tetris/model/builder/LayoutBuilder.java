@@ -1,7 +1,9 @@
 package com.esiea.tetris.model.builder;
 
 import com.esiea.tetris.model.Layout;
+import com.esiea.tetris.model.concrete.PenaltyComponent;
 import com.esiea.tetris.model.concrete.PlayableAreaComponent;
+import com.esiea.tetris.model.concrete.ScoreComponent;
 import com.esiea.tetris.model.concrete.console.InteractiveConsoleComponent;
 import com.esiea.tetris.utils.vec2;
 
@@ -26,8 +28,12 @@ public class LayoutBuilder {
     public static Layout buildSoloPlayerLayout(){
         Layout gameLayout = new Layout();
         PlayableAreaComponent playZone = new PlayableAreaComponent();
+        PenaltyComponent pc = new PenaltyComponent();
+        ScoreComponent score = new ScoreComponent(0, 0);
         
         gameLayout.addComponent(playZone);
+        gameLayout.addComponent(score);
+        gameLayout.addComponent(pc);
         return gameLayout;
     }
     
