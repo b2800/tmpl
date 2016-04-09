@@ -32,6 +32,7 @@ public class PlayableAreaComponent extends Component
         clearGrid();
         refreshInterval = 1000;
         timer = System.currentTimeMillis();
+        tetriminoSequence = new ArrayDeque<>();
         updateTetriminoSequence();
         currentTetrimino = tetriminoSequence.pop();
         MessageBus.getInstance().subscribe(this);
@@ -92,8 +93,23 @@ public class PlayableAreaComponent extends Component
         for(int y = 0; y < size.y; y++){
             output[y] = "";
             for(int x = 0; x < size.x; x++){
-                output[y] += grid[y][x];
+                if(grid[y][x] == 0){
+                    output[y] += " ";
+                } else {
+                    output[y] += "\u2588";
+                }
             }
+        }
+        int[][] tetrimino = currentTetrimino.getCurrentRepresentation();
+        vec2 pos = currentTetrimino.getPosition();
+        for(int y = 0; y < tetrimino.length; y++){
+            StringBuilder s = new StringBuilder(output[y]);
+            for(int x = 0; x < tetrimino[0].length; x++){
+                if(tetrimino[y][x] == 1){
+                    s.setCharAt(x + pos.x, '\u2588');
+                }
+            }
+            output[y] = s.toString();
         }
         return output;
     }
@@ -106,7 +122,7 @@ public class PlayableAreaComponent extends Component
     private void clearGrid(){
         for(int y = 0; y < size.y; y++){
             for(int x = 0; x < size.x ; x++){
-                grid[y][x] = ' ';
+                grid[y][x] = 0;
             }
         }
     }
@@ -114,7 +130,9 @@ public class PlayableAreaComponent extends Component
     private void updateTetriminoSequence(){
         int sequenceLength = 5;
         while(tetriminoSequence.size() < sequenceLength){ 
-            tetriminoSequence.addLast(TetriminoBuilder.getRandomTetrimino());
+            Tetrimino tetrimino = TetriminoBuilder.getRandomTetrimino();
+            tetrimino.setPosition(new vec2((int)(size.x/2), 0));
+            tetriminoSequence.addLast(tetrimino);
         }
     }
     

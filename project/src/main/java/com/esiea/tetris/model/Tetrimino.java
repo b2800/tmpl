@@ -32,6 +32,10 @@ public class Tetrimino {
         return this.position;
     }
     
+    public final int[][] getCurrentRepresentation(){
+        return layout.get(orientation);
+    }
+    
     public final void setRepresentation(ArrayList<int[][]> layout2){
         this.layout = layout2;
     }
