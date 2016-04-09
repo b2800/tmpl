@@ -17,11 +17,11 @@ public class PlayableAreaComponent extends Component
                                    implements Drawable {
     
     private Tetrimino currentTetrimino;
-    private char[][] grid;
+    private int[][] grid;
 
     public PlayableAreaComponent(vec2 size) {
         this.setSize(size);
-        grid = new char[size.y][size.x];
+        grid = new int[size.y][size.x];
         clearGrid();
         MessageBus.getInstance().subscribe(this);
     }
@@ -39,12 +39,18 @@ public class PlayableAreaComponent extends Component
         switch(d){
             case LEFT:
             	TetriminoMover.moveLeft(currentTetrimino);
+            	// Appel de la fonction CollisionSolver pour vérifier si collision
+            	// Si collision, on "annule" le mouvement du Tetrimino
                 break;
             case RIGHT:
             	TetriminoMover.moveRight(currentTetrimino);
+            	// Appel de la fonction CollisionSolver pour vérifier si collision
+            	// Si collision, on "annule" le mouvement du Tetrimino
                 break;
             case DOWN:
             	TetriminoMover.moveDown(currentTetrimino);
+            	// Appel de la fonction CollisionSolver pour vérifier si collision
+            	// Si collision, on "annule" le mouvement du Tetrimino
                 break;
         }
     }
@@ -88,7 +94,7 @@ public class PlayableAreaComponent extends Component
     private void clearGrid(){
         for(int y = 0; y < size.y; y++){
             for(int x = 0; x < size.x ; x++){
-                grid[y][x] = ' ';
+                grid[y][x] = 0;
             }
         }
     }

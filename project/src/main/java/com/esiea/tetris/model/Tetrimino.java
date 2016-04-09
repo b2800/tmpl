@@ -46,6 +46,11 @@ public abstract class Tetrimino {
     	this.orientation=(this.orientation-1)%this.layout.size();
     }
     
+    public final int[][] getLayoutForActualOrientation()
+    {
+    	return layout.get(orientation);
+    }
+    
     public class I extends Tetrimino{
         
         public I(vec2 _position) {
@@ -54,11 +59,10 @@ public abstract class Tetrimino {
             layout=new ArrayList <int[][]>();
             
             layout.add(new int[][]{
-                {1, 1, 1, 1}
+                {1, 1, 1}
             });
             
             layout.add(new int[][]{
-                    {1},
                     {1},
                     {1},
                     {1}
@@ -67,11 +71,10 @@ public abstract class Tetrimino {
             // Les deux orientation suivante ne sont pas nécessaires car elles se répètent
             
             /*layout.add(new int[][]{
-                    {1, 1, 1, 1}
+                    {1, 1, 1}
                 });
             
             layout.add(new int[][]{
-                    {1},
                     {1},
                     {1},
                     {1}
