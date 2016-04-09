@@ -24,7 +24,7 @@ public class TestPenaltyComponent {
 	{
 		pc = new PenaltyComponent();
 		listener = mock(Listener.class);
-		when(listener.handle(new PenaltyNotification(1,1)));
+		//when(listener.handle(new PenaltyNotification(1,1)));
 	}
 		
 	@Test
