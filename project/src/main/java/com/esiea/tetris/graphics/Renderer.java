@@ -3,7 +3,7 @@ package com.esiea.tetris.graphics;
 import com.esiea.tetris.model.Layout;
 
 public abstract class Renderer {
-    public void Draw(Layout _layout) throws Exception{
+    public void update(Layout _layout){
         
     }
 }
