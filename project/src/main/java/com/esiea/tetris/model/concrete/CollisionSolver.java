@@ -8,7 +8,7 @@ public class CollisionSolver {
 	
 	//Retourne true s'il y a collision avec un élément de la grille (= bord ou tétrimino arrivé au sol précédemment)
 	//Retourne false s'il n'y a pas de collision
-	public static boolean IsInCollision(char[][] grid, Tetrimino t)
+	public static boolean isInCollision(char[][] grid, Tetrimino t)
 	{
 		//int nbCollisions=0;
 		
