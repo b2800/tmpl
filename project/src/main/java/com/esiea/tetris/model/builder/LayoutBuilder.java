@@ -27,9 +27,13 @@ public class LayoutBuilder {
     
     public static Layout buildSoloPlayerLayout(){
         Layout gameLayout = new Layout();
-        PlayableAreaComponent playZone = new PlayableAreaComponent();
+        PlayableAreaComponent playZone = new PlayableAreaComponent(new vec2(10, 20));
         PenaltyComponent pc = new PenaltyComponent();
         ScoreComponent score = new ScoreComponent(0, 0);
+        
+        playZone.setPosition(new vec2(2,2));
+        score.setPosition(new vec2(14, 2));
+        pc.setPosition(new vec2(14, 5));
         
         gameLayout.addComponent(playZone);
         gameLayout.addComponent(score);

@@ -47,6 +47,7 @@ public class PenaltyComponent extends Component
     public TPanel getDrawableContainer() {
         TPanel panel = new TPanel();
         panel.add(this);
+        panel.setPosition(position);
         return panel;
     }
 
@@ -54,7 +55,7 @@ public class PenaltyComponent extends Component
     public String[] getDrawableText() {
         String[] text = new String[2];
         text[0] = "Lines before malus : ";
-        text[0] = Integer.toString(10 - compteurLine);
+        text[1] = Integer.toString(10 - compteurLine);
         return text;
     }
 
