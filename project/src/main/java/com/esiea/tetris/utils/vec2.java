@@ -14,6 +14,18 @@ public class vec2{
         this.y = a.y;
     }
     
+    public void add(vec2 v)
+    {
+    	this.x+=v.x;
+    	this.y+=v.y;
+    }
+    
+    public void add(int x, int y)
+    {
+    	this.x+=x;
+    	this.y+=y;
+    }
+    
     public static vec2 sum(vec2 a, vec2 b){
         vec2 c = a;
         c.x += b.x;
