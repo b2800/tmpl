@@ -18,7 +18,6 @@ import net.engio.mbassy.listener.Handler;
 public class PlayableAreaComponent extends Component
                                    implements Drawable {
     
-    private TetriminoMover mover;
     private Tetrimino currentTetrimino;
     private int[][] grid;
     private long timer;
@@ -26,7 +25,6 @@ public class PlayableAreaComponent extends Component
     private ArrayDeque<Tetrimino> tetriminoSequence;
 
     public PlayableAreaComponent(vec2 size) {
-        mover = new TetriminoMover();
         this.setSize(size);
         grid = new int[size.y][size.x];
         clearGrid();
@@ -50,19 +48,35 @@ public class PlayableAreaComponent extends Component
     private void moveTetrimino(Direction d){
         switch(d){
             case LEFT:
-                mover.moveLeft(currentTetrimino);
+            	TetriminoMover.moveLeft(currentTetrimino);
+            	// Si collision, on "annule" le mouvement du Tetrimino
+            	if(CollisionSolver.isInCollision(grid, currentTetrimino))
+            		TetriminoMover.moveRight(currentTetrimino);
                 break;
             case RIGHT:
-                mover.moveRight(currentTetrimino);
+            	TetriminoMover.moveRight(currentTetrimino);
+            	if(CollisionSolver.isInCollision(grid, currentTetrimino))
+            		TetriminoMover.moveLeft(currentTetrimino);
                 break;
             case DOWN:
-                mover.moveDown(currentTetrimino);
+            	TetriminoMover.moveDown(currentTetrimino);
+            	if(CollisionSolver.isInCollision(grid, currentTetrimino))
+            		TetriminoMover.moveUp(currentTetrimino);
                 break;
         }
     }
     
     private void dropTetrimino(){
-        mover.moveBottom(currentTetrimino, size.y);
+    	TetriminoMover.moveBottom(currentTetrimino, size.y);
+    }
+    
+    // Ajoute le Tetrimino à la grille (devient alors "statique", non contrôlable par l'utilsateur)
+    private void addTetriminoToGrid()
+    {
+    	// Pour chaque point constituant le Tetrimino
+        for(vec2 pt : currentTetrimino.getPointList()) {
+            grid[pt.x][pt.y]=currentTetrimino.getIndiceCouleur();
+        }
     }
     
     @Override
@@ -70,11 +84,18 @@ public class PlayableAreaComponent extends Component
         autoMoveDown();
     }
     
+    // à chaque update, le tetrimino en cours descend d'une case sous l'effet de la gravité
     private void autoMoveDown(){
-        if(System.currentTimeMillis() - timer > refreshInterval){
-            mover.moveDown(currentTetrimino);
-            timer = System.currentTimeMillis();
-        }
+        if(System.currentTimeMillis() - timer < refreshInterval){ return; }
+        
+        TetriminoMover.moveDown(currentTetrimino);
+    	
+    	// Si collision (<=> tétrimino arrive au fond)
+    	if(CollisionSolver.isInCollision(grid, currentTetrimino)) {   
+            // On annule le mouvement
+            TetriminoMover.moveUp(currentTetrimino);
+    	}
+        timer = System.currentTimeMillis();
     }
 
     @Override
@@ -100,7 +121,7 @@ public class PlayableAreaComponent extends Component
                 }
             }
         }
-        int[][] tetrimino = currentTetrimino.getCurrentRepresentation();
+        int[][] tetrimino = currentTetrimino.getLayoutForActualOrientation();
         vec2 pos = currentTetrimino.getPosition();
         for(int y = 0; y < tetrimino.length; y++){
             StringBuilder s = new StringBuilder(output[y + pos.y]);

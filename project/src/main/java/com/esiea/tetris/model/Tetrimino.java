@@ -22,7 +22,7 @@ public class Tetrimino {
      *  
      */
     
-    private char indiceCouleur; // indice permettant de différencier la couleur d'un tétrimino
+    private int indiceCouleur; // indice permettant de différencier la couleur d'un tétrimino
     
     public final void setPosition(vec2 _position){
         this.position = _position;
@@ -32,8 +32,8 @@ public class Tetrimino {
         return this.position;
     }
     
-    public final int[][] getCurrentRepresentation(){
-        return layout.get(orientation);
+    public final int getIndiceCouleur() {
+    	return indiceCouleur;
     }
     
     public final void setRepresentation(ArrayList<int[][]> layout2){
@@ -48,5 +48,45 @@ public class Tetrimino {
     public final void decrementRotation(){
     	// On décrémente le nombre représentant l'état de rotation, modulo le nombre d'orientation possible
     	this.orientation=(this.orientation-1)%this.layout.size();
+    }
+    
+    public final int[][] getLayoutForActualOrientation()
+    {
+    	return layout.get(orientation);
+    }
+    
+    // Retourne une liste contenant les coordonnées exactes de chaque point constituant le tetrimino
+    // Facilite un grand nombre d'actions ultérieures tel que pour dessiner le Tetrimino sur la surface de jeu
+    public final ArrayList<vec2> getPointList()
+    {
+    	ArrayList<vec2> list= new ArrayList <vec2>();
+    	
+    	// On récupère le tableau du layout décrivant l'état actuel du Tetrimino
+    	// ex :
+    	//110
+        //010
+        //011
+        int [][] lay=getLayoutForActualOrientation();
+
+        // On récupère les dimensions du tableau dans des variables pour simplifier l'écriture des calculs qui vont suivre
+        int wLay=lay.length;
+        int hLay=lay[0].length;
+
+        int xChecked,yChecked; // Variables intermédiaires pour simplifier l'écriture des calculs qui vont suivre
+
+        // On parcourt chaque case du layout du tetrimino
+        for(int i = 0; i <wLay ; i++){
+            for(int j = 0; j <hLay ; j++){
+                if(lay[i][j]==1) // Si la case correspond au "corps" du tétrimino, on ajoute un point à la liste
+                {
+                    // On récupère les coordonnées de la case de la grille correspondante
+                    xChecked=i+position.x-Math.round(wLay/2);
+                    yChecked=j+position.y-Math.round(hLay/2);
+
+                    list.add(new vec2(xChecked,yChecked));
+                }	   
+            }
+        }
+        return list;
     }
 }
