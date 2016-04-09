@@ -72,6 +72,7 @@ public class ScoreComponent extends Component implements Drawable{
         panel.setPosition(position);
         panel.setSize(size);
         panel.add(this);
+        panel.setDrawBorder(true);
         return panel;
     }
 

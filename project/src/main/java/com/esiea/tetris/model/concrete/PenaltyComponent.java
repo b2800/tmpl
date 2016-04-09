@@ -48,6 +48,8 @@ public class PenaltyComponent extends Component
         TPanel panel = new TPanel();
         panel.add(this);
         panel.setPosition(position);
+        panel.setSize(size);
+        panel.setDrawBorder(true);
         return panel;
     }
 

@@ -35,6 +35,9 @@ public class LayoutBuilder {
         score.setPosition(new vec2(14, 2));
         pc.setPosition(new vec2(14, 5));
         
+        score.setSize(new vec2(6, 1));
+        pc.setSize(new vec2(14, 2));
+        
         gameLayout.addComponent(playZone);
         gameLayout.addComponent(score);
         gameLayout.addComponent(pc);

@@ -32,4 +32,9 @@ public class vec2{
         c.y += b.y;
         return c;
     }
+    
+    @Override
+    public String toString(){
+        return "x: " + Integer.toString(x) + " y:" + Integer.toString(y);
+    }
 }

@@ -7,6 +7,7 @@ public class TPanel {
     private ArrayList<Drawable> drawables;
     private vec2 size;
     private vec2 position;
+    private boolean border;
     
     public TPanel(){
         drawables = new ArrayList<>();
@@ -35,5 +36,13 @@ public class TPanel {
     
     public void setPosition(vec2 _position){
         this.position = _position;
+    }
+    
+    public void setDrawBorder(boolean val){
+        border = val;
+    }
+    
+    public boolean drawBorder(){
+        return border;
     }
 }

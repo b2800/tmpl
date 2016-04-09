@@ -65,6 +65,8 @@ public class PlayableAreaComponent extends Component
         TPanel panel = new TPanel();
         panel.add(this);
         panel.setPosition(this.position);
+        panel.setSize(this.size);
+        panel.setDrawBorder(true);
         return panel;
     }
 

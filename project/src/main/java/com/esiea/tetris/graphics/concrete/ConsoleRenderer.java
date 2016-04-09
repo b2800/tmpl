@@ -20,6 +20,7 @@ import com.googlecode.lanterna.gui2.EmptySpace;
 import com.googlecode.lanterna.input.KeyStroke;
 
 import java.io.IOException;
+import static java.lang.Math.abs;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -67,6 +68,9 @@ public class ConsoleRenderer extends Renderer{
                      d.getDrawableRelativePosition(), 
                      panel.getPosition());
         });
+        if(panel.drawBorder()){
+            drawSquare(panel.getPosition(), panel.getSize(), false);
+        }
     }
     
     private void drawText(String[] text, vec2 position, vec2 offset){
@@ -86,6 +90,46 @@ public class ConsoleRenderer extends Renderer{
             }
             grid[pos.y][pos.x + i] = text.charAt(i);
         }
+    }
+    
+    private void drawSquare(vec2 position, vec2 size, boolean filled){
+        if(filled){ return; }
+        vec2 topLeft = new vec2(position);
+            topLeft.add(new vec2(-1, -1));
+        vec2 topRight = new vec2(position);
+            topRight.x += size.x;
+            topRight.add(new vec2(1, -1));
+        vec2  bottomLeft = new vec2(position);
+            bottomLeft.y += size.y;
+            bottomLeft.add(new vec2(-1, 1));
+        vec2 bottomRight = new vec2(position);
+            bottomRight.add(size);
+            bottomRight.add(new vec2(1, 1));
+        
+        System.out.println("--");
+        System.out.println(topLeft.toString());
+        System.out.println(topRight.toString());
+        System.out.println(bottomLeft.toString());
+        System.out.println(bottomRight.toString());
+        
+        drawLine(topLeft, topRight);
+        drawLine(bottomLeft, bottomRight);
+        drawLine(topLeft, bottomLeft);
+        drawLine(topRight, bottomRight);
+    }
+    
+    private void drawLine(vec2 start, vec2 end){
+        if(start.x == end.x){
+            for(int i = 0; i < abs(end.y - start.y); i++){
+                grid[i+start.y][start.x] = '|';
+            }
+        } else if (start.y == end.y){
+            for(int i = 0; i < abs(end.x - start.x); i++){
+                grid[start.y][i+start.x] = '-';
+            }
+        }
+        grid[start.y][start.x] = '+';
+        grid[end.y][end.x] = '+';
     }
 
     private void createWindow(){
