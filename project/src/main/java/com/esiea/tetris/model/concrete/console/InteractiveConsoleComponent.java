@@ -14,7 +14,8 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import net.engio.mbassy.listener.Handler;
 
-public class InteractiveConsoleComponent extends Component implements Drawable{
+public class InteractiveConsoleComponent extends Component 
+                                         implements Drawable{
     
     private CommandInterpreter interpreter;
     private ArrayDeque<String> consoleOutput;
@@ -64,10 +65,10 @@ public class InteractiveConsoleComponent extends Component implements Drawable{
                 movePromptCursor(1);
                 break;
             case UP:
-                moveHistoryCursor(-1);
+                moveHistoryCursor(1);
                 break;
             case DOWN:
-                moveHistoryCursor(1);
+                moveHistoryCursor(-1);
                 break;
         }
     }
@@ -103,6 +104,8 @@ public class InteractiveConsoleComponent extends Component implements Drawable{
         } else if(historyPosition >= history.size()){
             historyPosition = history.size()-1;
         }
+        currentInput = history.toArray(new String[history.size()])[historyPosition];
+        cursorPosition = currentInput.length();
     }
     
     private void executeCommand(){
@@ -110,7 +113,7 @@ public class InteractiveConsoleComponent extends Component implements Drawable{
         for(int i = 0; i < output.length; i++){
             consoleOutput.addFirst(output[i]);
         }
-        history.add(currentInput);
+        history.addFirst(currentInput);
         currentInput = "";
         cursorPosition = 0;
     }
@@ -132,11 +135,7 @@ public class InteractiveConsoleComponent extends Component implements Drawable{
     @Override
     public String[] getDrawableText() {
         ArrayList<String> output = new ArrayList<>();
-        
-        // Add the X last lines into the console output
-        consoleOutput.stream().limit(10).forEach( (s) -> {
-            output.add(s);
-        });
+        output.addAll(getLastConsoleOutput(10));
         output.add(getCurrentPrompt());
         return output.toArray(new String[output.size()]);
     }
@@ -144,6 +143,20 @@ public class InteractiveConsoleComponent extends Component implements Drawable{
     @Override
     public vec2 getDrawableRelativePosition() {
         return new vec2(0,0);
+    }
+    
+    private ArrayList<String> getLastConsoleOutput(int count){
+        ArrayList<String> output = new ArrayList<>();
+        // Get the last "count" lines
+        consoleOutput.stream().limit(count).forEach( (s) -> {
+            output.add(s);
+        });
+        // Reverse order 
+        ArrayList<String> output_reversed = new ArrayList<>(output);
+        for(int i = 0; i < output.size(); i++){
+            output_reversed.set(i, output.get(output.size()-1-i));
+        }
+        return output_reversed;
     }
     
     private String getCurrentPrompt(){
