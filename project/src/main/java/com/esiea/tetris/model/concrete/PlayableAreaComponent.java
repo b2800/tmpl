@@ -10,6 +10,8 @@ import com.esiea.tetris.utils.vec2;
 import com.esiea.tetris.communication.MessageBus;
 import com.esiea.tetris.communication.concrete.KeyboardInput.Direction;
 import com.esiea.tetris.communication.concrete.KeyboardInput.Type;
+import com.esiea.tetris.model.builder.TetriminoBuilder;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import net.engio.mbassy.listener.Handler;
 
@@ -18,13 +20,20 @@ public class PlayableAreaComponent extends Component
     
     private TetriminoMover mover;
     private Tetrimino currentTetrimino;
-    private char[][] grid;
+    private int[][] grid;
+    private long timer;
+    private long refreshInterval;
+    private ArrayDeque<Tetrimino> tetriminoSequence;
 
     public PlayableAreaComponent(vec2 size) {
         mover = new TetriminoMover();
         this.setSize(size);
-        grid = new char[size.y][size.x];
+        grid = new int[size.y][size.x];
         clearGrid();
+        refreshInterval = 1000;
+        timer = System.currentTimeMillis();
+        updateTetriminoSequence();
+        currentTetrimino = tetriminoSequence.pop();
         MessageBus.getInstance().subscribe(this);
     }
     
@@ -57,7 +66,14 @@ public class PlayableAreaComponent extends Component
     
     @Override
     public void update() {
-        
+        autoMoveDown();
+    }
+    
+    private void autoMoveDown(){
+        if(System.currentTimeMillis() - timer > refreshInterval){
+            mover.moveDown(currentTetrimino);
+            timer = System.currentTimeMillis();
+        }
     }
 
     @Override
@@ -93,5 +109,16 @@ public class PlayableAreaComponent extends Component
                 grid[y][x] = ' ';
             }
         }
+    }
+    
+    private void updateTetriminoSequence(){
+        int sequenceLength = 5;
+        while(tetriminoSequence.size() < sequenceLength){ 
+            tetriminoSequence.addLast(TetriminoBuilder.getRandomTetrimino());
+        }
+    }
+    
+    public Tetrimino[] getTetriminoSequence(){
+        return tetriminoSequence.toArray(new Tetrimino[tetriminoSequence.size()]);
     }
 }
