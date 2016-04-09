@@ -39,18 +39,19 @@ public class PlayableAreaComponent extends Component
         switch(d){
             case LEFT:
             	TetriminoMover.moveLeft(currentTetrimino);
-            	// Appel de la fonction CollisionSolver pour vérifier si collision
             	// Si collision, on "annule" le mouvement du Tetrimino
+            	if(CollisionSolver.isInCollision(grid, currentTetrimino))
+            		TetriminoMover.moveRight(currentTetrimino);
                 break;
             case RIGHT:
             	TetriminoMover.moveRight(currentTetrimino);
-            	// Appel de la fonction CollisionSolver pour vérifier si collision
-            	// Si collision, on "annule" le mouvement du Tetrimino
+            	if(CollisionSolver.isInCollision(grid, currentTetrimino))
+            		TetriminoMover.moveLeft(currentTetrimino);
                 break;
             case DOWN:
             	TetriminoMover.moveDown(currentTetrimino);
-            	// Appel de la fonction CollisionSolver pour vérifier si collision
-            	// Si collision, on "annule" le mouvement du Tetrimino
+            	if(CollisionSolver.isInCollision(grid, currentTetrimino))
+            		TetriminoMover.moveUp(currentTetrimino);
                 break;
         }
     }
@@ -59,9 +60,32 @@ public class PlayableAreaComponent extends Component
     	TetriminoMover.moveBottom(currentTetrimino, size.y);
     }
     
+    // Ajoute le Tetrimino à la grille (devient alors "statique", non contrôlable par l'utilsateur)
+    private void addTetriminoToGrid()
+    {
+    	// Pour chaque point constituant le Tetrimino
+		for (vec2 pt : currentTetrimino.getPointList()) {
+
+			grid[pt.x][pt.y]=currentTetrimino.getIndiceCouleur();
+		}
+    }
+    
     @Override
     public void update() {
-        
+    	// à chaque update, le tetrimino en cours descend d'une case sous l'effet de la gravité
+    	TetriminoMover.moveDown(currentTetrimino);
+    	
+    	// Si collision (<=> tétrimino arrive au fond)
+    	if(CollisionSolver.isInCollision(grid, currentTetrimino)) 
+    	{
+    		// On annule le mouvement
+    		TetriminoMover.moveUp(currentTetrimino);
+    		
+    		// On intègre le tétrimino à la grille :
+    		addTetriminoToGrid();
+    		
+    	}
+    		
     }
 
     @Override

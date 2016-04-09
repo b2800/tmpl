@@ -1,6 +1,9 @@
 package com.esiea.tetris.model.concrete;
 
+import java.util.ArrayList;
+
 import com.esiea.tetris.model.Tetrimino;
+import com.esiea.tetris.utils.vec2;
 
 public class CollisionSolver {
 	
@@ -8,7 +11,31 @@ public class CollisionSolver {
 	
 	//Retourne true s'il y a collision avec un élément de la grille (= bord ou tétrimino arrivé au sol précédemment)
 	//Retourne false s'il n'y a pas de collision
-	public static boolean isInCollision(char[][] grid, Tetrimino t)
+	public static boolean isInCollision(int[][] grid, Tetrimino t)
+	{
+		// On récupère les dimensions de la grille
+		int wGrid=grid.length;
+		int hGrid=grid[0].length;
+				
+		// Pour chaque point constituant le Tetrimino
+		for (vec2 pt : t.getPointList()) {
+
+			// On vérifie si la case n'est pas en dehors de la grille)
+			if(pt.x<0 || pt.x>wGrid || pt.y<0 || pt.y>hGrid)
+				return true;
+						   
+			// On vérifie le contenu de la case de la grille
+			if(grid[pt.x][pt.y]!=0)
+				return true;
+		}
+		
+		// Si on sort de la boucle sans avoir retourner true, c'est qu'aucune collision a été détectée
+		return false;
+	}
+	
+	//Retourne true s'il y a collision avec un élément de la grille (= bord ou tétrimino arrivé au sol précédemment)
+	//Retourne false s'il n'y a pas de collision
+	public static boolean isInCollision_old_version(int[][] grid, Tetrimino t)
 	{
 		//int nbCollisions=0;
 		

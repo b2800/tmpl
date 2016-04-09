@@ -22,6 +22,11 @@ public class TetriminoMover {
 	
 	public static void moveDown(Tetrimino T)
 	{
+		T.getPosition().add(0,1);
+	}
+	
+	public static void moveUp(Tetrimino T)
+	{
 		T.getPosition().add(0,-1);
 	}
 	
