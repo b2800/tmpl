@@ -267,6 +267,8 @@ public class PlayableAreaComponent extends Component
         clearGrid();
         updateTetriminoSequence();
         currentTetrimino = tetriminoSequence.pop();
+        Message msg = new Message().withType("newgame");
+        MessageBus.getInstance().post(msg).asynchronously();
     }
     
     public void quitToMainMenu(){

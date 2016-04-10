@@ -6,6 +6,7 @@ import com.esiea.tetris.model.concrete.PlayableAreaComponent;
 import com.esiea.tetris.model.concrete.ScoreComponent;
 import com.esiea.tetris.model.concrete.SimpleTextComponent;
 import com.esiea.tetris.model.concrete.console.InteractiveConsoleComponent;
+import com.esiea.tetris.utils.ScoreUtil;
 import com.esiea.tetris.utils.vec2;
 
 public class LayoutBuilder {
@@ -65,7 +66,14 @@ public class LayoutBuilder {
     }
     
     public static Layout buildHighScoresScreen(){
+        Layout highscores = new Layout();
         
-        return null;
+        SimpleTextComponent text = new SimpleTextComponent();
+        text.addLine("Highest scores ever made : ");
+        for(int score : ScoreUtil.getHighScores()){
+            text.addLine(Integer.toString(score));
+        }
+        text.setPosition(new vec2(10, 10));
+        return highscores;
     }
 }
