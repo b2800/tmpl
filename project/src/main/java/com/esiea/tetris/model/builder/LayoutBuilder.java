@@ -40,8 +40,9 @@ public class LayoutBuilder {
         
         score.setSize(new vec2(6, 1));
         pc.setSize(new vec2(14, 2));
-        text.setSize(new vec2(20, 2));
         
+        text.addLine("Arrow keys to move");
+        text.addLine("Press v/b to rotate");
         text.addLine("Press q to quit");
         text.addLine("Press r to play again");
         
