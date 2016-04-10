@@ -16,6 +16,7 @@ import com.esiea.tetris.model.builder.TetriminoBuilder;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import net.engio.mbassy.listener.Handler;
+import sun.security.util.Length;
 
 public class PlayableAreaComponent extends Component
                                    implements Drawable, Updatable {
@@ -123,6 +124,7 @@ public class PlayableAreaComponent extends Component
         }
         currentTetrimino = tetriminoSequence.pop();
         updateTetriminoSequence();
+        removeFullLinesIfAny();
     }
     
     public void update() {
@@ -143,6 +145,47 @@ public class PlayableAreaComponent extends Component
             addTetriminoToGrid();
     	}
         timer = System.currentTimeMillis();
+    }
+    
+    private void removeFullLinesIfAny(){
+        ArrayList<Integer> lines = getAllFullLines();
+        for(int index : lines){
+            System.out.println("removing line " + index);
+            shiftDownAt(index);
+        }
+    }
+    
+    private ArrayList<Integer> getAllFullLines(){
+        ArrayList<Integer> fullLines = new ArrayList<>();
+        
+        for(int y = 0; y < grid.length; y++){
+            boolean full = true;
+            for(int x = 0; x < grid[0].length; x++){
+                if(grid[y][x] == 0)
+                    full = false;
+            }
+            if(full)
+                fullLines.add(y);
+        }
+        return fullLines;
+    }
+    
+    private void shiftDownAt(int index){
+        while(index >= 0){
+            copyLineAbove(index);
+            index--;
+        }
+    }
+    private void copyLineAbove(int index){
+        if( index >= size.y ){ return; }
+        for(int x = 0; x < grid[0].length; x++){
+            if(index == 0){
+                grid[index][x] = 0;
+            } else {
+                grid[index][x] = grid[index - 1][x];
+                System.out.print(grid[index][x]);
+            }
+        }
     }
 
     @Override
