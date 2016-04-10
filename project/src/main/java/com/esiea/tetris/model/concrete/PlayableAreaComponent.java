@@ -10,12 +10,15 @@ import com.esiea.tetris.utils.vec2;
 import com.esiea.tetris.communication.MessageBus;
 import com.esiea.tetris.communication.concrete.KeyboardInput.Direction;
 import com.esiea.tetris.communication.concrete.KeyboardInput.Type;
+import com.esiea.tetris.communication.concrete.LineNotification;
+import com.esiea.tetris.communication.concrete.NextTetriminos;
 import com.esiea.tetris.core.Updatable;
 import com.esiea.tetris.model.builder.LayoutBuilder;
 import com.esiea.tetris.model.builder.TetriminoBuilder;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import net.engio.mbassy.listener.Handler;
+import sun.security.util.Length;
 
 public class PlayableAreaComponent extends Component
                                    implements Drawable, Updatable {
@@ -26,8 +29,9 @@ public class PlayableAreaComponent extends Component
     private long refreshInterval;
     private ArrayDeque<Tetrimino> tetriminoSequence;
     private boolean gameOver;
+    private int idJoueur;
 
-    public PlayableAreaComponent(vec2 size) {
+    public PlayableAreaComponent(vec2 size, int idJoueur) {
         this.setSize(size);
         grid = new int[size.y][size.x];
         clearGrid();
@@ -37,6 +41,7 @@ public class PlayableAreaComponent extends Component
         updateTetriminoSequence();
         currentTetrimino = tetriminoSequence.pop();
         gameOver = false;
+        this.idJoueur = idJoueur;
         MessageBus.getInstance().subscribe(this);
     }
     
@@ -123,8 +128,10 @@ public class PlayableAreaComponent extends Component
         }
         currentTetrimino = tetriminoSequence.pop();
         updateTetriminoSequence();
+        removeFullLinesIfAny();
     }
     
+    @Override
     public void update() {
         autoMoveDown();
     }
@@ -143,6 +150,49 @@ public class PlayableAreaComponent extends Component
             addTetriminoToGrid();
     	}
         timer = System.currentTimeMillis();
+    }
+    
+    private void removeFullLinesIfAny(){
+        ArrayList<Integer> lines = getAllFullLines();
+        if(!lines.isEmpty()){
+            for(int index : lines){
+                shiftDownAt(index);
+            }
+            LineNotification msg = new LineNotification(this.idJoueur, lines.size());
+            MessageBus.getInstance().post(msg).asynchronously();
+        }
+    }
+    
+    private ArrayList<Integer> getAllFullLines(){
+        ArrayList<Integer> fullLines = new ArrayList<>();
+        
+        for(int y = 0; y < grid.length; y++){
+            boolean full = true;
+            for(int x = 0; x < grid[0].length; x++){
+                if(grid[y][x] == 0)
+                    full = false;
+            }
+            if(full)
+                fullLines.add(y);
+        }
+        return fullLines;
+    }
+    
+    private void shiftDownAt(int index){
+        while(index >= 0){
+            copyLineAbove(index);
+            index--;
+        }
+    }
+    private void copyLineAbove(int index){
+        if( index >= size.y ){ return; }
+        for(int x = 0; x < grid[0].length; x++){
+            if(index == 0){
+                grid[index][x] = 0;
+            } else {
+                grid[index][x] = grid[index - 1][x];
+            }
+        }
     }
 
     @Override
@@ -203,6 +253,9 @@ public class PlayableAreaComponent extends Component
             tetrimino.setPosition(new vec2((int)(size.x/2), 0));
             tetriminoSequence.addLast(tetrimino);
         }
+        NextTetriminos msg = new NextTetriminos();
+        msg.setSequence(tetriminoSequence.toArray(new Tetrimino[tetriminoSequence.size()]));
+        MessageBus.getInstance().post(msg).now();
     }
     
     public Tetrimino[] getTetriminoSequence(){
@@ -218,10 +271,14 @@ public class PlayableAreaComponent extends Component
         clearGrid();
         updateTetriminoSequence();
         currentTetrimino = tetriminoSequence.pop();
+        Message msg = new Message().withType("newgame");
+        MessageBus.getInstance().post(msg).asynchronously();
     }
     
     public void quitToMainMenu(){
         endGame();
+        Message msg = new Message().withType("gameover");
+        MessageBus.getInstance().post(msg).now();
         parent.setNextLayout(LayoutBuilder.buildMainMenuLayout());
         parent.setShouldClose(true);
     }

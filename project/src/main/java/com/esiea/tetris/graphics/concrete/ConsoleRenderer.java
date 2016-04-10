@@ -1,26 +1,16 @@
 package com.esiea.tetris.graphics.concrete;
 
-import com.esiea.tetris.communication.MessageBus;
-import com.esiea.tetris.graphics.Drawable;
 import com.esiea.tetris.graphics.Renderer;
 import com.esiea.tetris.graphics.TPanel;
-import com.esiea.tetris.graphics.exceptions.OutOfBoundsDrawException;
 import com.esiea.tetris.model.Layout;
 import com.esiea.tetris.utils.vec2;
 import com.googlecode.lanterna.TerminalSize;
 
-import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.gui2.*;
-import com.googlecode.lanterna.screen.Screen;
-import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
-import com.googlecode.lanterna.gui2.EmptySpace;
-import com.googlecode.lanterna.input.KeyStroke;
 
 import java.io.IOException;
 import static java.lang.Math.abs;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -97,13 +87,12 @@ public class ConsoleRenderer extends Renderer{
             topLeft.add(new vec2(-1, -1));
         vec2 topRight = new vec2(position);
             topRight.x += size.x;
-            topRight.add(new vec2(1, -1));
+            topRight.add(new vec2(0, -1));
         vec2  bottomLeft = new vec2(position);
             bottomLeft.y += size.y;
             bottomLeft.add(new vec2(-1, 0));
         vec2 bottomRight = new vec2(position);
             bottomRight.add(size);
-            bottomRight.add(new vec2(1, 0));
         
         drawLine(topLeft, topRight);
         drawLine(bottomLeft, bottomRight);

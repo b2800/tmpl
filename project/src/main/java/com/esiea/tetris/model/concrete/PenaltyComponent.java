@@ -15,9 +15,10 @@ public class PenaltyComponent extends Component
 	private int compteurLine;
 	private int idJoueur;
 	
-	public PenaltyComponent () {
+	public PenaltyComponent (int idJoueur) {
 		MessageBus.getInstance().subscribe(this);
 		compteurLine=0;
+                this.idJoueur = idJoueur;
 	}
 	
 	@Handler
@@ -35,6 +36,7 @@ public class PenaltyComponent extends Component
 		if (compteurLine==10) {
 			PenaltyNotification msgPenalty = new PenaltyNotification(idJoueur,idTypePenalty);
 			MessageBus.getInstance().post(msgPenalty);
+                        compteurLine = 0;
 		}
 	}
 
