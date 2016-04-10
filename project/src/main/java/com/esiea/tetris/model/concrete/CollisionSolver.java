@@ -21,8 +21,11 @@ public class CollisionSolver {
 		for (vec2 pt : t.getPointList()) {
 
 			// On vérifie si la case n'est pas en dehors de la grille)
-			if(pt.x<0 || pt.x>=wGrid || pt.y<0 || pt.y>=hGrid)
+			if(pt.x<0 || pt.x>=wGrid || pt.y>=hGrid)
 				return true;
+                        
+                        if(pt.y < 0)    // On skipe la vérification avec le haut de la grille
+                            continue;
 						   
 			// On vérifie le contenu de la case de la grille
 			if(grid[pt.y][pt.x]!=0)

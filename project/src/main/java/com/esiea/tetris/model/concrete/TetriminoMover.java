@@ -27,7 +27,7 @@ public class TetriminoMover {
 	
 	public static void moveUp(Tetrimino T)
 	{
-		T.getPosition().add(0,1);
+		T.getPosition().add(0,-1);
 	}
 	
 	// Dans le cas où l'action est de descendre le Tetrimino tout en bas on envoie la distance (dist) maximale avant collision
