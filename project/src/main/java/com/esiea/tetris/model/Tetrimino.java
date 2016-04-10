@@ -24,6 +24,15 @@ public class Tetrimino {
     
     private int indiceCouleur; // indice permettant de différencier la couleur d'un tétrimino
     
+    public Tetrimino(){
+        
+    }
+    
+    public Tetrimino(Tetrimino t){
+        setRepresentation(t.getFullRepresentation());
+        setPosition(t.getPosition());
+    }
+    
     public final void setPosition(vec2 _position){
         this.position = _position;
     }
@@ -38,6 +47,10 @@ public class Tetrimino {
     
     public final void setRepresentation(ArrayList<int[][]> layout2){
         this.layout = layout2;
+    }
+    
+    public final ArrayList<int[][]> getFullRepresentation(){
+        return layout;
     }
     
     public final void incrementRotation(){
