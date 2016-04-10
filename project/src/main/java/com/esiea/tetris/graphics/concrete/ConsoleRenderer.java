@@ -7,7 +7,6 @@ import com.esiea.tetris.graphics.TPanel;
 import com.esiea.tetris.graphics.exceptions.OutOfBoundsDrawException;
 import com.esiea.tetris.model.Layout;
 import com.esiea.tetris.utils.vec2;
-import com.esiea.tetris.model.TButton;
 import com.googlecode.lanterna.TerminalSize;
 
 import com.googlecode.lanterna.TextColor;
