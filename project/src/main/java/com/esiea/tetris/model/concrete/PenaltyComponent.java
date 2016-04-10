@@ -36,6 +36,7 @@ public class PenaltyComponent extends Component
 		if (compteurLine==10) {
 			PenaltyNotification msgPenalty = new PenaltyNotification(idJoueur,idTypePenalty);
 			MessageBus.getInstance().post(msgPenalty);
+                        compteurLine = 0;
 		}
 	}
 
