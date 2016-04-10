@@ -25,9 +25,14 @@ public class NextTetriminoIndicatorComponent extends Component
         MessageBus.getInstance().subscribe(this);
     }
     
+    public NextTetriminoIndicatorComponent(int index) {
+        this();
+        setIndex(index);
+    }
+    
     @Handler
     public void handle(NextTetriminos msg){
-        nextTetrimino = msg.getSequence()[index];
+        nextTetrimino = new Tetrimino(msg.getSequence()[index]);
         nextTetrimino.setPosition(new vec2(2,2));
     }
 

@@ -40,6 +40,7 @@ public class PlayableAreaComponent extends Component
         tetriminoSequence = new ArrayDeque<>();
         updateTetriminoSequence();
         currentTetrimino = tetriminoSequence.pop();
+        updateTetriminoSequence();
         gameOver = false;
         this.idJoueur = idJoueur;
         MessageBus.getInstance().subscribe(this);
