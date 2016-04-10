@@ -23,7 +23,8 @@ public class CommandInterpreter {
                 + "start : Start a solo player game\n"
                 + "join [ip] : Join a multiplayer game. replace [ip] with the host ip\n"
                 + "host [port] : host a multiplayer game, default port is 4000\n"
-                + "highscores : Display the 5 best highscores \n"
+                + "scores : Display the 5 best highscores \n"
+                + "quit : Quit the game" 
                 + "--\n";
         return output;
     }
