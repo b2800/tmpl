@@ -42,12 +42,14 @@ public class Tetrimino {
     
     public final void incrementRotation(){
     	// On incrémente le nombre représentant l'état de rotation, modulo le nombre d'orientation possible
-        this.orientation=(this.orientation+1)%this.layout.size();
+        this.orientation=(this.orientation+1)%(this.layout.size());
     }
     
     public final void decrementRotation(){
     	// On décrémente le nombre représentant l'état de rotation, modulo le nombre d'orientation possible
-    	this.orientation=(this.orientation-1)%this.layout.size();
+    	this.orientation--; 
+        if(this.orientation < 0)
+            this.orientation = this.layout.size()-1;
     }
     
     public final int[][] getLayoutForActualOrientation()

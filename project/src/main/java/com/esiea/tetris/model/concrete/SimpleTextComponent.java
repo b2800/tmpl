@@ -13,6 +13,7 @@ public class SimpleTextComponent extends Component
 
     public SimpleTextComponent() {
         text = new ArrayList<>();
+        setSize(new vec2(0,0));
     }
     
     public void addLine(String input){
@@ -20,8 +21,18 @@ public class SimpleTextComponent extends Component
         for(String l : lines){
             text.add(l);
         }
+        updateSize();
     }
 
+    private void updateSize(){
+        int largest = 0;
+        for(String line : text){
+            if(line.length() > largest)
+                largest = line.length();
+        }
+        setSize(new vec2(largest, text.size()));
+    }
+    
     @Override
     public TPanel getDrawableContainer() {
         TPanel panel = new TPanel();

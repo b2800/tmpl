@@ -55,6 +55,12 @@ public class PlayableAreaComponent extends Component
                 case 'q':
                     quitToMainMenu();
                     break;
+                case 'v':
+                    rotateTetrimino(1);
+                    break;
+                case 'b':
+                    rotateTetrimino(-1);
+                    break;
             }
         }
     }
@@ -80,6 +86,18 @@ public class PlayableAreaComponent extends Component
                         addTetriminoToGrid();
                 }
                 break;
+        }
+    }
+    
+    public void rotateTetrimino(int d){
+        if(d>0){
+            TetriminoMover.turnLeft(currentTetrimino);
+            if(CollisionSolver.isInCollision(grid, currentTetrimino))
+            TetriminoMover.turnRight(currentTetrimino);
+        } else {
+            TetriminoMover.turnRight(currentTetrimino);
+            if(CollisionSolver.isInCollision(grid, currentTetrimino))
+                TetriminoMover.turnLeft(currentTetrimino);
         }
     }
     
