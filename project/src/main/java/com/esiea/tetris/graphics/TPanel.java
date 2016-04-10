@@ -11,6 +11,8 @@ public class TPanel {
     
     public TPanel(){
         drawables = new ArrayList<>();
+        size = new vec2(0,0);
+        position = new vec2(0,0);
     }
     
     public void add(Drawable d){

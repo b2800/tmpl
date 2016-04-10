@@ -11,6 +11,7 @@ import com.esiea.tetris.communication.MessageBus;
 import com.esiea.tetris.communication.concrete.KeyboardInput.Direction;
 import com.esiea.tetris.communication.concrete.KeyboardInput.Type;
 import com.esiea.tetris.communication.concrete.LineNotification;
+import com.esiea.tetris.communication.concrete.NextTetriminos;
 import com.esiea.tetris.core.Updatable;
 import com.esiea.tetris.model.builder.LayoutBuilder;
 import com.esiea.tetris.model.builder.TetriminoBuilder;
@@ -252,6 +253,9 @@ public class PlayableAreaComponent extends Component
             tetrimino.setPosition(new vec2((int)(size.x/2), 0));
             tetriminoSequence.addLast(tetrimino);
         }
+        NextTetriminos msg = new NextTetriminos();
+        msg.setSequence(tetriminoSequence.toArray(new Tetrimino[tetriminoSequence.size()]));
+        MessageBus.getInstance().post(msg).now();
     }
     
     public Tetrimino[] getTetriminoSequence(){

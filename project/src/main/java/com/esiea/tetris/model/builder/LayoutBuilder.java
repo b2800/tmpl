@@ -1,6 +1,7 @@
 package com.esiea.tetris.model.builder;
 
 import com.esiea.tetris.model.Layout;
+import com.esiea.tetris.model.concrete.NextTetriminoIndicatorComponent;
 import com.esiea.tetris.model.concrete.PenaltyComponent;
 import com.esiea.tetris.model.concrete.PlayableAreaComponent;
 import com.esiea.tetris.model.concrete.ScoreComponent;
@@ -33,11 +34,13 @@ public class LayoutBuilder {
         PenaltyComponent pc = new PenaltyComponent(0);
         ScoreComponent score = new ScoreComponent(0, 0);
         SimpleTextComponent text = new SimpleTextComponent();
+        NextTetriminoIndicatorComponent next = new NextTetriminoIndicatorComponent();
         
         playZone.setPosition(new vec2(2,2));
         score.setPosition(new vec2(14, 2));
         pc.setPosition(new vec2(14, 5));
-        text.setPosition(new vec2(14, 9));
+        next.setPosition(new vec2(14, 9));
+        text.setPosition(new vec2(14, 15));
         
         score.setSize(new vec2(6, 1));
         pc.setSize(new vec2(14, 2));
@@ -51,6 +54,7 @@ public class LayoutBuilder {
         gameLayout.addComponent(playZone);
         gameLayout.addComponent(score);
         gameLayout.addComponent(pc);
+        gameLayout.addComponent(next);
         gameLayout.addComponent(text);
         return gameLayout;
     }
