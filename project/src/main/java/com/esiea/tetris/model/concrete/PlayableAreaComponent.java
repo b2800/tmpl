@@ -255,7 +255,7 @@ public class PlayableAreaComponent extends Component
         }
         NextTetriminos msg = new NextTetriminos();
         msg.setSequence(tetriminoSequence.toArray(new Tetrimino[tetriminoSequence.size()]));
-        MessageBus.getInstance().post(msg).now();
+        MessageBus.getInstance().post(msg).asynchronously();
     }
     
     public Tetrimino[] getTetriminoSequence(){
