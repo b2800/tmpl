@@ -10,19 +10,22 @@ import com.esiea.tetris.utils.vec2;
 import com.esiea.tetris.communication.MessageBus;
 import com.esiea.tetris.communication.concrete.KeyboardInput.Direction;
 import com.esiea.tetris.communication.concrete.KeyboardInput.Type;
+import com.esiea.tetris.core.Updatable;
+import com.esiea.tetris.model.builder.LayoutBuilder;
 import com.esiea.tetris.model.builder.TetriminoBuilder;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import net.engio.mbassy.listener.Handler;
 
 public class PlayableAreaComponent extends Component
-                                   implements Drawable {
+                                   implements Drawable, Updatable {
     
     private Tetrimino currentTetrimino;
     private int[][] grid;
     private long timer;
     private long refreshInterval;
     private ArrayDeque<Tetrimino> tetriminoSequence;
+    private boolean gameOver;
 
     public PlayableAreaComponent(vec2 size) {
         this.setSize(size);
@@ -33,6 +36,7 @@ public class PlayableAreaComponent extends Component
         tetriminoSequence = new ArrayDeque<>();
         updateTetriminoSequence();
         currentTetrimino = tetriminoSequence.pop();
+        gameOver = false;
         MessageBus.getInstance().subscribe(this);
     }
     
@@ -40,12 +44,23 @@ public class PlayableAreaComponent extends Component
     public void handle(KeyboardInput input){
         if(input.getKeyType() == Type.ARROW_KEY){
             moveTetrimino(input.getDirection());
-        } else if (input.getKeyType() == Type.CHARACTER && input.getCharacter() == ' '){
-            dropTetrimino();
+        } else if (input.getKeyType() == Type.CHARACTER){
+            switch(input.getCharacter()){
+                case ' ':
+                    dropTetrimino();
+                    break;
+                case 'r':
+                    playAgain();
+                    break;
+                case 'q':
+                    quitToMainMenu();
+                    break;
+            }
         }
     }
     
     private void moveTetrimino(Direction d){
+        if(gameOver){ return; }
         switch(d){
             case LEFT:
             	TetriminoMover.moveLeft(currentTetrimino);
@@ -69,30 +84,38 @@ public class PlayableAreaComponent extends Component
     }
     
     private void dropTetrimino(){
-    	TetriminoMover.moveBottom(currentTetrimino, size.y);
+        if(gameOver){ return; }
+        while(!CollisionSolver.isInCollision(grid, currentTetrimino)){
+            TetriminoMover.moveDown(currentTetrimino);
+        }
+        TetriminoMover.moveUp(currentTetrimino);
+        addTetriminoToGrid();
     }
     
     // Ajoute le Tetrimino à la grille (devient alors "statique", non contrôlable par l'utilsateur)
     private void addTetriminoToGrid()
     {
-    	// Pour chaque point constituant le Tetrimino
         for(vec2 pt : currentTetrimino.getPointList()) {
-            System.out.println(pt.toString());
-            grid[pt.y][pt.x]=currentTetrimino.getIndiceCouleur();
+            if(pt.y < 0){   // Si on essaie de placer un tetrimino en dehors de l'écran
+                            // c'est qu'on est arrivé tout en haut de la grille
+                endGame();
+                return;
+            }
+            grid[pt.y][pt.x]=1;
         }
         currentTetrimino = tetriminoSequence.pop();
         updateTetriminoSequence();
     }
     
-    @Override
     public void update() {
         autoMoveDown();
     }
     
     // à chaque update, le tetrimino en cours descend d'une case sous l'effet de la gravité
     private void autoMoveDown(){
+        if(gameOver){ return; }
         if(System.currentTimeMillis() - timer < refreshInterval){ return; }
-        
+
         TetriminoMover.moveDown(currentTetrimino);
     	
     	// Si collision (<=> tétrimino arrive au fond)
@@ -155,6 +178,7 @@ public class PlayableAreaComponent extends Component
     }
     
     private void updateTetriminoSequence(){
+        if(gameOver){ return; }
         int sequenceLength = 5;
         while(tetriminoSequence.size() < sequenceLength){ 
             Tetrimino tetrimino = TetriminoBuilder.getRandomTetrimino();
@@ -165,5 +189,22 @@ public class PlayableAreaComponent extends Component
     
     public Tetrimino[] getTetriminoSequence(){
         return tetriminoSequence.toArray(new Tetrimino[tetriminoSequence.size()]);
+    }
+    
+    public void endGame(){
+        gameOver = true;
+    }
+    
+    public void playAgain(){
+        gameOver = false;
+        clearGrid();
+        updateTetriminoSequence();
+        currentTetrimino = tetriminoSequence.pop();
+    }
+    
+    public void quitToMainMenu(){
+        endGame();
+        parent.setNextLayout(LayoutBuilder.buildMainMenuLayout());
+        parent.setShouldClose(true);
     }
 }

@@ -42,7 +42,7 @@ public class ConsoleRenderer extends Renderer{
     }
     
     @Override
-    public void update(Layout _layout){
+    public void process(Layout _layout){
         inputAdapter.transferInput(terminal);
         if(shouldDraw()){
             draw(_layout);

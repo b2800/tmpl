@@ -15,7 +15,7 @@ import java.util.ArrayList;
    Concrete components defines the logic to run on each updates.
  */
 
-public abstract class Component implements Updatable{
+public abstract class Component{
     protected vec2 position;
     protected vec2 size;
     protected Layout parent;
@@ -23,9 +23,6 @@ public abstract class Component implements Updatable{
     public Component(){
         
     }
-    
-    @Override
-    public abstract void update();
     
     public vec2 getPosition() {
         return position;

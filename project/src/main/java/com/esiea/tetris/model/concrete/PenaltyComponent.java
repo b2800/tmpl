@@ -39,11 +39,6 @@ public class PenaltyComponent extends Component
 	}
 
     @Override
-    public void update() {
-
-    }
-
-    @Override
     public TPanel getDrawableContainer() {
         TPanel panel = new TPanel();
         panel.add(this);

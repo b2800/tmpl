@@ -9,8 +9,6 @@ import com.esiea.tetris.graphics.TPanel;
 import com.esiea.tetris.model.Component;
 import com.esiea.tetris.utils.vec2;
 
-import java.util.ArrayList;
-
 public class ScoreComponent extends Component implements Drawable{
 	
 	private int score;
@@ -60,11 +58,6 @@ public class ScoreComponent extends Component implements Drawable{
 	public void setIdJoueur(int numJoueur) {
 		this.idJoueur = numJoueur;
 	}
-
-    @Override
-    public void update() {
-
-    }
 
     @Override
     public TPanel getDrawableContainer() {

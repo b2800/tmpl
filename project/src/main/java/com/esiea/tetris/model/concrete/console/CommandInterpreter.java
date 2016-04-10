@@ -3,6 +3,7 @@ package com.esiea.tetris.model.concrete.console;
 import com.esiea.tetris.communication.MessageBus;
 import com.esiea.tetris.communication.concrete.NavigationIntent;
 import com.esiea.tetris.model.builder.LayoutBuilder;
+import com.esiea.tetris.utils.StringUtil;
 import java.util.ArrayList;
 
 public class CommandInterpreter {
@@ -12,7 +13,7 @@ public class CommandInterpreter {
     
     public String[] execute(String command){
         String output = parseAndRun(command.toLowerCase());
-        return linesToArray(output);
+        return StringUtil.linesToArray(output);
     }
     
     private String displayHelp(){
@@ -53,22 +54,5 @@ public class CommandInterpreter {
         }
         return cmdTokens[0] + " : Command not found, type 'help' to display"
                             + " available commands \n";
-    }
-    
-    // Convertit les lignes qui contienent des '\n' en tableau de plusieurs
-    // lignes. 
-    private String[] linesToArray(String text){
-        ArrayList<String> lines = new ArrayList<>();
-        
-        String current = "";
-        for(int i = 0; i < text.length(); i++){
-            if(text.charAt(i) == '\n'){
-                lines.add(current);
-                current = "";
-            } else {
-                current += text.charAt(i);
-            }
-        }
-        return lines.toArray(new String[lines.size()]);
     }
 }
