@@ -273,6 +273,8 @@ public class PlayableAreaComponent extends Component
     
     public void quitToMainMenu(){
         endGame();
+        Message msg = new Message().withType("gameover");
+        MessageBus.getInstance().post(msg).now();
         parent.setNextLayout(LayoutBuilder.buildMainMenuLayout());
         parent.setShouldClose(true);
     }
