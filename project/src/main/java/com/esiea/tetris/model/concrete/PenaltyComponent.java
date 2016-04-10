@@ -15,9 +15,10 @@ public class PenaltyComponent extends Component
 	private int compteurLine;
 	private int idJoueur;
 	
-	public PenaltyComponent () {
+	public PenaltyComponent (int idJoueur) {
 		MessageBus.getInstance().subscribe(this);
 		compteurLine=0;
+                this.idJoueur = idJoueur;
 	}
 	
 	@Handler

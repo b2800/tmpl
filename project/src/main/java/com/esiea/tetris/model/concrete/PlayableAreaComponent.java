@@ -10,6 +10,7 @@ import com.esiea.tetris.utils.vec2;
 import com.esiea.tetris.communication.MessageBus;
 import com.esiea.tetris.communication.concrete.KeyboardInput.Direction;
 import com.esiea.tetris.communication.concrete.KeyboardInput.Type;
+import com.esiea.tetris.communication.concrete.LineNotification;
 import com.esiea.tetris.core.Updatable;
 import com.esiea.tetris.model.builder.LayoutBuilder;
 import com.esiea.tetris.model.builder.TetriminoBuilder;
@@ -27,8 +28,9 @@ public class PlayableAreaComponent extends Component
     private long refreshInterval;
     private ArrayDeque<Tetrimino> tetriminoSequence;
     private boolean gameOver;
+    private int idJoueur;
 
-    public PlayableAreaComponent(vec2 size) {
+    public PlayableAreaComponent(vec2 size, int idJoueur) {
         this.setSize(size);
         grid = new int[size.y][size.x];
         clearGrid();
@@ -38,6 +40,7 @@ public class PlayableAreaComponent extends Component
         updateTetriminoSequence();
         currentTetrimino = tetriminoSequence.pop();
         gameOver = false;
+        this.idJoueur = idJoueur;
         MessageBus.getInstance().subscribe(this);
     }
     
@@ -127,6 +130,7 @@ public class PlayableAreaComponent extends Component
         removeFullLinesIfAny();
     }
     
+    @Override
     public void update() {
         autoMoveDown();
     }
@@ -149,9 +153,12 @@ public class PlayableAreaComponent extends Component
     
     private void removeFullLinesIfAny(){
         ArrayList<Integer> lines = getAllFullLines();
-        for(int index : lines){
-            System.out.println("removing line " + index);
-            shiftDownAt(index);
+        if(!lines.isEmpty()){
+            for(int index : lines){
+                shiftDownAt(index);
+            }
+            LineNotification msg = new LineNotification(this.idJoueur, lines.size());
+            MessageBus.getInstance().post(msg).asynchronously();
         }
     }
     
@@ -183,7 +190,6 @@ public class PlayableAreaComponent extends Component
                 grid[index][x] = 0;
             } else {
                 grid[index][x] = grid[index - 1][x];
-                System.out.print(grid[index][x]);
             }
         }
     }

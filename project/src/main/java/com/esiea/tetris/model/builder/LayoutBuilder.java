@@ -28,8 +28,8 @@ public class LayoutBuilder {
     
     public static Layout buildSoloPlayerLayout(){
         Layout gameLayout = new Layout();
-        PlayableAreaComponent playZone = new PlayableAreaComponent(new vec2(10, 20));
-        PenaltyComponent pc = new PenaltyComponent();
+        PlayableAreaComponent playZone = new PlayableAreaComponent(new vec2(10, 20), 0);
+        PenaltyComponent pc = new PenaltyComponent(0);
         ScoreComponent score = new ScoreComponent(0, 0);
         SimpleTextComponent text = new SimpleTextComponent();
         
@@ -43,6 +43,7 @@ public class LayoutBuilder {
         
         text.addLine("Arrow keys to move");
         text.addLine("Press v/b to rotate");
+        text.addLine("Press space to drop");
         text.addLine("Press q to quit");
         text.addLine("Press r to play again");
         
