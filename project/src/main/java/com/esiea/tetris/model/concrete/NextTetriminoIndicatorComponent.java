@@ -34,7 +34,6 @@ public class NextTetriminoIndicatorComponent extends Component
 
     @Override
     public TPanel getDrawableContainer() {
-        panel.setPosition(position);
         return panel;
     }
 
@@ -61,6 +60,12 @@ public class NextTetriminoIndicatorComponent extends Component
     @Override
     public vec2 getDrawableRelativePosition() {
         return new vec2(0,0);
+    }
+    
+    @Override
+    public void setPosition(vec2 pos){
+        super.setPosition(pos);
+        panel.setPosition(pos);
     }
     
     public void setIndex(int i){
