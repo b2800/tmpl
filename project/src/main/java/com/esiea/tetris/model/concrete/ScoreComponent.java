@@ -1,5 +1,6 @@
 package com.esiea.tetris.model.concrete;
 
+import com.esiea.tetris.communication.Message;
 import net.engio.mbassy.listener.Handler;
 
 import com.esiea.tetris.communication.MessageBus;
@@ -7,6 +8,7 @@ import com.esiea.tetris.communication.concrete.LineNotification;
 import com.esiea.tetris.graphics.Drawable;
 import com.esiea.tetris.graphics.TPanel;
 import com.esiea.tetris.model.Component;
+import com.esiea.tetris.utils.ScoreUtil;
 import com.esiea.tetris.utils.vec2;
 
 public class ScoreComponent extends Component implements Drawable{
@@ -35,15 +37,23 @@ public class ScoreComponent extends Component implements Drawable{
 		// Si la notification concerne le joueur actuel, on incrémente son score
 		if(idJoueur==this.idJoueur)
 			incrementScore(nbLignes);
-		
 	}
+        
+        @Handler
+        public void handle(Message msg){
+            if("gameover".equals(msg.getType())){
+                ScoreUtil.writeHighScore(score);
+            } else if ("newgame".equals(msg.getType())){
+                score = 0;
+            }
+        }
 	
 	
 	public void incrementScore (int nbLignes) {
 		this.score+=this.coef*nbLignes*nbLignes;
 	}
 	
-    public int getScore() {
+        public int getScore() {
 		return score;
 	}
 
