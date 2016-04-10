@@ -47,8 +47,7 @@ public class ScoreComponent extends Component implements Drawable{
                 score = 0;
             }
         }
-	
-	
+
 	public void incrementScore (int nbLignes) {
 		this.score+=this.coef*nbLignes*nbLignes;
 	}

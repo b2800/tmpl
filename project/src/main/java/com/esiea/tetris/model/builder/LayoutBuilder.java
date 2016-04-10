@@ -69,10 +69,7 @@ public class LayoutBuilder {
         Layout highscores = new Layout();
         
         SimpleTextComponent text = new SimpleTextComponent();
-        text.addLine("Highest scores ever made : ");
-        for(int score : ScoreUtil.getHighScores()){
-            text.addLine(Integer.toString(score));
-        }
+
         text.setPosition(new vec2(10, 10));
         return highscores;
     }

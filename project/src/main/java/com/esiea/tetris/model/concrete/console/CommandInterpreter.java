@@ -3,6 +3,7 @@ package com.esiea.tetris.model.concrete.console;
 import com.esiea.tetris.communication.MessageBus;
 import com.esiea.tetris.communication.concrete.NavigationIntent;
 import com.esiea.tetris.model.builder.LayoutBuilder;
+import com.esiea.tetris.utils.ScoreUtil;
 import com.esiea.tetris.utils.StringUtil;
 import java.util.ArrayList;
 
@@ -43,6 +44,22 @@ public class CommandInterpreter {
         return output;
     }
     
+    private String displayHighscores(){
+        String output = "Meilleurs scores : \n";
+        for(int score : ScoreUtil.getHighScores()){
+            output += Integer.toString(score) + "\n";
+        }
+        return output;
+    }
+    
+    private String quitGame(){
+        String output = "Quitting game\n";
+        NavigationIntent msg = new NavigationIntent();
+        msg.nextLayout = null;
+        MessageBus.getInstance().post(msg).asynchronously();
+        return output;
+    }
+    
     private String parseAndRun(String command){
         String[] cmdTokens = command.split("\\s+");
         if(cmdTokens[0].equals("help")){
@@ -51,6 +68,10 @@ public class CommandInterpreter {
             return startGame();
         } if(cmdTokens[0].equals("join")) {
             return joinGame(cmdTokens[1]);
+        } if(cmdTokens[0].equals("scores")){
+            return displayHighscores();
+        } if(cmdTokens[0].equals("quit")){
+            return quitGame();
         }
         return cmdTokens[0] + " : Command not found, type 'help' to display"
                             + " available commands \n";
