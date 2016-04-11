@@ -125,7 +125,7 @@ public class PlayableAreaComponent extends Component
                 endGame();
                 return;
             }
-            grid[pt.y][pt.x]=1;
+            grid[pt.y][pt.x]=currentTetrimino.getIndiceCouleur();
         }
         currentTetrimino = tetriminoSequence.pop();
         updateTetriminoSequence();

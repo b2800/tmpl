@@ -4,6 +4,7 @@ package com.esiea.tetris.model;
 import java.util.ArrayList;
 
 import com.esiea.tetris.utils.vec2;
+import java.util.Random;
 
 public class Tetrimino {
     private vec2 position;
@@ -25,7 +26,8 @@ public class Tetrimino {
     private int indiceCouleur; // indice permettant de différencier la couleur d'un tétrimino
     
     public Tetrimino(){
-        
+        Random rn = new Random();
+        indiceCouleur = rn.nextInt(6)+1;
     }
     
     public Tetrimino(Tetrimino t){
