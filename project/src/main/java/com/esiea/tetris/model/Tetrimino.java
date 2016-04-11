@@ -33,6 +33,7 @@ public class Tetrimino {
     public Tetrimino(Tetrimino t){
         setRepresentation(t.getFullRepresentation());
         setPosition(t.getPosition());
+        indiceCouleur = t.getIndiceCouleur();
     }
     
     public final void setPosition(vec2 _position){

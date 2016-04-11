@@ -71,19 +71,24 @@ public class ConsoleRenderer extends Renderer{
             pos.y += i;
             pos.y += offset.y;
             pos.x += offset.x;
-            insertLineAt(text[i], colors, pos);
+            if(colors != null)
+                insertLineAt(text[i], colors[i], pos);
+            else
+                insertLineAt(text[i], null, pos);
         }
     }
     
-    private void insertLineAt(String text, int[][] colors,  vec2 pos){
+    private void insertLineAt(String text, int[] colors_id,  vec2 pos){
         for(int i = 0; i < text.length(); i++){
             if(pos.x + i >= grid[0].length || pos.y >= grid.length){
                 continue;
             }
-            if(colors != null)
-                grid[pos.y][pos.x + i] = new TCharacter(text.charAt(i), colors[i]);
-            else
+            if(colors_id != null){
+                int[] color = ColorUtil.ColorIndexToRGB(colors_id[i]);
+                grid[pos.y][pos.x + i] = new TCharacter(text.charAt(i), color);
+            } else {
                 grid[pos.y][pos.x + i] = new TCharacter(text.charAt(i));
+            }
         }
     }
     

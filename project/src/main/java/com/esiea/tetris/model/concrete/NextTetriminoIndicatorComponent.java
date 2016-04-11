@@ -6,6 +6,7 @@ import com.esiea.tetris.graphics.Drawable;
 import com.esiea.tetris.graphics.TPanel;
 import com.esiea.tetris.model.Component;
 import com.esiea.tetris.model.Tetrimino;
+import com.esiea.tetris.utils.GridUtil;
 import com.esiea.tetris.utils.vec2;
 import net.engio.mbassy.listener.Handler;
 
@@ -78,6 +79,13 @@ public class NextTetriminoIndicatorComponent extends Component
 
     @Override
     public int[][] getColorMap() {
-        return null;
+        if(nextTetrimino == null){ return null; }
+        
+        int[][] map = new int[4][4];
+        GridUtil.clearGrid(map, 1);
+        for(vec2 pt : nextTetrimino.getPointList()){
+            map[pt.y][pt.x] = nextTetrimino.getIndiceCouleur();
+        }
+        return map;
     }
 }

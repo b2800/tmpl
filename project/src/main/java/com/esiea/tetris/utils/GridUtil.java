@@ -24,6 +24,14 @@ public class GridUtil {
         }
     } 
     
+    public static void clearGrid(int[][] grid, int c){
+        for(int i = 0; i < grid.length; i++){
+            for(int j = 0; j < grid.length; j++){
+                grid[i][j] = c;
+            }
+        }
+    } 
+    
     public static int[][] logicalAnd(int[][] grid, int val){
         for(int y = 0; y < grid.length; y++){
             for(int x = 0; x < grid[0].length; x++){
