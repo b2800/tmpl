@@ -4,6 +4,7 @@ import com.esiea.tetris.graphics.exceptions.OutOfBoundsDrawException;
 import com.esiea.tetris.graphics.Renderer;
 import com.esiea.tetris.utils.vec2;
 import com.esiea.tetris.communication.Message;
+import com.esiea.tetris.core.Updatable;
 import com.esiea.tetris.graphics.Drawable;
 import com.esiea.tetris.graphics.TPanel;
 
@@ -41,9 +42,11 @@ public class Layout{
     }
     
     public void update(){
-        this.components.stream().forEach((c) -> {
-            c.update();
-        });
+        for(Component c : components){
+            if(c instanceof Updatable){
+                ((Updatable)c).update();
+            }
+        }
     }
     
     public boolean shouldClose(){

@@ -22,7 +22,7 @@ public class TestPenaltyComponent {
 	@Before
 	public void init()
 	{
-		pc = new PenaltyComponent();
+		pc = new PenaltyComponent(1);
 		listener = mock(Listener.class);
 		//when(listener.handle(new PenaltyNotification(1,1)));
 	}

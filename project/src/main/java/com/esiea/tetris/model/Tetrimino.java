@@ -4,8 +4,9 @@ package com.esiea.tetris.model;
 import java.util.ArrayList;
 
 import com.esiea.tetris.utils.vec2;
+import java.util.Random;
 
-public abstract class Tetrimino {
+public class Tetrimino {
     private vec2 position;
 
     private ArrayList <int[][]> layout; // tableau représentant la configuration du Tetrimino selon son orientation
@@ -24,6 +25,16 @@ public abstract class Tetrimino {
     
     private int indiceCouleur; // indice permettant de différencier la couleur d'un tétrimino
     
+    public Tetrimino(){
+        Random rn = new Random();
+        indiceCouleur = rn.nextInt(6)+1;
+    }
+    
+    public Tetrimino(Tetrimino t){
+        setRepresentation(t.getFullRepresentation());
+        setPosition(t.getPosition());
+    }
+    
     public final void setPosition(vec2 _position){
         this.position = _position;
     }
@@ -32,8 +43,7 @@ public abstract class Tetrimino {
         return this.position;
     }
     
-    public final int getIndiceCouleur()
-    {
+    public final int getIndiceCouleur() {
     	return indiceCouleur;
     }
     
@@ -41,14 +51,20 @@ public abstract class Tetrimino {
         this.layout = layout2;
     }
     
+    public final ArrayList<int[][]> getFullRepresentation(){
+        return layout;
+    }
+    
     public final void incrementRotation(){
     	// On incrémente le nombre représentant l'état de rotation, modulo le nombre d'orientation possible
-        this.orientation=(this.orientation+1)%this.layout.size();
+        this.orientation=(this.orientation+1)%(this.layout.size());
     }
     
     public final void decrementRotation(){
     	// On décrémente le nombre représentant l'état de rotation, modulo le nombre d'orientation possible
-    	this.orientation=(this.orientation-1)%this.layout.size();
+    	this.orientation--; 
+        if(this.orientation < 0)
+            this.orientation = this.layout.size()-1;
     }
     
     public final int[][] getLayoutForActualOrientation()
@@ -65,235 +81,29 @@ public abstract class Tetrimino {
     	// On récupère le tableau du layout décrivant l'état actuel du Tetrimino
     	// ex :
     	//110
-   		//010
-  		//011
-   		int [][] lay=getLayoutForActualOrientation();
-   		
-   		// On récupère les dimensions du tableau dans des variables pour simplifier l'écriture des calculs qui vont suivre
-   		int wLay=lay.length;
-   		int hLay=lay[0].length;
-   		
-   		int xChecked,yChecked; // Variables intermédiaires pour simplifier l'écriture des calculs qui vont suivre
-   		
-   		// On parcourt chaque case du layout du tetrimino
-   		for(int i = 0; i <wLay ; i++){
-   			   for(int j = 0; j <hLay ; j++){
-   				   if(lay[i][j]==1) // Si la case correspond au "corps" du tétrimino, on ajoute un point à la liste
-    			   {
-   					   // On récupère les coordonnées de la case de la grille correspondante
-    					xChecked=i+position.x-Math.round(wLay/2);
-    					yChecked=j+position.y-Math.round(hLay/2);
-    					
-    					list.add(new vec2(xChecked,yChecked));
-    				}	   
-    			}
-   			}
-    			
-   		return list;
-    }
-    
-    public class I extends Tetrimino{
-        
-        public I(vec2 _position) {
-        	
+        //010
+        //011
+        int [][] lay=getLayoutForActualOrientation();
 
-            layout=new ArrayList <int[][]>();
-            
-            layout.add(new int[][]{
-                {1, 1, 1}
-            });
-            
-            layout.add(new int[][]{
-                    {1},
-                    {1},
-                    {1}
-                });
-            
-            // Les deux orientation suivante ne sont pas nécessaires car elles se répètent
-            
-            /*layout.add(new int[][]{
-                    {1, 1, 1}
-                });
-            
-            layout.add(new int[][]{
-                    {1},
-                    {1},
-                    {1}
-                });*/
-            
-            this.setPosition(_position);
-            this.setRepresentation(layout);
+        // On récupère les dimensions du tableau dans des variables pour simplifier l'écriture des calculs qui vont suivre
+        int wLay=lay.length;
+        int hLay=lay[0].length;
+
+        int xChecked,yChecked; // Variables intermédiaires pour simplifier l'écriture des calculs qui vont suivre
+
+        // On parcourt chaque case du layout du tetrimino
+        for(int i = 0; i <wLay ; i++){
+            for(int j = 0; j <hLay ; j++){
+                if(lay[i][j]==1) // Si la case correspond au "corps" du tétrimino, on ajoute un point à la liste
+                {
+                    // On récupère les coordonnées de la case de la grille correspondante
+                    xChecked=i+position.x-Math.round(wLay/2);
+                    yChecked=j+position.y-Math.round(hLay/2);
+
+                    list.add(new vec2(xChecked,yChecked));
+                }	   
+            }
         }
-    }
-    
-    public class J extends Tetrimino{
-        
-        public J(vec2 _position) {
-        	
-        	layout=new ArrayList <int[][]>();
-            
-            layout.add(new int[][]{
-                    {1, 1, 1},
-                    {0, 0, 1}
-                });
-            
-            layout.add(new int[][]{
-                    {0,1},
-                    {0,1},
-                    {1,1}
-                });
-            
-            layout.add(new int[][]{
-                    {1, 0, 0},
-                    {1, 1, 1}
-                });
-            
-            layout.add(new int[][]{
-                    {1,1},
-                    {1,0},
-                    {1,0}
-                });
-            
-            this.setPosition(_position);
-            this.setRepresentation(layout);
-        }
-    }
-        
-    public class L extends Tetrimino{
-        
-        public L(vec2 _position) {
-        	
-        	layout=new ArrayList <int[][]>();
-            
-            layout.add(new int[][]{
-                    {1, 1, 1},
-                    {1, 0, 0}
-                });
-            
-            layout.add(new int[][]{
-                    {1,1},
-                    {0,1},
-                    {0,1}
-                });
-            
-            layout.add(new int[][]{
-                    {0, 0, 1},
-                    {1, 1, 1}
-                });
-            
-            layout.add(new int[][]{
-                    {1,0},
-                    {1,0},
-                    {1,1}
-                });
-            
-            this.setPosition(_position);
-            this.setRepresentation(layout);
-        }
-    }
-            
-    public class O extends Tetrimino{
-        
-        public O(vec2 _position) {
-        	
-        	layout=new ArrayList <int[][]>();
-        	
-        	layout.add(new int[][]{
-                {1, 1},
-                {1, 1}
-            });
-            this.setPosition(_position);
-            this.setRepresentation(layout);
-        }
-    }
-                
-    public class S extends Tetrimino{
-        
-        public S(vec2 _position) {
-        	
-layout=new ArrayList <int[][]>();
-            
-            layout.add(new int[][]{
-                    {0, 1, 1},
-                    {1, 1, 0}
-                });
-            
-            layout.add(new int[][]{
-                    {1,0},
-                    {1,1},
-                    {0,1}
-                });
-            
-            /*
-            layout.add(new int[][]{
-                    {0, 1, 1},
-                    {1, 1, 0}
-                });
-            
-            layout.add(new int[][]{
-                    {1,0},
-                    {1,1},
-                    {0,1}
-                });
-            */
-        	
-            this.setPosition(_position);
-            this.setRepresentation(layout);
-        }
-    }
-    
-    public class T extends Tetrimino{
-        
-        public T(vec2 _position) {
-        	
-        	layout=new ArrayList <int[][]>();
-            
-            layout.add(new int[][]{
-            		{1, 1, 1},
-                    {0, 1, 0}
-                });
-            
-            layout.add(new int[][]{
-                    {0,1},
-                    {1,1},
-                    {0,1}
-                });
-            
-            layout.add(new int[][]{
-                    {0, 1, 0},
-                    {1, 1, 1}
-                });
-            
-            layout.add(new int[][]{
-                    {1,0},
-                    {1,1},
-                    {1,0}
-                });
-            
-            this.setPosition(_position);
-            this.setRepresentation(layout);
-        }
-    }
-    
-    public class Z extends Tetrimino{
-        
-        public Z(vec2 _position) {
-        	
-        	layout=new ArrayList <int[][]>();
-        	
-        	layout.add(new int[][]{
-        			{1, 1, 0},
-                    {0, 1, 1}
-                });
-            
-            layout.add(new int[][]{
-                    {0,1},
-                    {1,1},
-                    {1,0}
-                });
-            
-            this.setPosition(_position);
-            this.setRepresentation(layout);
-        }
+        return list;
     }
 }

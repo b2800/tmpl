@@ -124,11 +124,6 @@ public class InteractiveConsoleComponent extends Component
         currentInput = "";
         cursorPosition = 0;
     }
-    
-    @Override
-    public void update() {
-
-    }
 
     @Override
     public TPanel getDrawableContainer() {
@@ -177,5 +172,4 @@ public class InteractiveConsoleComponent extends Component
                                  currentInput.substring(cursorPosition);
         return "> " + currentInputWithCursor;
     }
-
 }
