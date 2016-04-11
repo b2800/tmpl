@@ -1,10 +1,14 @@
 package com.esiea.tetris.graphics.concrete;
 
 import com.esiea.tetris.graphics.Renderer;
+import com.esiea.tetris.graphics.TCharacter;
 import com.esiea.tetris.graphics.TPanel;
 import com.esiea.tetris.model.Layout;
+import com.esiea.tetris.utils.ColorUtil;
+import com.esiea.tetris.utils.GridUtil;
 import com.esiea.tetris.utils.vec2;
 import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.TextColor;
 
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
@@ -15,7 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ConsoleRenderer extends Renderer{
-    private char[][] grid;
+    private TCharacter[][] grid;
     private TerminalSize terminalSize;
     private Terminal terminal;
 
@@ -24,8 +28,8 @@ public class ConsoleRenderer extends Renderer{
     
     public ConsoleRenderer(){
         this.createWindow();
-        grid = new char[terminalSize.getRows()][terminalSize.getColumns()];
-        clearGrid();
+        grid = new TCharacter[terminalSize.getRows()][terminalSize.getColumns()];
+        clearGrids();
         lastRefreshTime = 0;
         refreshRate = 50;
     }
@@ -44,14 +48,15 @@ public class ConsoleRenderer extends Renderer{
         });
         
         drawToTerminal();   // Actually sends the data to the terminal
-        clearGrid();
+        clearGrids();
         lastRefreshTime = System.currentTimeMillis();
     }
     
     private void drawPanel(TPanel panel){
         if(panel == null){ return; }
         panel.getDrawables().stream().forEach( (d) -> {
-            drawText(d.getDrawableText(), 
+            drawText(d.getDrawableText(),
+                     d.getColorMap(),
                      d.getDrawableRelativePosition(), 
                      panel.getPosition());
         });
@@ -60,22 +65,25 @@ public class ConsoleRenderer extends Renderer{
         }
     }
     
-    private void drawText(String[] text, vec2 position, vec2 offset){
+    private void drawText(String[] text, int[][] colors, vec2 position, vec2 offset){
         for(int i = 0; i < text.length; i++){
             vec2 pos = new vec2(position);
             pos.y += i;
             pos.y += offset.y;
             pos.x += offset.x;
-            insertLineAt(text[i], pos);
+            insertLineAt(text[i], colors, pos);
         }
     }
     
-    private void insertLineAt(String text, vec2 pos){
+    private void insertLineAt(String text, int[][] colors,  vec2 pos){
         for(int i = 0; i < text.length(); i++){
             if(pos.x + i >= grid[0].length || pos.y >= grid.length){
                 continue;
             }
-            grid[pos.y][pos.x + i] = text.charAt(i);
+            if(colors != null)
+                grid[pos.y][pos.x + i] = new TCharacter(text.charAt(i), colors[i]);
+            else
+                grid[pos.y][pos.x + i] = new TCharacter(text.charAt(i));
         }
     }
     
@@ -101,15 +109,15 @@ public class ConsoleRenderer extends Renderer{
     private void drawLine(vec2 start, vec2 end){
         if(start.x == end.x){
             for(int i = 0; i < abs(end.y - start.y); i++){
-                grid[i+start.y][start.x] = '|';
+                grid[i+start.y][start.x] = new TCharacter('|');
             }
         } else if (start.y == end.y){
             for(int i = 0; i < abs(end.x - start.x); i++){
-                grid[start.y][i+start.x] = '-';
+                grid[start.y][i+start.x] = new TCharacter('-');
             }
         }
-        grid[start.y][start.x] = '+';
-        grid[end.y][end.x] = '+';
+        grid[start.y][start.x] = new TCharacter('+');
+        grid[end.y][end.x] = new TCharacter('+');
     }
 
     private void createWindow(){
@@ -132,32 +140,19 @@ public class ConsoleRenderer extends Renderer{
             for(int y = 0; y < grid.length; y++){
                 terminal.setCursorPosition(0, y);
                 for(int x = 0; x < grid[0].length; x++){
-                    terminal.putCharacter(grid[y][x]);
+                    TCharacter tc = grid[y][x]; 
+                    if(tc == null){
+                        tc = new TCharacter(' '); // Hack étrange a cause du langage
+                    }
+                    int[] colors = tc.getColor();
+                    terminal.setForegroundColor(TextColor.Indexed.fromRGB(colors[0], colors[1], colors[2]));
+                    terminal.putCharacter(tc.getCharacter());
                 }
             }
             terminal.flush();
         } catch (IOException ex) {
             Logger.getLogger(ConsoleRenderer.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    
-    private void clearGrid(){
-        for(int i = 0; i < grid.length; i++){
-            for(int j = 0; j < grid.length; j++){
-                grid[i][j] = ' ';
-            }
-        }
-    }
-    
-    private void showGrid(){
-        System.out.println("----------------------------------");
-        for(int i = 0; i < grid.length; i++){
-            for(int j = 0; j < grid.length; j++){
-                System.out.print(grid[i][j]);
-            }
-            System.out.println(" ");
-        }
-        System.out.println("----------------------------------");
     }
     
     private boolean shouldDraw(){
@@ -168,4 +163,10 @@ public class ConsoleRenderer extends Renderer{
     public Terminal getTerminal() {
         return terminal;
     }
+    
+    private void clearGrids(){
+        GridUtil.clearGrid(grid, ' ');
+    }
+    
+
 }

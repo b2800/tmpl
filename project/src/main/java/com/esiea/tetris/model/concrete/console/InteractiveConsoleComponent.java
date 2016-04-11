@@ -24,7 +24,6 @@ public class InteractiveConsoleComponent extends Component
     private String currentInput;
     private int cursorPosition;
     private int historyPosition;
-    private String prompt;
 
     public InteractiveConsoleComponent() {
         interpreter = new CommandInterpreter();
@@ -54,6 +53,7 @@ public class InteractiveConsoleComponent extends Component
             case DELETE:
                 removePreCharacter();
                 break;
+            default:
         }
     }
     
@@ -76,6 +76,9 @@ public class InteractiveConsoleComponent extends Component
                 break;
             case DOWN:
                 moveHistoryCursor(-1);
+                break;
+            case NONE:
+            default:
                 break;
         }
     }
@@ -171,5 +174,10 @@ public class InteractiveConsoleComponent extends Component
                                  cursor +
                                  currentInput.substring(cursorPosition);
         return "> " + currentInputWithCursor;
+    }
+
+    @Override
+    public int[][] getColorMap() {
+        return null;
     }
 }

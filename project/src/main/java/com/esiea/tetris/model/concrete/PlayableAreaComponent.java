@@ -25,6 +25,7 @@ public class PlayableAreaComponent extends Component
     
     private Tetrimino currentTetrimino;
     private int[][] grid;
+    private int[][] colorMap;
     private long timer;
     private long refreshInterval;
     private ArrayDeque<Tetrimino> tetriminoSequence;
@@ -282,5 +283,10 @@ public class PlayableAreaComponent extends Component
         MessageBus.getInstance().post(msg).now();
         parent.setNextLayout(LayoutBuilder.buildMainMenuLayout());
         parent.setShouldClose(true);
+    }
+
+    @Override
+    public int[][] getColorMap() {
+        return colorMap;
     }
 }

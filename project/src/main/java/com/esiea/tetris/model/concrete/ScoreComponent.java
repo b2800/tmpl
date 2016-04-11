@@ -88,4 +88,9 @@ public class ScoreComponent extends Component implements Drawable{
     public vec2 getDrawableRelativePosition() {
         return new vec2(0,0);
     }
+
+    @Override
+    public int[][] getColorMap() {
+        return null;
+    }
 }

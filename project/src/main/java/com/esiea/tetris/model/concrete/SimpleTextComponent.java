@@ -52,4 +52,9 @@ public class SimpleTextComponent extends Component
     public vec2 getDrawableRelativePosition() {
         return new vec2(0,0);
     }
+
+    @Override
+    public int[][] getColorMap() {
+        return null;
+    }
 }

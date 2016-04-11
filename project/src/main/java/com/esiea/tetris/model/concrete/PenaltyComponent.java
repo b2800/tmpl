@@ -63,4 +63,9 @@ public class PenaltyComponent extends Component
         return new vec2(0,0);
     }
 
+    @Override
+    public int[][] getColorMap() {
+        return null;
+    }
+
 }

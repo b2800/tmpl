@@ -75,4 +75,9 @@ public class NextTetriminoIndicatorComponent extends Component
     public void setIndex(int i){
         index = i;
     }
+
+    @Override
+    public int[][] getColorMap() {
+        return null;
+    }
 }
