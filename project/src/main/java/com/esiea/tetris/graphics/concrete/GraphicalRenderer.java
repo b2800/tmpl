@@ -30,9 +30,11 @@ public class GraphicalRenderer extends Renderer {
     
     private Graphics g;
     
+    private JFrame window;
+    
     public GraphicalRenderer(){
     	
-    	 JFrame window = new JFrame();
+    	 window = new JFrame();
     	 window.setTitle("Tetris");
     	 window.setSize(400, 700);
     	 
@@ -54,6 +56,11 @@ public class GraphicalRenderer extends Renderer {
     	
     	g=pan.getGraphics();
     	 
+    }
+    
+    public JFrame getWindow()
+    {
+    	return window;
     }
     
     @Override
@@ -157,16 +164,17 @@ public class GraphicalRenderer extends Renderer {
 
     // FONCTION A MODIFIER
     private void drawToTerminal(){
-    	showGrid();
-    	System.out.println("drawtoscreen");
+    	//showGrid();
+    	//System.out.println("drawtoscreen");
     	
     	
             for(int y = 0; y < grid.length; y++){
                 for(int x = 0; x < grid[0].length; x++){
                 	if(grid[y][x]!=' ')
                 	{
+                		//System.out.println("drawrectangle "+x+" "+y);
 	                    g.setColor(Color.red);   
-	                	g.fillRect(10,10, x*10, y*10);
+	                	g.fillRect(x*10, y*10,10,10);
                 	}
                 }
             }

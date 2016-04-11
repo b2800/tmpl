@@ -1,6 +1,7 @@
 package com.esiea.tetris.core;
 
 import com.esiea.tetris.core.concrete.InputService;
+import com.esiea.tetris.core.concrete.InputServiceGraphical;
 import com.esiea.tetris.core.concrete.NetworkService;
 import com.esiea.tetris.graphics.concrete.ConsoleRenderer;
 import com.esiea.tetris.graphics.concrete.GraphicalRenderer;
@@ -17,6 +18,7 @@ public class Tetris {
     private Layout current_layout;
     private final Renderer renderer;
     //private final Updatable inputService;
+    private final Updatable inputService;
     private final Updatable networkService;
     private Boolean application_should_close;
     
@@ -28,6 +30,7 @@ public class Tetris {
         //renderer = new ConsoleRenderer();
         renderer = new GraphicalRenderer();
         
+        inputService=new InputServiceGraphical((((GraphicalRenderer)renderer).getWindow()));
         //inputService = new InputService(((ConsoleRenderer)renderer).getTerminal());
         // il faudra un autre inputService géré par le graphicalrenderer
     }
