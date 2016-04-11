@@ -30,16 +30,21 @@ public class LayoutBuilder {
     
     public static Layout buildSoloPlayerLayout(){
         Layout gameLayout = new Layout();
-        PlayableAreaComponent playZone = new PlayableAreaComponent(new vec2(10, 20), 0);
         PenaltyComponent pc = new PenaltyComponent(0);
         ScoreComponent score = new ScoreComponent(0, 0);
         SimpleTextComponent text = new SimpleTextComponent();
-        NextTetriminoIndicatorComponent next = new NextTetriminoIndicatorComponent();
+        NextTetriminoIndicatorComponent next = new NextTetriminoIndicatorComponent(0);
+        NextTetriminoIndicatorComponent next2 = new NextTetriminoIndicatorComponent(1);
+        NextTetriminoIndicatorComponent next3 = new NextTetriminoIndicatorComponent(2);
+        PlayableAreaComponent playZone = new PlayableAreaComponent(new vec2(10, 20), 0);
+
         
         playZone.setPosition(new vec2(2,2));
         score.setPosition(new vec2(14, 2));
         pc.setPosition(new vec2(14, 5));
         next.setPosition(new vec2(14, 9));
+        next2.setPosition(new vec2(19, 9));
+        next3.setPosition(new vec2(24, 9));
         text.setPosition(new vec2(14, 15));
         
         score.setSize(new vec2(6, 1));
@@ -55,6 +60,8 @@ public class LayoutBuilder {
         gameLayout.addComponent(score);
         gameLayout.addComponent(pc);
         gameLayout.addComponent(next);
+        gameLayout.addComponent(next2);
+        gameLayout.addComponent(next3);
         gameLayout.addComponent(text);
         return gameLayout;
     }

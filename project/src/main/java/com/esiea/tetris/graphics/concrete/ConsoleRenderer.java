@@ -18,13 +18,12 @@ public class ConsoleRenderer extends Renderer{
     private char[][] grid;
     private TerminalSize terminalSize;
     private Terminal terminal;
-    private LanternaInputAdapter inputAdapter;
+
     private long lastRefreshTime;
     private long refreshRate;
     
     public ConsoleRenderer(){
         this.createWindow();
-        inputAdapter = new LanternaInputAdapter();
         grid = new char[terminalSize.getRows()][terminalSize.getColumns()];
         clearGrid();
         lastRefreshTime = 0;
@@ -33,7 +32,6 @@ public class ConsoleRenderer extends Renderer{
     
     @Override
     public void process(Layout _layout){
-        inputAdapter.transferInput(terminal);
         if(shouldDraw()){
             draw(_layout);
         }
@@ -165,5 +163,9 @@ public class ConsoleRenderer extends Renderer{
     private boolean shouldDraw(){
         long delta = System.currentTimeMillis() - lastRefreshTime;
         return delta > refreshRate;
+    }
+    
+    public Terminal getTerminal() {
+        return terminal;
     }
 }

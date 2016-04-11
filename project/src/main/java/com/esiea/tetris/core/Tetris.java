@@ -1,8 +1,9 @@
 package com.esiea.tetris.core;
 
-import com.esiea.tetris.core.concrete.TerminalKeyboardInputService;
-import com.esiea.tetris.core.concrete.NetworkServiceV1;
+import com.esiea.tetris.core.concrete.InputService;
+import com.esiea.tetris.core.concrete.NetworkService;
 import com.esiea.tetris.graphics.concrete.ConsoleRenderer;
+import com.esiea.tetris.graphics.concrete.GraphicalRenderer;
 import com.esiea.tetris.graphics.Renderer;
 import com.esiea.tetris.model.builder.LayoutBuilder;
 import com.esiea.tetris.model.Layout;
@@ -15,23 +16,27 @@ public class Tetris {
     
     private Layout current_layout;
     private final Renderer renderer;
-    private final Updatable inputService;
+    //private final Updatable inputService;
     private final Updatable networkService;
     private Boolean application_should_close;
     
     public Tetris(){
         application_should_close = false;
         current_layout = LayoutBuilder.buildMainMenuLayout();
-        inputService = new TerminalKeyboardInputService();
-        networkService = new NetworkServiceV1();
-        renderer = new ConsoleRenderer();
+        networkService = new NetworkService();
+        
+        //renderer = new ConsoleRenderer();
+        renderer = new GraphicalRenderer();
+        
+        //inputService = new InputService(((ConsoleRenderer)renderer).getTerminal());
+        // il faudra un autre inputService géré par le graphicalrenderer
     }
     
     public void Start(){
         while(!application_should_close){   // Boucle principale du jeu 
             
             while(!current_layout.shouldClose()){   
-                inputService.update();
+                //inputService.update();
                 networkService.update();
                 current_layout.update();
                 renderer.process(current_layout);

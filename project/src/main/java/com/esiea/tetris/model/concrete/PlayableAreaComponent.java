@@ -40,6 +40,7 @@ public class PlayableAreaComponent extends Component
         tetriminoSequence = new ArrayDeque<>();
         updateTetriminoSequence();
         currentTetrimino = tetriminoSequence.pop();
+        updateTetriminoSequence();
         gameOver = false;
         this.idJoueur = idJoueur;
         MessageBus.getInstance().subscribe(this);
@@ -124,7 +125,7 @@ public class PlayableAreaComponent extends Component
                 endGame();
                 return;
             }
-            grid[pt.y][pt.x]=1;
+            grid[pt.y][pt.x]=currentTetrimino.getIndiceCouleur();
         }
         currentTetrimino = tetriminoSequence.pop();
         updateTetriminoSequence();
@@ -255,7 +256,7 @@ public class PlayableAreaComponent extends Component
         }
         NextTetriminos msg = new NextTetriminos();
         msg.setSequence(tetriminoSequence.toArray(new Tetrimino[tetriminoSequence.size()]));
-        MessageBus.getInstance().post(msg).now();
+        MessageBus.getInstance().post(msg).asynchronously();
     }
     
     public Tetrimino[] getTetriminoSequence(){
