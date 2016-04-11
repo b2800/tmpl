@@ -1,6 +1,6 @@
 package com.esiea.tetris.core;
 
-import com.esiea.tetris.core.concrete.TerminalKeyboardInputService;
+import com.esiea.tetris.core.concrete.InputService;
 import com.esiea.tetris.core.concrete.NetworkServiceV1;
 import com.esiea.tetris.graphics.concrete.ConsoleRenderer;
 import com.esiea.tetris.graphics.Renderer;
@@ -22,9 +22,9 @@ public class Tetris {
     public Tetris(){
         application_should_close = false;
         current_layout = LayoutBuilder.buildMainMenuLayout();
-        inputService = new TerminalKeyboardInputService();
         networkService = new NetworkServiceV1();
         renderer = new ConsoleRenderer();
+        inputService = new InputService(((ConsoleRenderer)renderer).getTerminal());
     }
     
     public void Start(){
