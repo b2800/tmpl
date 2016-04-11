@@ -1,5 +1,7 @@
 package com.esiea.tetris.utils;
 
+import com.esiea.tetris.communication.MessageBus;
+import com.esiea.tetris.communication.concrete.LineNotification;
 import com.esiea.tetris.graphics.TCharacter;
 import java.util.ArrayList;
 
@@ -43,8 +45,8 @@ public class GridUtil {
         return grid;
     }
     
-        
-    public ArrayList<Integer> getAllFullLines(int[][] grid){
+    
+    public static ArrayList<Integer> getAllFullLines(int[][] grid){
         ArrayList<Integer> fullLines = new ArrayList<>();
         
         for(int y = 0; y < grid.length; y++){
@@ -57,5 +59,23 @@ public class GridUtil {
                 fullLines.add(y);
         }
         return fullLines;
+    }
+    
+    public static void shiftDownAt(int[][] grid, int index){
+        while(index >= 0){
+            copyLineAboveAt(grid, index);
+            index--;
+        }
+    }
+    
+    private static void copyLineAboveAt(int[][]grid, int index){
+        if(index >= grid.length ){ return; }
+        for(int x = 0; x < grid[0].length; x++){
+            if(index == 0){
+                grid[index][x] = 0;
+            } else {
+                grid[index][x] = grid[index - 1][x];
+            }
+        }
     }
 }

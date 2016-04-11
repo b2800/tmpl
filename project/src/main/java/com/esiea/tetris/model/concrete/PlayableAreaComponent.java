@@ -15,10 +15,10 @@ import com.esiea.tetris.communication.concrete.NextTetriminos;
 import com.esiea.tetris.core.Updatable;
 import com.esiea.tetris.model.builder.LayoutBuilder;
 import com.esiea.tetris.model.builder.TetriminoBuilder;
+import com.esiea.tetris.utils.GridUtil;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import net.engio.mbassy.listener.Handler;
-import sun.security.util.Length;
 
 public class PlayableAreaComponent extends Component
                                    implements Drawable, Updatable {
@@ -31,6 +31,7 @@ public class PlayableAreaComponent extends Component
     private ArrayDeque<Tetrimino> tetriminoSequence;
     private boolean gameOver;
     private int idJoueur;
+    private String[] drawableText;
 
     public PlayableAreaComponent(vec2 size, int idJoueur) {
         this.setSize(size);
@@ -44,6 +45,8 @@ public class PlayableAreaComponent extends Component
         updateTetriminoSequence();
         gameOver = false;
         this.idJoueur = idJoueur;
+        drawableText = new String[size.y];
+        colorMap = new int[size.y][size.x];
         MessageBus.getInstance().subscribe(this);
     }
     
@@ -136,6 +139,7 @@ public class PlayableAreaComponent extends Component
     @Override
     public void update() {
         autoMoveDown();
+        updateDrawableData();
     }
     
     // à chaque update, le tetrimino en cours descend d'une case sous l'effet de la gravité
@@ -154,46 +158,14 @@ public class PlayableAreaComponent extends Component
         timer = System.currentTimeMillis();
     }
     
-    private void removeFullLinesIfAny(){
-        ArrayList<Integer> lines = getAllFullLines();
+    public void removeFullLinesIfAny(){
+        ArrayList<Integer> lines = GridUtil.getAllFullLines(grid);
         if(!lines.isEmpty()){
             for(int index : lines){
-                shiftDownAt(index);
+                GridUtil.shiftDownAt(grid, index);
             }
             LineNotification msg = new LineNotification(this.idJoueur, lines.size());
             MessageBus.getInstance().post(msg).asynchronously();
-        }
-    }
-    
-    private ArrayList<Integer> getAllFullLines(){
-        ArrayList<Integer> fullLines = new ArrayList<>();
-        
-        for(int y = 0; y < grid.length; y++){
-            boolean full = true;
-            for(int x = 0; x < grid[0].length; x++){
-                if(grid[y][x] == 0)
-                    full = false;
-            }
-            if(full)
-                fullLines.add(y);
-        }
-        return fullLines;
-    }
-    
-    private void shiftDownAt(int index){
-        while(index >= 0){
-            copyLineAbove(index);
-            index--;
-        }
-    }
-    private void copyLineAbove(int index){
-        if( index >= size.y ){ return; }
-        for(int x = 0; x < grid[0].length; x++){
-            if(index == 0){
-                grid[index][x] = 0;
-            } else {
-                grid[index][x] = grid[index - 1][x];
-            }
         }
     }
 
@@ -209,25 +181,7 @@ public class PlayableAreaComponent extends Component
 
     @Override
     public String[] getDrawableText() {
-        String[] output = new String[size.y];
-        for(int y = 0; y < size.y; y++){
-            output[y] = "";
-            for(int x = 0; x < size.x; x++){
-                if(grid[y][x] == 0){
-                    output[y] += " ";
-                } else {
-                    output[y] += "\u2588";
-                }
-            }
-        }
-        for(vec2 pt : currentTetrimino.getPointList()){
-            if(isWithinGrid(pt)){
-                StringBuilder s = new StringBuilder(output[pt.y]);
-                s.setCharAt(pt.x, '\u2588');
-                output[pt.y] = s.toString();
-            }
-        }
-        return output;
+        return drawableText;
     }
     
     public boolean isWithinGrid(vec2 pos){
@@ -283,6 +237,28 @@ public class PlayableAreaComponent extends Component
         MessageBus.getInstance().post(msg).now();
         parent.setNextLayout(LayoutBuilder.buildMainMenuLayout());
         parent.setShouldClose(true);
+    }
+    
+    private void updateDrawableData(){
+        for(int y = 0; y < size.y; y++){
+            drawableText[y] = "";
+            for(int x = 0; x < size.x; x++){
+                if(grid[y][x] == 0){
+                    drawableText[y] += " ";
+                } else {
+                    drawableText[y] += "\u2588";
+                }
+                colorMap[y][x] = grid[y][x];
+            }
+        }
+        for(vec2 pt : currentTetrimino.getPointList()){
+            if(isWithinGrid(pt)){
+                StringBuilder s = new StringBuilder(drawableText[pt.y]);
+                s.setCharAt(pt.x, '\u2588');
+                drawableText[pt.y] = s.toString();
+                colorMap[pt.y][pt.x] = currentTetrimino.getIndiceCouleur();
+            }
+        }
     }
 
     @Override
