@@ -7,6 +7,7 @@ import com.esiea.tetris.model.concrete.PlayableAreaComponent;
 import com.esiea.tetris.model.concrete.ScoreComponent;
 import com.esiea.tetris.model.concrete.SimpleTextComponent;
 import com.esiea.tetris.model.concrete.console.InteractiveConsoleComponent;
+import com.esiea.tetris.utils.Context;
 import com.esiea.tetris.utils.ScoreUtil;
 import com.esiea.tetris.utils.vec2;
 
@@ -17,7 +18,7 @@ public class LayoutBuilder {
         
         InteractiveConsoleComponent console = new InteractiveConsoleComponent();
         console.setPosition(new vec2(0,0));
-        console.setSize(new vec2(50,20));
+        console.setSize(Context.getWindowSize());
         
         menu_layout.addComponent(console);
         return menu_layout;
