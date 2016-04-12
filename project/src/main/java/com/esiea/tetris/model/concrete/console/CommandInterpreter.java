@@ -1,6 +1,7 @@
 package com.esiea.tetris.model.concrete.console;
 
 import com.esiea.tetris.communication.MessageBus;
+import com.esiea.tetris.communication.concrete.MultiplayerMessage;
 import com.esiea.tetris.communication.concrete.NavigationIntent;
 import com.esiea.tetris.model.builder.LayoutBuilder;
 import com.esiea.tetris.utils.ScoreUtil;
@@ -32,15 +33,19 @@ public class CommandInterpreter {
     private String startGame(){
         String output = "Starting a solo game \n";
         NavigationIntent msg = new NavigationIntent();
-        msg.nextLayout = LayoutBuilder.buildSoloPlayerLayout();
+        msg.nextLayout = LayoutBuilder.buildSoloPlayerLayout(0);
         MessageBus.getInstance().post(msg).asynchronously();
         return output;
     }
     
-    private String joinGame(String ip){
+    private String joinGame(String ip, int port){
         String output = "Trying to join " + ip + "\n";
+        MultiplayerMessage multi = new MultiplayerMessage();
+        multi.setAddress(ip);
+        multi.setPort(port);
+        MessageBus.getInstance().post(multi).asynchronously();
         NavigationIntent msg = new NavigationIntent();
-        msg.nextLayout = LayoutBuilder.buildMultiplayerLobby(ip);
+        msg.nextLayout = LayoutBuilder.buildMultiplayerLayout(1);
         MessageBus.getInstance().post(msg).asynchronously();
         return output;
     }
@@ -68,7 +73,10 @@ public class CommandInterpreter {
         } if(cmdTokens[0].equals("start")){
             return startGame();
         } if(cmdTokens[0].equals("join")) {
-            return joinGame(cmdTokens[1]);
+            int port = 4000;
+            if(cmdTokens.length >= 3)
+                port = Integer.parseInt(cmdTokens[2]);
+            return joinGame(cmdTokens[1], port);
         } if(cmdTokens[0].equals("scores")){
             return displayHighscores();
         } if(cmdTokens[0].equals("quit")){

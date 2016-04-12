@@ -1,7 +1,5 @@
 package com.esiea.tetris.communication.concrete;
 
-import java.net.InetAddress;
-
 public class MultiplayerMessage {
     public enum Type{ CREATE, JOIN };
     

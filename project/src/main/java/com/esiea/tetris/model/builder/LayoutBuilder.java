@@ -29,15 +29,15 @@ public class LayoutBuilder {
         return null;
     }
     
-    public static Layout buildSoloPlayerLayout(){
+    public static Layout buildSoloPlayerLayout(int id){
         Layout gameLayout = new Layout();
-        PenaltyComponent pc = new PenaltyComponent(0);
-        ScoreComponent score = new ScoreComponent(0, 0);
+        PenaltyComponent pc = new PenaltyComponent(id);
+        ScoreComponent score = new ScoreComponent(id, 0);
         SimpleTextComponent text = new SimpleTextComponent();
         NextTetriminoIndicatorComponent next = new NextTetriminoIndicatorComponent(0);
         NextTetriminoIndicatorComponent next2 = new NextTetriminoIndicatorComponent(1);
         NextTetriminoIndicatorComponent next3 = new NextTetriminoIndicatorComponent(2);
-        PlayableAreaComponent playZone = new PlayableAreaComponent(new vec2(10, 20), 0);
+        PlayableAreaComponent playZone = new PlayableAreaComponent(new vec2(10, 20), id, false);
 
         
         playZone.setPosition(new vec2(2,2));
@@ -67,22 +67,14 @@ public class LayoutBuilder {
         return gameLayout;
     }
     
-    public static Layout buildLocalMultiplayerLayout(int player_count){
+    public static Layout buildMultiplayerLayout(int id_joueur){
+        int id_opponent = (id_joueur+1)%2;
+        Layout mlayout = buildSoloPlayerLayout(id_joueur);
         
-        return null;
-    }
-    
-    public static Layout buildNetworkMultiplayerLayout(boolean is_server){
+        PlayableAreaComponent zone2 = new PlayableAreaComponent(new vec2(10,20), id_opponent, true);
+        zone2.setPosition(new vec2(40, 2));
+        mlayout.addComponent(zone2);
         
-        return null;
-    }
-    
-    public static Layout buildHighScoresScreen(){
-        Layout highscores = new Layout();
-        
-        SimpleTextComponent text = new SimpleTextComponent();
-
-        text.setPosition(new vec2(10, 10));
-        return highscores;
+        return mlayout;
     }
 }
