@@ -17,26 +17,22 @@ public class CollisionSolver {
 		int wGrid=grid[0].length;
 		int hGrid=grid.length;
 				
+		ArrayList <vec2> list = t.getPointList();
+		
 		// Pour chaque point constituant le Tetrimino
-		for (vec2 pt : t.getPointList()) {
-			
-			System.out.println("pt "+pt.x+"-"+pt.y+", contenu case :"+grid[pt.y][pt.x]);
+		for (vec2 pt : list) {
 
 			// On vérifie si la case n'est pas en dehors de la grille)
 			if(pt.x<0 || pt.x>=wGrid || pt.y>=hGrid)
 				return true;
                         
-		System.out.println("1ère verif passee");
                         if(pt.y < 0)    // On skipe la vérification avec le haut de la grille
-                            continue;
-        System.out.println("2ème verif passee");	   
+                            continue;   
 			// On vérifie le contenu de la case de la grille
 			if(grid[pt.y][pt.x]!=0)
 				return true;
 			
-		System.out.println("3ème verif passee");
 		}
-		System.out.println("sort de la boucle");
 		// Si on sort de la boucle sans avoir retourner true, c'est qu'aucune collision a été détectée
 		return false;
 	}
