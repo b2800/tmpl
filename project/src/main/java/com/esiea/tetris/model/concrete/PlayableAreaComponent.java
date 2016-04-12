@@ -8,6 +8,7 @@ import com.esiea.tetris.model.Component;
 import com.esiea.tetris.model.Tetrimino;
 import com.esiea.tetris.utils.vec2;
 import com.esiea.tetris.communication.MessageBus;
+import com.esiea.tetris.communication.concrete.GridStateNotification;
 import com.esiea.tetris.communication.concrete.KeyboardInput.Direction;
 import com.esiea.tetris.communication.concrete.KeyboardInput.Type;
 import com.esiea.tetris.communication.concrete.LineNotification;
@@ -134,6 +135,7 @@ public class PlayableAreaComponent extends Component
         currentTetrimino = tetriminoSequence.pop();
         updateTetriminoSequence();
         removeFullLinesIfAny();
+        propagateState();
     }
     
     @Override
@@ -156,6 +158,12 @@ public class PlayableAreaComponent extends Component
             addTetriminoToGrid();
     	}
         timer = System.currentTimeMillis();
+    }
+    
+    private void propagateState(){
+        GridStateNotification msg = new GridStateNotification();
+        msg.setGrid(grid);
+        MessageBus.getInstance().post(msg).asynchronously();
     }
     
     public void removeFullLinesIfAny(){
