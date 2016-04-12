@@ -32,6 +32,7 @@ public class InteractiveConsoleComponent extends Component
         cursorPosition = 0;
         historyPosition = 0;
         currentInput = "";
+        setSize(new vec2(50,10));
         MessageBus.getInstance().subscribe(this);
     }
 	
@@ -140,7 +141,7 @@ public class InteractiveConsoleComponent extends Component
     @Override
     public String[] getDrawableText() {
         ArrayList<String> output = new ArrayList<>();
-        output.addAll(getLastConsoleOutput(10));
+        output.addAll(getLastConsoleOutput(size.y-1));
         output.add(getCurrentPrompt());
         return output.toArray(new String[output.size()]);
     }

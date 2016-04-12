@@ -8,6 +8,7 @@ import com.esiea.tetris.model.Component;
 import com.esiea.tetris.model.Tetrimino;
 import com.esiea.tetris.utils.vec2;
 import com.esiea.tetris.communication.MessageBus;
+import com.esiea.tetris.communication.concrete.GridStateNotification;
 import com.esiea.tetris.communication.concrete.KeyboardInput.Direction;
 import com.esiea.tetris.communication.concrete.KeyboardInput.Type;
 import com.esiea.tetris.communication.concrete.LineNotification;
@@ -32,8 +33,9 @@ public class PlayableAreaComponent extends Component
     private boolean gameOver;
     private int idJoueur;
     private String[] drawableText;
+    private boolean syncOverNetwork;
 
-    public PlayableAreaComponent(vec2 size, int idJoueur) {
+    public PlayableAreaComponent(vec2 size, int idJoueur, boolean sync) {
         this.setSize(size);
         grid = new int[size.y][size.x];
         clearGrid();
@@ -47,11 +49,13 @@ public class PlayableAreaComponent extends Component
         this.idJoueur = idJoueur;
         drawableText = new String[size.y];
         colorMap = new int[size.y][size.x];
+        syncOverNetwork = sync;
         MessageBus.getInstance().subscribe(this);
     }
     
     @Handler
     public void handle(KeyboardInput input){
+        if(syncOverNetwork == true){ return; }
         if(input.getKeyType() == Type.ARROW_KEY){
             moveTetrimino(input.getDirection());
         } else if (input.getKeyType() == Type.CHARACTER){
@@ -71,6 +75,16 @@ public class PlayableAreaComponent extends Component
                 case 'b':
                     rotateTetrimino(-1);
                     break;
+            }
+        }
+    }
+    
+    @Handler
+    public void handle(GridStateNotification msg){
+        if(syncOverNetwork){
+            if(msg.getId() == idJoueur){
+                this.grid = msg.getGrid();
+                this.colorMap = msg.getColorMap();
             }
         }
     }
@@ -134,6 +148,7 @@ public class PlayableAreaComponent extends Component
         currentTetrimino = tetriminoSequence.pop();
         updateTetriminoSequence();
         removeFullLinesIfAny();
+        propagateState();
     }
     
     @Override
@@ -144,7 +159,7 @@ public class PlayableAreaComponent extends Component
     
     // à chaque update, le tetrimino en cours descend d'une case sous l'effet de la gravité
     private void autoMoveDown(){
-        if(gameOver){ return; }
+        if(gameOver || syncOverNetwork){ return; }
         if(System.currentTimeMillis() - timer < refreshInterval){ return; }
 
         TetriminoMover.moveDown(currentTetrimino);
@@ -156,6 +171,15 @@ public class PlayableAreaComponent extends Component
             addTetriminoToGrid();
     	}
         timer = System.currentTimeMillis();
+    }
+    
+    private void propagateState(){
+        if(syncOverNetwork){ return; }
+        GridStateNotification msg = new GridStateNotification();
+        msg.setGrid(grid);
+        msg.setColorMap(colorMap);
+        msg.setId(idJoueur);
+        MessageBus.getInstance().post(msg).asynchronously();
     }
     
     public void removeFullLinesIfAny(){

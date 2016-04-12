@@ -52,25 +52,27 @@ public class TetriminoBuilder {
         ArrayList<int[][]> layout = new ArrayList <int[][]>();
             
         layout.add(new int[][]{
+            {0, 0, 0},
             {1, 1, 1},
             {0, 0, 1}
         });
 
         layout.add(new int[][]{
-            {0,1},
-            {0,1},
-            {1,1}
+            {0,1,0},
+            {0,1,0},
+            {1,1,0}
         });
 
         layout.add(new int[][]{
             {1, 0, 0},
-            {1, 1, 1}
+            {1, 1, 1},
+            {0, 0, 0}
         });
 
         layout.add(new int[][]{
-            {1,1},
-            {1,0},
-            {1,0}
+            {0,1,1},
+            {0,1,0},
+            {0,1,0}
         });
 
         J.setRepresentation(layout);
@@ -84,25 +86,27 @@ public class TetriminoBuilder {
         ArrayList<int[][]> layout = new ArrayList <int[][]>();
             
         layout.add(new int[][]{
+            {0, 0, 0},
             {1, 1, 1},
             {1, 0, 0}
         });
 
         layout.add(new int[][]{
-            {1,1},
-            {0,1},
-            {0,1}
+            {1,1,0},
+            {0,1,0},
+            {0,1,0}
         });
 
         layout.add(new int[][]{
             {0, 0, 1},
-            {1, 1, 1}
+            {1, 1, 1},
+            {0, 0, 0}
         });
 
         layout.add(new int[][]{
-            {1,0},
-            {1,0},
-            {1,1}
+            {0,1,0},
+            {0,1,0},
+            {0,1,1}
         });
 
         L.setRepresentation(layout);
@@ -128,14 +132,28 @@ public class TetriminoBuilder {
 
         layout.add(new int[][]{
             {0, 1, 1},
-            {1, 1, 0}
+            {1, 1, 0},
+            {0, 0, 0}
         });
 
         layout.add(new int[][]{
-            {1,0},
-            {1,1},
-            {0,1}
+            {0,1,0},
+            {0,1,1},
+            {0,0,1}
         });
+        
+        layout.add(new int[][]{
+            {0, 0, 0},
+            {0, 1, 1},
+            {1, 1, 0}
+        });
+        
+        layout.add(new int[][]{
+            {1,0,0},
+            {1,1,0},
+            {0,1,0}
+        });
+
 
         S.setRepresentation(layout);
         return S;
@@ -146,25 +164,27 @@ public class TetriminoBuilder {
         ArrayList<int[][]> layout = new ArrayList <int[][]>();
             
         layout.add(new int[][]{
+            {0, 0, 0},
             {1, 1, 1},
             {0, 1, 0}
         });
 
         layout.add(new int[][]{
-            {0,1},
-            {1,1},
-            {0,1}
+            {0,1,0},
+            {1,1,0},
+            {0,1,0}
         });
 
         layout.add(new int[][]{
             {0, 1, 0},
-            {1, 1, 1}
+            {1, 1, 1},
+            {0, 0, 0}
         });
 
         layout.add(new int[][]{
-            {1,0},
-            {1,1},
-            {1,0}
+            {0,1,0},
+            {0,1,1},
+            {0,1,0}
         });
 
         T.setRepresentation(layout);
@@ -177,13 +197,26 @@ public class TetriminoBuilder {
 
         layout.add(new int[][]{
             {1, 1, 0},
-            {0, 1, 1}
+            {0, 1, 1},
+            {0, 0, 0}
         });
 
         layout.add(new int[][]{
-            {0,1},
-            {1,1},
-            {1,0}
+            {0,0,1},
+            {0,1,1},
+            {0,1,0}
+        });
+        
+        layout.add(new int[][]{
+            {0, 0, 0},
+            {1, 1, 0},
+            {0, 1, 1}            
+        });
+
+        layout.add(new int[][]{
+            {0,1,0},
+            {1,1,0},
+            {1,0,0}
         });
 
         Z.setRepresentation(layout);

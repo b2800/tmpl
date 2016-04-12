@@ -1,7 +1,7 @@
 package com.esiea.tetris.core;
 
 import com.esiea.tetris.core.concrete.InputService;
-import com.esiea.tetris.core.concrete.NetworkService;
+import com.esiea.tetris.network.NetworkService;
 import com.esiea.tetris.graphics.concrete.ConsoleRenderer;
 import com.esiea.tetris.graphics.Renderer;
 import com.esiea.tetris.model.builder.LayoutBuilder;
@@ -21,10 +21,10 @@ public class Tetris {
     
     public Tetris(){
         application_should_close = false;
-        current_layout = LayoutBuilder.buildMainMenuLayout();
         networkService = new NetworkService();
         renderer = new ConsoleRenderer();
         inputService = new InputService(((ConsoleRenderer)renderer).getTerminal());
+        current_layout = LayoutBuilder.buildMainMenuLayout();
     }
     
     public void Start(){

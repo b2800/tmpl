@@ -5,6 +5,7 @@ import com.esiea.tetris.graphics.TCharacter;
 import com.esiea.tetris.graphics.TPanel;
 import com.esiea.tetris.model.Layout;
 import com.esiea.tetris.utils.ColorUtil;
+import com.esiea.tetris.utils.Context;
 import com.esiea.tetris.utils.GridUtil;
 import com.esiea.tetris.utils.vec2;
 import com.googlecode.lanterna.TerminalSize;
@@ -134,6 +135,7 @@ public class ConsoleRenderer extends Renderer{
             terminal.setCursorVisible(false);
 
             terminalSize = terminal.getTerminalSize();
+            Context.setWindowSize(new vec2(terminalSize.getColumns(), terminalSize.getRows()));
             
         } catch (IOException ex) {
             Logger.getLogger(ConsoleRenderer.class.getName()).log(Level.SEVERE, null, ex);
@@ -172,6 +174,4 @@ public class ConsoleRenderer extends Renderer{
     private void clearGrids(){
         GridUtil.clearGrid(grid, ' ');
     }
-    
-
 }
