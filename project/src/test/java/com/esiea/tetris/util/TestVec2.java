@@ -9,8 +9,8 @@ import static org.assertj.core.api.Assertions.*;
 
 public class TestVec2 {
 	
-	public vec2 v1;
-	public vec2 v2;
+	private vec2 v1;
+	private vec2 v2;
 	
 	@Before
 	public void init()
