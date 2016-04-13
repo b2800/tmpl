@@ -3,7 +3,7 @@ package com.esiea.tetris.model.concrete;
 import java.util.ArrayList;
 
 import com.esiea.tetris.model.Tetrimino;
-import com.esiea.tetris.utils.vec2;
+import com.esiea.tetris.utils.Vec2;
 
 public class CollisionSolver {
 	
@@ -17,10 +17,10 @@ public class CollisionSolver {
 		int wGrid=grid[0].length;
 		int hGrid=grid.length;
 				
-		ArrayList <vec2> list = t.getPointList();
+		ArrayList <Vec2> list = t.getPointList();
 		
 		// Pour chaque point constituant le Tetrimino
-		for (vec2 pt : list) {
+		for (Vec2 pt : list) {
 
 			// On vérifie si la case n'est pas en dehors de la grille)
 			if(pt.x<0 || pt.x>=wGrid || pt.y>=hGrid)

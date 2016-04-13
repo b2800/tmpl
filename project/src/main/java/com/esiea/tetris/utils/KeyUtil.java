@@ -39,6 +39,7 @@ public class KeyUtil {
             case Enter:
                 msg.setKeyType(Type.ENTER);
                 break;
+            default:
         }
     }
 }

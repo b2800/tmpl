@@ -4,7 +4,7 @@ import com.esiea.tetris.communication.MessageBus;
 import com.esiea.tetris.graphics.Drawable;
 import com.esiea.tetris.graphics.TPanel;
 import com.esiea.tetris.model.Component;
-import com.esiea.tetris.utils.vec2;
+import com.esiea.tetris.utils.Vec2;
 import com.esiea.tetris.communication.MessageBus;
 import com.esiea.tetris.communication.concrete.KeyboardInput;
 import com.esiea.tetris.communication.concrete.KeyboardInput.Type;
@@ -32,7 +32,7 @@ public class InteractiveConsoleComponent extends Component
         cursorPosition = 0;
         historyPosition = 0;
         currentInput = "";
-        setSize(new vec2(50,10));
+        setSize(new Vec2(50,10));
         MessageBus.getInstance().subscribe(this);
     }
 	
@@ -60,6 +60,7 @@ public class InteractiveConsoleComponent extends Component
     
     @Handler
     public void handle(NavigationIntent msg){
+        if(parent == null){ return; } 
         parent.setNextLayout(msg.nextLayout);
         parent.setShouldClose(true);
     }
@@ -147,8 +148,8 @@ public class InteractiveConsoleComponent extends Component
     }
 
     @Override
-    public vec2 getDrawableRelativePosition() {
-        return new vec2(0,0);
+    public Vec2 getDrawableRelativePosition() {
+        return new Vec2(0,0);
     }
     
     private ArrayList<String> getLastConsoleOutput(int count){

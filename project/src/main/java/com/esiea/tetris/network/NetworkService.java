@@ -37,9 +37,7 @@ public class NetworkService implements Updatable{
     
     @Handler 
     public void handle(GridStateNotification msg){
-        if(msg.shouldPropagateOverNetwork()){
             sendMessage(msg);
-        }
     }
     
     @Handler 

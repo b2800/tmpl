@@ -35,6 +35,7 @@ public class SocketListener extends Thread{
     public void run(){
         while(!shouldClose){
             try {
+                
                 byte[] receivedData = new byte[4096];
                 DatagramPacket packet = new DatagramPacket(receivedData, receivedData.length);
                 socket.receive(packet);

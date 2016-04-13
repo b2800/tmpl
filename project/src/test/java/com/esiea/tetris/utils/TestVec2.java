@@ -3,26 +3,26 @@ package com.esiea.tetris.utils;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.esiea.tetris.utils.vec2;
+import com.esiea.tetris.utils.Vec2;
 
 import static org.assertj.core.api.Assertions.*;
 
 public class TestVec2 {
 	
-	private vec2 v1;
-	private vec2 v2;
+	private Vec2 v1;
+	private Vec2 v2;
 	
 	@Before
 	public void init()
 	{
-		v1=new vec2(4,1);
-		v2=new vec2(8,3);
+		v1=new Vec2(4,1);
+		v2=new Vec2(8,3);
 	}
 	
 	@Test
 	public void itShouldCreateAnIdenticalVectorFromAnotherOne()
 	{
-		vec2 v3= new vec2 (v1);
+		Vec2 v3= new Vec2 (v1);
 		assertThat(v3.x==4);
 		assertThat(v3.y==1);
 	}
@@ -38,7 +38,7 @@ public class TestVec2 {
 	@Test
 	public void itShouldMakeCorrectyTheSumOfTwoVectors()
 	{
-		vec2 v3 = vec2.sum(v1,v2);
+		Vec2 v3 = Vec2.sum(v1,v2);
 		assertThat(v3.x==12);
 		assertThat(v3.y==4);
 	}

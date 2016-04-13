@@ -2,6 +2,7 @@ package com.esiea.tetris.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -14,9 +15,8 @@ public class ByteUtil {
             o.writeObject(obj);
             return b.toByteArray();
         }catch(Exception e){
-            e.printStackTrace();
         }
-        return null;
+        return new byte[0];
     }
 
     public static Object fromByteArray(byte[] bytes){
@@ -24,9 +24,8 @@ public class ByteUtil {
             ByteArrayInputStream b = new ByteArrayInputStream(bytes);
             ObjectInputStream o = new ObjectInputStream(b);
             return o.readObject();
-        } catch (Exception e){
-            e.printStackTrace();
+        } catch (IOException | ClassNotFoundException e){
         }
-        return null;
+        return new byte[0];
     }
 }

@@ -1,13 +1,14 @@
 package com.esiea.tetris.model.builder;
 
 import com.esiea.tetris.model.Tetrimino;
-import com.esiea.tetris.utils.vec2;
+import com.esiea.tetris.utils.Vec2;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class TetriminoBuilder {
     
     public static Tetrimino getRandomTetrimino(){
-        int number = (int)(Math.random()*7);
+        int number = new Random().nextInt(7);
         switch(number){
             case 0:
                 return createI();

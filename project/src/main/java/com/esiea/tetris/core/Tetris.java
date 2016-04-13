@@ -27,7 +27,7 @@ public class Tetris {
         current_layout = LayoutBuilder.buildMainMenuLayout();
     }
     
-    public void Start(){
+    public void start(){
         while(!application_should_close){   // Boucle principale du jeu 
             
             while(!current_layout.shouldClose()){   
@@ -52,6 +52,6 @@ public class Tetris {
 
     public static void main(String[] args) {
         Tetris game = new Tetris();
-        game.Start();
+        game.start();
     }
 }

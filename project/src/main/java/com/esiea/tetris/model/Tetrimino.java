@@ -3,11 +3,11 @@ package com.esiea.tetris.model;
 
 import java.util.ArrayList;
 
-import com.esiea.tetris.utils.vec2;
+import com.esiea.tetris.utils.Vec2;
 import java.util.Random;
 
 public class Tetrimino {
-    private vec2 position;
+    private Vec2 position;
 
     private ArrayList <int[][]> layout; // tableau représentant la configuration du Tetrimino selon son orientation
     
@@ -36,11 +36,11 @@ public class Tetrimino {
         indiceCouleur = t.getIndiceCouleur();
     }
     
-    public final void setPosition(vec2 _position){
+    public final void setPosition(Vec2 _position){
         this.position = _position;
     }
     
-    public final vec2 getPosition(){
+    public final Vec2 getPosition(){
         return this.position;
     }
     
@@ -75,9 +75,9 @@ public class Tetrimino {
     
     // Retourne une liste contenant les coordonnées exactes de chaque point constituant le tetrimino
     // Facilite un grand nombre d'actions ultérieures tel que pour dessiner le Tetrimino sur la surface de jeu
-    public final ArrayList<vec2> getPointList()
+    public final ArrayList<Vec2> getPointList()
     {
-    	ArrayList<vec2> list= new ArrayList <vec2>();
+    	ArrayList<Vec2> list= new ArrayList <Vec2>();
     	
     	// On récupère le tableau du layout décrivant l'état actuel du Tetrimino
     	// ex :
@@ -101,7 +101,7 @@ public class Tetrimino {
                     xChecked=i+position.x-Math.round(wLay/2);
                     yChecked=j+position.y-Math.round(hLay/2);
 
-                    list.add(new vec2(xChecked,yChecked));
+                    list.add(new Vec2(xChecked,yChecked));
                 }	   
             }
         }

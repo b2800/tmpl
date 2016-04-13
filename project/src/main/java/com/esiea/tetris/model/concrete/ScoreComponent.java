@@ -9,7 +9,7 @@ import com.esiea.tetris.graphics.Drawable;
 import com.esiea.tetris.graphics.TPanel;
 import com.esiea.tetris.model.Component;
 import com.esiea.tetris.utils.ScoreUtil;
-import com.esiea.tetris.utils.vec2;
+import com.esiea.tetris.utils.Vec2;
 
 public class ScoreComponent extends Component implements Drawable{
 	
@@ -85,8 +85,8 @@ public class ScoreComponent extends Component implements Drawable{
     }
 
     @Override
-    public vec2 getDrawableRelativePosition() {
-        return new vec2(0,0);
+    public Vec2 getDrawableRelativePosition() {
+        return new Vec2(0,0);
     }
 
     @Override

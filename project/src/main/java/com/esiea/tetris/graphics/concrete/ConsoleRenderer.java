@@ -7,7 +7,7 @@ import com.esiea.tetris.model.Layout;
 import com.esiea.tetris.utils.ColorUtil;
 import com.esiea.tetris.utils.Context;
 import com.esiea.tetris.utils.GridUtil;
-import com.esiea.tetris.utils.vec2;
+import com.esiea.tetris.utils.Vec2;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 
@@ -18,6 +18,9 @@ import java.io.IOException;
 import static java.lang.Math.abs;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.lang.Math.abs;
+import static java.lang.Math.abs;
+import static java.lang.Math.abs;
 
 public class ConsoleRenderer extends Renderer{
     private TCharacter[][] grid;
@@ -66,9 +69,9 @@ public class ConsoleRenderer extends Renderer{
         }
     }
     
-    private void drawText(String[] text, int[][] colors, vec2 position, vec2 offset){
+    private void drawText(String[] text, int[][] colors, Vec2 position, Vec2 offset){
         for(int i = 0; i < text.length; i++){
-            vec2 pos = new vec2(position);
+            Vec2 pos = new Vec2(position);
             pos.y += i;
             pos.y += offset.y;
             pos.x += offset.x;
@@ -79,13 +82,13 @@ public class ConsoleRenderer extends Renderer{
         }
     }
     
-    private void insertLineAt(String text, int[] colors_id,  vec2 pos){
+    private void insertLineAt(String text, int[] colors_id,  Vec2 pos){
         for(int i = 0; i < text.length(); i++){
             if(pos.x + i >= grid[0].length || pos.y >= grid.length){
                 continue;
             }
             if(colors_id != null){
-                int[] color = ColorUtil.ColorIndexToRGB(colors_id[i]);
+                int[] color = ColorUtil.colorIndexToRGB(colors_id[i]);
                 grid[pos.y][pos.x + i] = new TCharacter(text.charAt(i), color);
             } else {
                 grid[pos.y][pos.x + i] = new TCharacter(text.charAt(i));
@@ -93,17 +96,17 @@ public class ConsoleRenderer extends Renderer{
         }
     }
     
-    private void drawSquare(vec2 position, vec2 size, boolean filled){
+    private void drawSquare(Vec2 position, Vec2 size, boolean filled){
         if(filled){ return; }
-        vec2 topLeft = new vec2(position);
-            topLeft.add(new vec2(-1, -1));
-        vec2 topRight = new vec2(position);
+        Vec2 topLeft = new Vec2(position);
+            topLeft.add(new Vec2(-1, -1));
+        Vec2 topRight = new Vec2(position);
             topRight.x += size.x;
-            topRight.add(new vec2(0, -1));
-        vec2  bottomLeft = new vec2(position);
+            topRight.add(new Vec2(0, -1));
+        Vec2  bottomLeft = new Vec2(position);
             bottomLeft.y += size.y;
-            bottomLeft.add(new vec2(-1, 0));
-        vec2 bottomRight = new vec2(position);
+            bottomLeft.add(new Vec2(-1, 0));
+        Vec2 bottomRight = new Vec2(position);
             bottomRight.add(size);
         
         drawLine(topLeft, topRight);
@@ -112,7 +115,7 @@ public class ConsoleRenderer extends Renderer{
         drawLine(topRight, bottomRight);
     }
     
-    private void drawLine(vec2 start, vec2 end){
+    private void drawLine(Vec2 start, Vec2 end){
         if(start.x == end.x){
             for(int i = 0; i < abs(end.y - start.y); i++){
                 grid[i+start.y][start.x] = new TCharacter('|');
@@ -135,7 +138,7 @@ public class ConsoleRenderer extends Renderer{
             terminal.setCursorVisible(false);
 
             terminalSize = terminal.getTerminalSize();
-            Context.setWindowSize(new vec2(terminalSize.getColumns(), terminalSize.getRows()));
+            Context.setWindowSize(new Vec2(terminalSize.getColumns(), terminalSize.getRows()));
             
         } catch (IOException ex) {
             Logger.getLogger(ConsoleRenderer.class.getName()).log(Level.SEVERE, null, ex);

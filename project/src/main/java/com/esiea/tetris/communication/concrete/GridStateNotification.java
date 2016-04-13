@@ -5,35 +5,27 @@ import java.io.Serializable;
 public class GridStateNotification implements Serializable{
     private int[][] grid;
     private int[][] colorMap;
-    private boolean propagateOverNetwork;
     private int id;
 
     public GridStateNotification() {
-        propagateOverNetwork = true;
+        grid = new int[0][0];
+        colormap = new int[0][0];
     }
     
     public int[][] getGrid() {
-        return grid;
+        return grid.clone();
     }
 
     public void setGrid(int[][] grid) {
-        this.grid = grid;
-    }
-
-    public boolean shouldPropagateOverNetwork() {
-        return propagateOverNetwork;
-    }
-
-    public void setPropagateOverNetwork(boolean propagateOverNetwork) {
-        this.propagateOverNetwork = propagateOverNetwork;
+        this.grid = grid.clone();
     }
     
     public int[][] getColorMap() {
-        return colorMap;
+        return colorMap.clone();
     }
 
     public void setColorMap(int[][] colorMap) {
-        this.colorMap = colorMap;
+        this.colorMap = colorMap.clone();
     }
     
     public int getId() {

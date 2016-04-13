@@ -27,15 +27,16 @@ public class TestPenaltyComponent {
     }
 
     @Test
-    public void itShouldSendAPenaltyAfter10Lines()
+    public void itShouldSendAPenaltyAfter10Lines() throws InterruptedException
     {
         assertEquals(pl.gotPenalty(), false);
         
         // When player 1 clears 10 lines
         send10Lines(1);
 
+        Thread.sleep(2000);
         // Then it should have sent a penaltyMessage;
-        // assertEquals(pl.gotPenalty(), true);
+        assertEquals(pl.gotPenalty(), true);
     }
     
     @Test
@@ -56,7 +57,7 @@ public class TestPenaltyComponent {
         }
     }
     
-    private class PenaltyListener{
+    private static class PenaltyListener{
         private boolean gotPenalty;
         private int playerId;
 
@@ -67,6 +68,7 @@ public class TestPenaltyComponent {
         
         @Handler
         public void handle(PenaltyNotification msg){
+            System.out.println("Received penalty message");
             gotPenalty = true;
         }
 

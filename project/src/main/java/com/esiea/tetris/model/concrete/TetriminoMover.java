@@ -1,7 +1,7 @@
 package com.esiea.tetris.model.concrete;
 
 import com.esiea.tetris.model.Tetrimino;
-import com.esiea.tetris.utils.vec2;
+import com.esiea.tetris.utils.Vec2;
 
 
 // Classe qui se contente d'effectuer les déplacements. Tous les problèmes de collisions seront gérés en amont.

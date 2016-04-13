@@ -8,7 +8,7 @@ import com.esiea.tetris.communication.concrete.PenaltyNotification;
 import com.esiea.tetris.graphics.Drawable;
 import com.esiea.tetris.graphics.TPanel;
 import com.esiea.tetris.model.Component;
-import com.esiea.tetris.utils.vec2;
+import com.esiea.tetris.utils.Vec2;
 
 public class PenaltyComponent extends Component
                               implements Drawable {
@@ -31,7 +31,8 @@ public class PenaltyComponent extends Component
         // Send penalty if enough lines were cleared. 
         if(lineCount >= 10){
             int penaltyTypeId = new Random().nextInt(2);
-            PenaltyNotification msgPenalty = new PenaltyNotification(playerId, penaltyTypeId);
+            int opponentId = (playerId+1)%2;
+            PenaltyNotification msgPenalty = new PenaltyNotification(opponentId, penaltyTypeId);
             MessageBus.getInstance().post(msgPenalty);
             lineCount -= 10;
         }
@@ -59,8 +60,8 @@ public class PenaltyComponent extends Component
     }
 
     @Override
-    public vec2 getDrawableRelativePosition() {
-        return new vec2(0,0);
+    public Vec2 getDrawableRelativePosition() {
+        return new Vec2(0,0);
     }
 
     @Override

@@ -1,20 +1,20 @@
 package com.esiea.tetris.utils;
 
-public class vec2{
+public class Vec2{
     public int x;
     public int y;
     
-    public vec2(int _x, int _y){
+    public Vec2(int _x, int _y){
         this.x = _x;
         this.y = _y;
     }
     
-    public vec2(vec2 a){
+    public Vec2(Vec2 a){
         this.x = a.x;
         this.y = a.y;
     }
     
-    public void add(vec2 v)
+    public void add(Vec2 v)
     {
     	this.x+=v.x;
     	this.y+=v.y;
@@ -26,8 +26,8 @@ public class vec2{
     	this.y+=y;
     }
     
-    public static vec2 sum(vec2 a, vec2 b){
-        vec2 c = a;
+    public static Vec2 sum(Vec2 a, Vec2 b){
+        Vec2 c = a;
         c.x += b.x;
         c.y += b.y;
         return c;

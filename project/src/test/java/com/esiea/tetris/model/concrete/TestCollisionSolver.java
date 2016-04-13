@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import com.esiea.tetris.model.Tetrimino;
 import com.esiea.tetris.model.builder.TetriminoBuilder;
-import com.esiea.tetris.utils.vec2;
+import com.esiea.tetris.utils.Vec2;
 
 public class TestCollisionSolver {
 	
@@ -34,7 +34,7 @@ public class TestCollisionSolver {
 	            {0, 0, 0, 0, 0, 0},
 	        };
 		
-		t.setPosition(new vec2(3,4));
+		t.setPosition(new Vec2(3,4));
 		
 		/*
 		{0, 0, 0, 0, 0, 0},
@@ -56,7 +56,7 @@ public class TestCollisionSolver {
             {0, 0, 0, 0, 0, 0},
         };
 	
-		t.setPosition(new vec2(3,4));
+		t.setPosition(new Vec2(3,4));
 		
 		/*
 		{0, 0, 0, 0, 0, 0},
@@ -78,7 +78,7 @@ public class TestCollisionSolver {
             {1, 0, 0, 0, 0, 0},
         };
 	
-		t.setPosition(new vec2(1,2));
+		t.setPosition(new Vec2(1,2));
 		
 		/*
 		{0, 0, 0, 0, 0, 0},
@@ -107,7 +107,7 @@ public class TestCollisionSolver {
 	            {0, 0, 0, 0, 0, 0},
 	        };
 		
-		t.setPosition(new vec2(3,4));
+		t.setPosition(new Vec2(3,4));
 		
 		/*
 		{0, 0, 0, 0, 0, 0},
@@ -129,7 +129,7 @@ public class TestCollisionSolver {
 	            {1, 1, 0, 0, 0, 0},
 	        };
 		
-		t.setPosition(new vec2(3,4));
+		t.setPosition(new Vec2(3,4));
 		
 		/*
 		{0, 0, 0, 0, 0, 0},
@@ -151,7 +151,7 @@ public class TestCollisionSolver {
 	            {1, 0, 0, 1, 0, 0},
 	        };
 		
-		t.setPosition(new vec2(1,2));
+		t.setPosition(new Vec2(1,2));
 		
 		/*
 		{0, 0, 0, 0, 0, 0},
@@ -178,7 +178,7 @@ public class TestCollisionSolver {
             {0, 0, 0, 0, 0, 0},
         };
 	
-		t.setPosition(new vec2(6,4));
+		t.setPosition(new Vec2(6,4));
 		
 		/*
 		{0, 0, 0, 0, 0, 0},
@@ -201,7 +201,7 @@ public class TestCollisionSolver {
 	        {0, 0, 0, 0, 0, 0},
 	    };
 	
-		t.setPosition(new vec2(3,6));
+		t.setPosition(new Vec2(3,6));
 		
 		/*
 		{0, 0, 0, 0, 0, 0},
@@ -224,7 +224,7 @@ public class TestCollisionSolver {
 	        {0, 0, 0, 0, 0, 0},
 	    };
 	
-		t.setPosition(new vec2(0,2));
+		t.setPosition(new Vec2(0,2));
 		
 		/*
 		{0, 0, 0, 0, 0, 0},

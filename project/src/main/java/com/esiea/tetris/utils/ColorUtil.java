@@ -1,7 +1,7 @@
 package com.esiea.tetris.utils;
 
 public class ColorUtil {
-    public static int[] ColorIndexToRGB(int index){
+    public static int[] colorIndexToRGB(int index){
         switch(index){
             case 2: 
                 return new int[]{200,0,0};

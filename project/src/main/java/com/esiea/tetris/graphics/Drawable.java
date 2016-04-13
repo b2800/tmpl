@@ -1,9 +1,9 @@
 package com.esiea.tetris.graphics;
 
-import com.esiea.tetris.utils.vec2;
+import com.esiea.tetris.utils.Vec2;
 
 public interface Drawable {
     String[] getDrawableText();
-    vec2 getDrawableRelativePosition();
+    Vec2 getDrawableRelativePosition();
     int[][] getColorMap();
 }

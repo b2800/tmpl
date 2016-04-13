@@ -7,7 +7,7 @@ import com.esiea.tetris.graphics.TPanel;
 import com.esiea.tetris.model.Component;
 import com.esiea.tetris.model.Tetrimino;
 import com.esiea.tetris.utils.GridUtil;
-import com.esiea.tetris.utils.vec2;
+import com.esiea.tetris.utils.Vec2;
 import net.engio.mbassy.listener.Handler;
 
 public class NextTetriminoIndicatorComponent extends Component
@@ -17,7 +17,7 @@ public class NextTetriminoIndicatorComponent extends Component
     int index;
 
     public NextTetriminoIndicatorComponent() {
-        setSize(new vec2(4,4));
+        setSize(new Vec2(4,4));
         index = 0;
         panel = new TPanel();
         panel.setDrawBorder(true);
@@ -34,7 +34,7 @@ public class NextTetriminoIndicatorComponent extends Component
     @Handler
     public void handle(NextTetriminos msg){
         nextTetrimino = new Tetrimino(msg.getSequence()[index]);
-        nextTetrimino.setPosition(new vec2(2,2));
+        nextTetrimino.setPosition(new Vec2(2,2));
     }
 
     @Override
@@ -51,7 +51,7 @@ public class NextTetriminoIndicatorComponent extends Component
             }
         }
         if(nextTetrimino != null){
-            for(vec2 pt : nextTetrimino.getPointList()){
+            for(Vec2 pt : nextTetrimino.getPointList()){
                 grid[pt.y][pt.x] = '\u2588';
             }
         }
@@ -63,12 +63,12 @@ public class NextTetriminoIndicatorComponent extends Component
     }
 
     @Override
-    public vec2 getDrawableRelativePosition() {
-        return new vec2(0,0);
+    public Vec2 getDrawableRelativePosition() {
+        return new Vec2(0,0);
     }
     
     @Override
-    public void setPosition(vec2 pos){
+    public void setPosition(Vec2 pos){
         super.setPosition(pos);
         panel.setPosition(pos);
     }
@@ -83,7 +83,7 @@ public class NextTetriminoIndicatorComponent extends Component
         
         int[][] map = new int[4][4];
         GridUtil.clearGrid(map, 1);
-        for(vec2 pt : nextTetrimino.getPointList()){
+        for(Vec2 pt : nextTetrimino.getPointList()){
             map[pt.y][pt.x] = nextTetrimino.getIndiceCouleur();
         }
         return map;

@@ -27,7 +27,7 @@ public class TCharacter {
     }
 
     public int[] getColor() {
-        return color;
+        return color.clone();
     }
 
     public final void setColor(Integer[] color) {
@@ -37,7 +37,7 @@ public class TCharacter {
     }
     
     public final void setColor(int[] color){
-        this.color = color;
+        this.color = color.clone();
     }
     
     @Override

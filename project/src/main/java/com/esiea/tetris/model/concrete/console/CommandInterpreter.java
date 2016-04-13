@@ -7,6 +7,7 @@ import com.esiea.tetris.model.builder.LayoutBuilder;
 import com.esiea.tetris.utils.ScoreUtil;
 import com.esiea.tetris.utils.StringUtil;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class CommandInterpreter {
 
@@ -14,7 +15,7 @@ public class CommandInterpreter {
     }
     
     public String[] execute(String command){
-        String output = parseAndRun(command.toLowerCase());
+        String output = parseAndRun(command);
         return StringUtil.linesToArray(output);
     }
     
@@ -61,11 +62,12 @@ public class CommandInterpreter {
     }
     
     private String displayHighscores(){
-        String output = "Meilleurs scores : \n";
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("Meilleurs scores : \n");
         for(int score : ScoreUtil.getHighScores()){
-            output += Integer.toString(score) + "\n";
+            buffer.append(Integer.toString(score) + "\n");
         }
-        return output;
+        return buffer.toString();
     }
     
     private String quitGame(){

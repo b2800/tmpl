@@ -3,7 +3,7 @@ package com.esiea.tetris.model;
 import com.esiea.tetris.core.Updatable;
 import com.esiea.tetris.graphics.Drawable;
 import com.esiea.tetris.graphics.TPanel;
-import com.esiea.tetris.utils.vec2;
+import com.esiea.tetris.utils.Vec2;
 import java.util.ArrayList;
 
 /*
@@ -16,27 +16,27 @@ import java.util.ArrayList;
  */
 
 public abstract class Component{
-    protected vec2 position;
-    protected vec2 size;
+    protected Vec2 position;
+    protected Vec2 size;
     protected Layout parent;
     
     public Component(){
         
     }
     
-    public vec2 getPosition() {
+    public Vec2 getPosition() {
         return position;
     }
 
-    public void setPosition(vec2 position) {
+    public void setPosition(Vec2 position) {
         this.position = position;
     }
 
-    public vec2 getSize() {
+    public Vec2 getSize() {
         return size;
     }
 
-    public void setSize(vec2 size) {
+    public void setSize(Vec2 size) {
         this.size = size;
     }
     

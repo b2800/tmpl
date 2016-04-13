@@ -4,7 +4,7 @@ import com.esiea.tetris.graphics.Drawable;
 import com.esiea.tetris.graphics.TPanel;
 import com.esiea.tetris.model.Component;
 import com.esiea.tetris.utils.StringUtil;
-import com.esiea.tetris.utils.vec2;
+import com.esiea.tetris.utils.Vec2;
 import java.util.ArrayList;
 
 public class SimpleTextComponent extends Component
@@ -13,7 +13,7 @@ public class SimpleTextComponent extends Component
 
     public SimpleTextComponent() {
         text = new ArrayList<>();
-        setSize(new vec2(0,0));
+        setSize(new Vec2(0,0));
     }
     
     public void addLine(String input){
@@ -30,7 +30,7 @@ public class SimpleTextComponent extends Component
             if(line.length() > largest)
                 largest = line.length();
         }
-        setSize(new vec2(largest, text.size()));
+        setSize(new Vec2(largest, text.size()));
     }
     
     @Override
@@ -49,8 +49,8 @@ public class SimpleTextComponent extends Component
     }
 
     @Override
-    public vec2 getDrawableRelativePosition() {
-        return new vec2(0,0);
+    public Vec2 getDrawableRelativePosition() {
+        return new Vec2(0,0);
     }
 
     @Override

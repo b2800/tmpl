@@ -6,7 +6,7 @@ import com.esiea.tetris.graphics.Drawable;
 import com.esiea.tetris.graphics.TPanel;
 import com.esiea.tetris.model.Component;
 import com.esiea.tetris.model.Tetrimino;
-import com.esiea.tetris.utils.vec2;
+import com.esiea.tetris.utils.Vec2;
 import com.esiea.tetris.communication.MessageBus;
 import com.esiea.tetris.communication.concrete.GridStateNotification;
 import com.esiea.tetris.communication.concrete.KeyboardInput.Direction;
@@ -35,7 +35,7 @@ public class PlayableAreaComponent extends Component
     private String[] drawableText;
     private boolean syncOverNetwork;
 
-    public PlayableAreaComponent(vec2 size, int idJoueur, boolean sync) {
+    public PlayableAreaComponent(Vec2 size, int idJoueur, boolean sync) {
         this.setSize(size);
         grid = new int[size.y][size.x];
         clearGrid();
@@ -75,6 +75,7 @@ public class PlayableAreaComponent extends Component
                 case 'b':
                     rotateTetrimino(-1);
                     break;
+                default:
             }
         }
     }
@@ -110,6 +111,7 @@ public class PlayableAreaComponent extends Component
                         addTetriminoToGrid();
                 }
                 break;
+            default:
         }
     }
     
@@ -137,7 +139,7 @@ public class PlayableAreaComponent extends Component
     // Ajoute le Tetrimino à la grille (devient alors "statique", non contrôlable par l'utilsateur)
     private void addTetriminoToGrid()
     {
-        for(vec2 pt : currentTetrimino.getPointList()) {
+        for(Vec2 pt : currentTetrimino.getPointList()) {
             if(pt.y < 0){   // Si on essaie de placer un tetrimino en dehors de l'écran
                             // c'est qu'on est arrivé tout en haut de la grille
                 endGame();
@@ -205,16 +207,16 @@ public class PlayableAreaComponent extends Component
 
     @Override
     public String[] getDrawableText() {
-        return drawableText;
+        return drawableText.clone();
     }
     
-    public boolean isWithinGrid(vec2 pos){
+    public boolean isWithinGrid(Vec2 pos){
         return !(pos.x < 0 || pos.y < 0 || pos.x >= size.x || pos.y >= size.y);
     }
 
     @Override
-    public vec2 getDrawableRelativePosition() {
-        return new vec2(0,0);
+    public Vec2 getDrawableRelativePosition() {
+        return new Vec2(0,0);
     }
     
     private void clearGrid(){
@@ -230,7 +232,7 @@ public class PlayableAreaComponent extends Component
         int sequenceLength = 5;
         while(tetriminoSequence.size() < sequenceLength){ 
             Tetrimino tetrimino = TetriminoBuilder.getRandomTetrimino();
-            tetrimino.setPosition(new vec2((int)(size.x/2), 0));
+            tetrimino.setPosition(new Vec2((int)(size.x/2), 0));
             tetriminoSequence.addLast(tetrimino);
         }
         NextTetriminos msg = new NextTetriminos();
@@ -251,16 +253,18 @@ public class PlayableAreaComponent extends Component
         clearGrid();
         updateTetriminoSequence();
         currentTetrimino = tetriminoSequence.pop();
-        Message msg = new Message().withType("newgame");
+        Message msg = new Message().setType("newgame");
         MessageBus.getInstance().post(msg).asynchronously();
     }
     
     public void quitToMainMenu(){
         endGame();
-        Message msg = new Message().withType("gameover");
+        Message msg = new Message().setType("gameover");
         MessageBus.getInstance().post(msg).now();
-        parent.setNextLayout(LayoutBuilder.buildMainMenuLayout());
-        parent.setShouldClose(true);
+        if(parent != null){
+            parent.setNextLayout(LayoutBuilder.buildMainMenuLayout());
+            parent.setShouldClose(true);
+        }
     }
     
     private void updateDrawableData(){
@@ -275,7 +279,7 @@ public class PlayableAreaComponent extends Component
                 colorMap[y][x] = grid[y][x];
             }
         }
-        for(vec2 pt : currentTetrimino.getPointList()){
+        for(Vec2 pt : currentTetrimino.getPointList()){
             if(isWithinGrid(pt)){
                 StringBuilder s = new StringBuilder(drawableText[pt.y]);
                 s.setCharAt(pt.x, '\u2588');
@@ -287,6 +291,6 @@ public class PlayableAreaComponent extends Component
 
     @Override
     public int[][] getColorMap() {
-        return colorMap;
+        return colorMap.clone();
     }
 }

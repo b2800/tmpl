@@ -61,12 +61,12 @@ public class TestMessageBus {
     
     private SyncAsyncPostCommand sendMessage(String type, int value){
         return MessageBus.getInstance().post(
-                new Message().withType(type)
-                             .withJson(new JSONObject().put("value", value))
+                new Message().setType(type)
+                             .setJson(new JSONObject().put("value", value))
         );
     }
     
-    private class DummyListener{
+    private static class DummyListener{
         private int value = 0;
         
         @Handler

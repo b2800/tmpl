@@ -1,18 +1,18 @@
 package com.esiea.tetris.graphics;
 
-import com.esiea.tetris.utils.vec2;
+import com.esiea.tetris.utils.Vec2;
 import java.util.ArrayList;
 
 public class TPanel {
     private ArrayList<Drawable> drawables;
-    private vec2 size;
-    private vec2 position;
+    private Vec2 size;
+    private Vec2 position;
     private boolean border;
     
     public TPanel(){
         drawables = new ArrayList<>();
-        size = new vec2(0,0);
-        position = new vec2(0,0);
+        size = new Vec2(0,0);
+        position = new Vec2(0,0);
     }
     
     public void add(Drawable d){
@@ -24,19 +24,19 @@ public class TPanel {
         return drawables;
     }
     
-    public vec2 getSize(){
+    public Vec2 getSize(){
         return size;
     }
     
-    public vec2 getPosition(){
+    public Vec2 getPosition(){
         return position;
     }
     
-    public void setSize(vec2 _size){
+    public void setSize(Vec2 _size){
         this.size = _size;
     }
     
-    public void setPosition(vec2 _position){
+    public void setPosition(Vec2 _position){
         this.position = _position;
     }
     

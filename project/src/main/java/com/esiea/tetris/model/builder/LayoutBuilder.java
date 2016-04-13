@@ -9,7 +9,7 @@ import com.esiea.tetris.model.concrete.SimpleTextComponent;
 import com.esiea.tetris.model.concrete.console.InteractiveConsoleComponent;
 import com.esiea.tetris.utils.Context;
 import com.esiea.tetris.utils.ScoreUtil;
-import com.esiea.tetris.utils.vec2;
+import com.esiea.tetris.utils.Vec2;
 
 public class LayoutBuilder {
 
@@ -17,7 +17,7 @@ public class LayoutBuilder {
         Layout menu_layout = new Layout();
         
         InteractiveConsoleComponent console = new InteractiveConsoleComponent();
-        console.setPosition(new vec2(0,0));
+        console.setPosition(new Vec2(0,0));
         console.setSize(Context.getWindowSize());
         
         menu_layout.addComponent(console);
@@ -37,19 +37,19 @@ public class LayoutBuilder {
         NextTetriminoIndicatorComponent next = new NextTetriminoIndicatorComponent(0);
         NextTetriminoIndicatorComponent next2 = new NextTetriminoIndicatorComponent(1);
         NextTetriminoIndicatorComponent next3 = new NextTetriminoIndicatorComponent(2);
-        PlayableAreaComponent playZone = new PlayableAreaComponent(new vec2(10, 20), id, false);
+        PlayableAreaComponent playZone = new PlayableAreaComponent(new Vec2(10, 20), id, false);
 
         
-        playZone.setPosition(new vec2(2,2));
-        score.setPosition(new vec2(14, 2));
-        pc.setPosition(new vec2(14, 5));
-        next.setPosition(new vec2(14, 9));
-        next2.setPosition(new vec2(19, 9));
-        next3.setPosition(new vec2(24, 9));
-        text.setPosition(new vec2(14, 15));
+        playZone.setPosition(new Vec2(2,2));
+        score.setPosition(new Vec2(14, 2));
+        pc.setPosition(new Vec2(14, 5));
+        next.setPosition(new Vec2(14, 9));
+        next2.setPosition(new Vec2(19, 9));
+        next3.setPosition(new Vec2(24, 9));
+        text.setPosition(new Vec2(14, 15));
         
-        score.setSize(new vec2(6, 1));
-        pc.setSize(new vec2(14, 2));
+        score.setSize(new Vec2(6, 1));
+        pc.setSize(new Vec2(14, 2));
         
         text.addLine("Arrow keys to move");
         text.addLine("Press v/b to rotate");
@@ -71,8 +71,8 @@ public class LayoutBuilder {
         int id_opponent = (id_joueur+1)%2;
         Layout mlayout = buildSoloPlayerLayout(id_joueur);
         
-        PlayableAreaComponent zone2 = new PlayableAreaComponent(new vec2(10,20), id_opponent, true);
-        zone2.setPosition(new vec2(40, 2));
+        PlayableAreaComponent zone2 = new PlayableAreaComponent(new Vec2(10,20), id_opponent, true);
+        zone2.setPosition(new Vec2(40, 2));
         mlayout.addComponent(zone2);
         
         return mlayout;

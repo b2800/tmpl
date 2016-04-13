@@ -6,14 +6,14 @@ public class NextTetriminos {
     private Tetrimino[] sequence;
     
     public NextTetriminos() {
-
+        sequence = new Tetrimino[0];
     }
     
     public Tetrimino[] getSequence() {
-        return sequence;
+        return sequence.clone();
     }
 
     public void setSequence(Tetrimino[] sequence) {
-        this.sequence = sequence;
+        this.sequence = sequence.clone();
     }
 }

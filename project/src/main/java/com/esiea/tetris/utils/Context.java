@@ -2,13 +2,13 @@ package com.esiea.tetris.utils;
 
 public class Context {
     
-    private static vec2  windowSize;
+    private static Vec2  windowSize;
     
-    public static vec2 getWindowSize(){
+    public static Vec2 getWindowSize(){
         return windowSize;
     }
     
-    public static void setWindowSize(vec2 size){
+    public static void setWindowSize(Vec2 size){
         windowSize = size;
     }
 }
