@@ -15,21 +15,22 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.engio.mbassy.listener.Handler;
 
 public class NetworkService implements Updatable{
     
-    private DatagramSocket senderSocket;
-    private DatagramSocket receiverSocket;
+    private DatagramSocket socket;
     private InetAddress address;
     private int localPort;
     private int remotePort;
     private ThreadSafeBuffer buffer = new ThreadSafeBuffer();
+    private SocketListener listener;
 
     public NetworkService(){
-
+        MessageBus.getInstance().subscribe(this);
     }
     
     @Handler
@@ -39,7 +40,9 @@ public class NetworkService implements Updatable{
     
     @Handler 
     public void handle(GridStateNotification msg){
-        sendMessage(msg);
+        if(msg.shouldPropagateOverNetwork()){
+            sendMessage(msg);
+        }
     }
     
     @Handler 
@@ -47,16 +50,22 @@ public class NetworkService implements Updatable{
         sendMessage(msg);
     }
     
-    private void createSockets(String address, int localPort){
+    private void createSockets(String address, int port){
         closeConnectionIfAny();
         try {
-            this.localPort = localPort;
             if(address != null){
-                remotePort = localPort;
+                remotePort = port;
                 this.address = InetAddress.getAllByName(address)[0];
+                this.listener = new SocketListener();
+                socket = new DatagramSocket(port, this.address);
+                this.localPort = socket.getLocalPort();
+            } else { 
+                this.localPort = port;
+                socket = new DatagramSocket(localPort);
             }
-            receiverSocket = new DatagramSocket(localPort);
-            senderSocket = new DatagramSocket();
+            listener.provideSocket(socket);
+            listener.start();
+            
         } catch (SocketException ex) {
             Logger.getLogger(NetworkService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnknownHostException ex) {
@@ -68,7 +77,7 @@ public class NetworkService implements Updatable{
         try {
             byte[] data = ByteUtil.toByteArray(msg);
             DatagramPacket packet = new DatagramPacket(data, data.length, address, remotePort);
-            senderSocket.send(packet);
+            socket.send(packet);
         } catch (IOException ex) {
             Logger.getLogger(NetworkService.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -79,11 +88,14 @@ public class NetworkService implements Updatable{
     }
     
     private void closeConnectionIfAny(){
-        if(senderSocket != null){
-            senderSocket.close();
-        }
-        if(receiverSocket != null){
-            receiverSocket.close();
+        if(socket != null){
+            try {
+                listener.close();
+                listener.join();
+                socket.close();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(NetworkService.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     

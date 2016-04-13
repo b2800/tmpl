@@ -50,6 +50,16 @@ public class CommandInterpreter {
         return output;
     }
     
+    private String hostGame(int port){
+        MultiplayerMessage msg = new MultiplayerMessage();
+        msg.setPort(port);
+        MessageBus.getInstance().post(msg).asynchronously();
+        NavigationIntent nav = new NavigationIntent();
+        nav.nextLayout = LayoutBuilder.buildMultiplayerLayout(0);
+        MessageBus.getInstance().post(nav).asynchronously();
+        return "Hosting a game";
+    }
+    
     private String displayHighscores(){
         String output = "Meilleurs scores : \n";
         for(int score : ScoreUtil.getHighScores()){
@@ -77,7 +87,12 @@ public class CommandInterpreter {
             if(cmdTokens.length >= 3)
                 port = Integer.parseInt(cmdTokens[2]);
             return joinGame(cmdTokens[1], port);
-        } if(cmdTokens[0].equals("scores")){
+        } if(cmdTokens[0].equals("host")){
+            int port = 4000;
+            if(cmdTokens.length >= 2)
+                port = Integer.parseInt(cmdTokens[1]);
+            return hostGame(port);
+        }if(cmdTokens[0].equals("scores")){
             return displayHighscores();
         } if(cmdTokens[0].equals("quit")){
             return quitGame();
