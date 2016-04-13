@@ -15,6 +15,9 @@ Note : Sur certains environements, le jar est créé dans le dossier target,dans
 mvn clean install && java -jar target/*.jar
 ```
 
+Note : Sur les systémes UNIX, dans certains cas, la configuration du jeu de couleurs du terminal prends le dessus.
+Il est recommandé d'executer ce programme dans un terminal à fond sombre. 
+
 ## Comment jouer ?
 Lorsque vous lancez le jeu, vous arriverez directement sur le shell intégré. Voici la liste des commandes disponibles
 - **help** : Affiche la liste des commandes disponibles
