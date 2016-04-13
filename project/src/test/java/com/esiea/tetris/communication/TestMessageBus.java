@@ -1,5 +1,6 @@
 package com.esiea.tetris.communication;
 
+import com.esiea.tetris.communication.concrete.JSONMessage;
 import java.util.ArrayList;
 import net.engio.mbassy.bus.publication.SyncAsyncPostCommand;
 import net.engio.mbassy.listener.Handler;
@@ -61,7 +62,7 @@ public class TestMessageBus {
     
     private SyncAsyncPostCommand sendMessage(String type, int value){
         return MessageBus.getInstance().post(
-                new Message().setType(type)
+                new JSONMessage().setType(type)
                              .setJson(new JSONObject().put("value", value))
         );
     }
@@ -70,7 +71,7 @@ public class TestMessageBus {
         private int value = 0;
         
         @Handler
-        public void handle(Message msg){
+        public void handle(JSONMessage msg){
             if("TestMessage".equals(msg.getType())){
                 JSONObject obj = msg.getJSON();
                 value = obj.getInt("value");

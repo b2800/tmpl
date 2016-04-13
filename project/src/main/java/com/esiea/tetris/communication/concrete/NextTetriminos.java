@@ -1,8 +1,9 @@
 package com.esiea.tetris.communication.concrete;
 
+import com.esiea.tetris.communication.Message;
 import com.esiea.tetris.model.Tetrimino;
 
-public class NextTetriminos {
+public class NextTetriminos extends Message{
     private Tetrimino[] sequence;
     
     public NextTetriminos() {

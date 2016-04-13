@@ -1,6 +1,6 @@
 package com.esiea.tetris.model.concrete;
 
-import com.esiea.tetris.communication.Message;
+import com.esiea.tetris.communication.concrete.JSONMessage;
 import net.engio.mbassy.listener.Handler;
 
 import com.esiea.tetris.communication.MessageBus;
@@ -40,7 +40,7 @@ public class ScoreComponent extends Component implements Drawable{
 	}
         
         @Handler
-        public void handle(Message msg){
+        public void handle(JSONMessage msg){
             if("gameover".equals(msg.getType())){
                 ScoreUtil.writeHighScore(score);
             } else if ("newgame".equals(msg.getType())){

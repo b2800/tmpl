@@ -1,5 +1,6 @@
 package com.esiea.tetris.network;
 
+import com.esiea.tetris.communication.Message;
 import com.esiea.tetris.communication.MessageBus;
 import com.esiea.tetris.communication.concrete.GridStateNotification;
 import com.esiea.tetris.utils.ByteUtil;
@@ -39,8 +40,10 @@ public class SocketListener extends Thread{
                 byte[] receivedData = new byte[4096];
                 DatagramPacket packet = new DatagramPacket(receivedData, receivedData.length);
                 socket.receive(packet);
-                Object msg = ByteUtil.fromByteArray(receivedData);
+                Message msg = (Message)ByteUtil.fromByteArray(receivedData);
+                msg.setPropagateOverNetwork(false);  // Prevent broadcast storms
                 MessageBus.getInstance().post(msg).asynchronously();
+                
                 if(address == null){
                     address = packet.getAddress();
                     remotePort = packet.getPort();

@@ -1,12 +1,14 @@
 package com.esiea.tetris.communication.concrete;
 
-public class PenaltyNotification {
+import com.esiea.tetris.communication.Message;
+
+public class PenaltyNotification extends Message{
 	
 	private int idJoueur;
 	private int idTypePenalty;
 	
 	public PenaltyNotification(int idJoueur, int idTypePenalty) {
-		
+		setPropagateOverNetwork(true);
 		this.idJoueur=idJoueur;
 		this.idTypePenalty=idTypePenalty;
 	}

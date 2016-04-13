@@ -1,26 +1,19 @@
 package com.esiea.tetris.communication;
 
-import org.json.JSONObject;
+import java.io.Serializable;
 
-public class Message {
-    private String type;    // Example : MoveLeft, MoveRight, SendMalus etc... 
-    private JSONObject json;
+public class Message implements Serializable{
+    private boolean propagateOverNetwork;
     
-    public Message setType(String _type){
-        this.type = _type;
-        return this;
+    public Message() {
+        propagateOverNetwork = false;
     }
     
-    public Message setJson(JSONObject _json){
-        this.json = _json;
-        return this;
+    public final boolean shouldPropagateOverNetwork(){
+        return propagateOverNetwork;
     }
     
-    public String getType(){
-        return this.type;
-    }
-    
-    public JSONObject getJSON(){
-        return json;
+    public final void setPropagateOverNetwork(boolean propagateOverNetwork){
+        this.propagateOverNetwork = propagateOverNetwork;
     }
 }

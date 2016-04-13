@@ -1,7 +1,10 @@
 package com.esiea.tetris.communication.concrete;
 
 // Abstraction class for underlying input objects (KeyStroke from lanterna etc)
-public class KeyboardInput {
+
+import com.esiea.tetris.communication.Message;
+
+public class KeyboardInput extends Message{
     Type keyType;
     char character;
     Direction direction;

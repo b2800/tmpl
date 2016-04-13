@@ -1,7 +1,8 @@
 package com.esiea.tetris.network;
 
-import com.esiea.tetris.core.Updatable;
 import com.esiea.tetris.communication.Message;
+import com.esiea.tetris.core.Updatable;
+import com.esiea.tetris.communication.concrete.JSONMessage;
 import com.esiea.tetris.communication.MessageBus;
 import com.esiea.tetris.communication.concrete.GridStateNotification;
 import com.esiea.tetris.communication.concrete.MultiplayerMessage;
@@ -36,12 +37,7 @@ public class NetworkService implements Updatable{
     }
     
     @Handler 
-    public void handle(GridStateNotification msg){
-            sendMessage(msg);
-    }
-    
-    @Handler 
-    public void handle(PenaltyNotification msg){
+    public void handle(Message msg){
         sendMessage(msg);
     }
     
@@ -66,7 +62,9 @@ public class NetworkService implements Updatable{
         }
     }
     
-    private void sendMessage(Object msg){
+    private void sendMessage(Message msg){
+        if(!msg.shouldPropagateOverNetwork()){ return; }
+        
         if(this.address == null){
             this.address = listener.getAddress();
             this.remotePort = listener.getRemotePort();

@@ -1,6 +1,8 @@
 package com.esiea.tetris.communication.concrete;
 
-public class MultiplayerMessage {
+import com.esiea.tetris.communication.Message;
+
+public class MultiplayerMessage extends Message{
     public enum Type{ CREATE, JOIN };
     
     private Type type;

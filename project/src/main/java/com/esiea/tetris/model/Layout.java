@@ -2,7 +2,7 @@ package com.esiea.tetris.model;
 
 import com.esiea.tetris.graphics.Renderer;
 import com.esiea.tetris.utils.Vec2;
-import com.esiea.tetris.communication.Message;
+import com.esiea.tetris.communication.concrete.JSONMessage;
 import com.esiea.tetris.core.Updatable;
 import com.esiea.tetris.graphics.Drawable;
 import com.esiea.tetris.graphics.TPanel;

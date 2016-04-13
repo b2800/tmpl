@@ -1,6 +1,8 @@
 package com.esiea.tetris.communication.concrete;
 
-public class LineNotification {
+import com.esiea.tetris.communication.Message;
+
+public class LineNotification extends Message{
 	
     private int playerId;
     private int lineCount;

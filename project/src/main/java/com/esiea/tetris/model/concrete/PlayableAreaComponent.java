@@ -1,6 +1,6 @@
 package com.esiea.tetris.model.concrete;
 
-import com.esiea.tetris.communication.Message;
+import com.esiea.tetris.communication.concrete.JSONMessage;
 import com.esiea.tetris.communication.concrete.KeyboardInput;
 import com.esiea.tetris.graphics.Drawable;
 import com.esiea.tetris.graphics.TPanel;
@@ -253,13 +253,13 @@ public class PlayableAreaComponent extends Component
         clearGrid();
         updateTetriminoSequence();
         currentTetrimino = tetriminoSequence.pop();
-        Message msg = new Message().setType("newgame");
+        JSONMessage msg = new JSONMessage().setType("newgame");
         MessageBus.getInstance().post(msg).asynchronously();
     }
     
     public void quitToMainMenu(){
         endGame();
-        Message msg = new Message().setType("gameover");
+        JSONMessage msg = new JSONMessage().setType("gameover");
         MessageBus.getInstance().post(msg).now();
         if(parent != null){
             parent.setNextLayout(LayoutBuilder.buildMainMenuLayout());

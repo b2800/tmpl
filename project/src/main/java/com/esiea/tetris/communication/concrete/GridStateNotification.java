@@ -1,15 +1,16 @@
 package com.esiea.tetris.communication.concrete;
 
-import java.io.Serializable;
+import com.esiea.tetris.communication.Message;
 
-public class GridStateNotification implements Serializable{
+public class GridStateNotification extends Message{
     private int[][] grid;
     private int[][] colorMap;
     private int id;
 
     public GridStateNotification() {
         grid = new int[0][0];
-        colormap = new int[0][0];
+        colorMap = new int[0][0];
+        setPropagateOverNetwork(true);
     }
     
     public int[][] getGrid() {
