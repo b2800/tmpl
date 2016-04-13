@@ -14,7 +14,7 @@ import com.esiea.tetris.model.Layout;
 public class Tetris {
     
     private Layout current_layout;
-    private final Renderer renderer;
+    private Renderer renderer;
     private final Updatable inputService;
     private final Updatable networkService;
     private Boolean application_should_close;
@@ -43,6 +43,11 @@ public class Tetris {
                 current_layout = current_layout.next();
             }
         }
+        terminateServices();
+    }
+    
+    private void terminateServices(){
+        renderer = null;
     }
 
     public static void main(String[] args) {

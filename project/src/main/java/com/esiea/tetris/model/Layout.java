@@ -1,6 +1,5 @@
 package com.esiea.tetris.model;
 
-import com.esiea.tetris.graphics.exceptions.OutOfBoundsDrawException;
 import com.esiea.tetris.graphics.Renderer;
 import com.esiea.tetris.utils.vec2;
 import com.esiea.tetris.communication.Message;

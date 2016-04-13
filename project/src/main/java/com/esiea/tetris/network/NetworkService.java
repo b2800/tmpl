@@ -26,7 +26,6 @@ public class NetworkService implements Updatable{
     private InetAddress address;
     private int localPort;
     private int remotePort;
-    private ThreadSafeBuffer buffer = new ThreadSafeBuffer();
     private SocketListener listener;
 
     public NetworkService(){
@@ -52,12 +51,12 @@ public class NetworkService implements Updatable{
     
     private void createSockets(String address, int port){
         closeConnectionIfAny();
+        this.listener = new SocketListener();
         try {
             if(address != null){
                 remotePort = port;
                 this.address = InetAddress.getAllByName(address)[0];
-                this.listener = new SocketListener();
-                socket = new DatagramSocket(port, this.address);
+                socket = new DatagramSocket();
                 this.localPort = socket.getLocalPort();
             } else { 
                 this.localPort = port;
@@ -66,25 +65,24 @@ public class NetworkService implements Updatable{
             listener.provideSocket(socket);
             listener.start();
             
-        } catch (SocketException ex) {
-            Logger.getLogger(NetworkService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnknownHostException ex) {
+        } catch (SocketException | UnknownHostException ex) {
             Logger.getLogger(NetworkService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     private void sendMessage(Object msg){
+        if(this.address == null){
+            this.address = socket.getInetAddress();
+            this.remotePort = socket.getPort();
+        }
         try {
             byte[] data = ByteUtil.toByteArray(msg);
             DatagramPacket packet = new DatagramPacket(data, data.length, address, remotePort);
+            System.out.println("Sending packet with size " + data.length);
             socket.send(packet);
         } catch (IOException ex) {
             Logger.getLogger(NetworkService.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    
-    private void broadcastMessagesFromNetwork(){
-        
     }
     
     private void closeConnectionIfAny(){
@@ -101,6 +99,6 @@ public class NetworkService implements Updatable{
     
     @Override
     public void update(){
-        broadcastMessagesFromNetwork();
+        
     }
 }

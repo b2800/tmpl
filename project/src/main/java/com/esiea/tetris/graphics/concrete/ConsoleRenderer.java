@@ -41,7 +41,7 @@ public class ConsoleRenderer extends Renderer{
             draw(_layout);
         }
     }
-        
+
     private void draw(Layout _layout){
         // Changes an internal grid with the new data.
         _layout.getDrawableContainers().stream().forEach((panel) -> {

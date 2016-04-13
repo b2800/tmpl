@@ -9,7 +9,7 @@ public class GridStateNotification implements Serializable{
     private int id;
 
     public GridStateNotification() {
-        
+        propagateOverNetwork = true;
     }
     
     public int[][] getGrid() {
