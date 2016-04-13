@@ -1,15 +1,12 @@
 package com.esiea.tetris.model.concrete;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import com.esiea.tetris.model.Tetrimino;
 import com.esiea.tetris.model.builder.TetriminoBuilder;
-import com.esiea.tetris.util.Listener;
 import com.esiea.tetris.utils.vec2;
 
 public class TestCollisionSolver {
@@ -22,8 +19,6 @@ public class TestCollisionSolver {
 	public void init()
 	{
 		t=TetriminoBuilder.createO();
-		
-		//when(listener.handle(new PenaltyNotification(1,1)));
 	}
 	
 	

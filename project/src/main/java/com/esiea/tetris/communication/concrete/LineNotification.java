@@ -2,26 +2,26 @@ package com.esiea.tetris.communication.concrete;
 
 public class LineNotification {
 	
-	private int idJoueur;
-	private int nbLignes;
-	
-	public LineNotification(int idJoueur, int nbLignes)
-	{
-		this.idJoueur=idJoueur;
-		this.nbLignes=nbLignes;
-	}
-	
-	public int getIdJoueur() {
-		return idJoueur;
-	}
-	public void setIdJoueur(int idJoueur) {
-		this.idJoueur = idJoueur;
-	}
-	public int getNbLignes() {
-		return nbLignes;
-	}
-	public void setNbLignes(int nbLignes) {
-		this.nbLignes = nbLignes;
-	}
+    private int playerId;
+    private int lineCount;
+
+    public LineNotification(int id, int _nbLines)
+    {
+        this.playerId=id;
+        this.lineCount=_nbLines;
+    }
+
+    public int getPlayerId() {
+        return playerId;
+    }
+    public void setPlayerId(int idJoueur) {
+        this.playerId = idJoueur;
+    }
+    public int getLineCount() {
+        return lineCount;
+    }
+    public void setLineCount(int nbLignes) {
+        this.lineCount = nbLignes;
+    }
 
 }

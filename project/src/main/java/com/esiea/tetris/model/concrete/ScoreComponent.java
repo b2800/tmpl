@@ -31,8 +31,8 @@ public class ScoreComponent extends Component implements Drawable{
 		//reçoit le message en paramètre
 		
 		// on extrait les informations contenues dans le message
-		int idJoueur=msg.getIdJoueur();
-		int nbLignes=msg.getNbLignes();
+		int idJoueur=msg.getPlayerId();
+		int nbLignes=msg.getLineCount();
 		
 		// Si la notification concerne le joueur actuel, on incrémente son score
 		if(idJoueur==this.idJoueur)

@@ -1,4 +1,4 @@
-package com.esiea.tetris.util;
+package com.esiea.tetris.utils;
 
 import org.junit.Before;
 import org.junit.Test;

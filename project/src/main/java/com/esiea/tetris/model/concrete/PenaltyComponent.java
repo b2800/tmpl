@@ -12,33 +12,30 @@ import com.esiea.tetris.utils.vec2;
 
 public class PenaltyComponent extends Component
                               implements Drawable {
-	private int compteurLine;
-	private int idJoueur;
-	
-	public PenaltyComponent (int idJoueur) {
-		MessageBus.getInstance().subscribe(this);
-		compteurLine=0;
-                this.idJoueur = idJoueur;
-	}
-	
-	@Handler
-	public void handle(LineNotification msg){
-		//appel de la variables nbLignes contenues dans le message
-		int nbLignes=msg.getNbLignes();
-		int _idJoueur=msg.getIdJoueur();
-		Random rn = new Random();
-		int idTypePenalty = rn.nextInt(2);
-		
-		if(idJoueur==_idJoueur) {
-			compteurLine+=nbLignes;
-		}
-		
-		if (compteurLine==10) {
-			PenaltyNotification msgPenalty = new PenaltyNotification(idJoueur,idTypePenalty);
-			MessageBus.getInstance().post(msgPenalty);
-                        compteurLine = 0;
-		}
-	}
+    private int lineCount;
+    private int playerId;
+
+    public PenaltyComponent (int id) {
+        MessageBus.getInstance().subscribe(this);
+        lineCount=0;
+        this.playerId = id;
+    }
+
+    @Handler
+    public void handle(LineNotification msg){
+        // Discard if message does not come from our player;
+        if(msg.getPlayerId() != this.playerId){ return; }
+        
+        lineCount += msg.getLineCount();
+        
+        // Send penalty if enough lines were cleared. 
+        if(lineCount >= 10){
+            int penaltyTypeId = new Random().nextInt(2);
+            PenaltyNotification msgPenalty = new PenaltyNotification(playerId, penaltyTypeId);
+            MessageBus.getInstance().post(msgPenalty);
+            lineCount -= 10;
+        }
+    }
 
     @Override
     public TPanel getDrawableContainer() {
@@ -52,9 +49,12 @@ public class PenaltyComponent extends Component
 
     @Override
     public String[] getDrawableText() {
+        int remainingLines = 10 - lineCount;
         String[] text = new String[2];
-        text[0] = "Lines before malus : ";
-        text[1] = Integer.toString(10 - compteurLine);
+        text[0] = "Sending malus in: ";
+        text[1] = Integer.toString(remainingLines) + " line";
+        if(remainingLines > 1)
+            text[1] += "s";
         return text;
     }
 
@@ -67,5 +67,4 @@ public class PenaltyComponent extends Component
     public int[][] getColorMap() {
         return null;
     }
-
 }
