@@ -23,4 +23,8 @@ public class Message {
     public String getType(){
         return this.type;
     }
+    
+    public JSONObject getJSON(){
+        return json;
+    }
 }
