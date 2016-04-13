@@ -17,6 +17,8 @@ public class SocketListener extends Thread{
 
     private DatagramSocket socket;
     private boolean shouldClose;
+    private InetAddress address;
+    private int remotePort;
     
     public SocketListener() {
         shouldClose = false;
@@ -37,14 +39,23 @@ public class SocketListener extends Thread{
                 DatagramPacket packet = new DatagramPacket(receivedData, receivedData.length);
                 socket.receive(packet);
                 Object msg = ByteUtil.fromByteArray(receivedData);
-                GridStateNotification notif = (GridStateNotification)msg;
-                System.out.println("id : " + notif.getId());
-                notif.setPropagateOverNetwork(false);
                 MessageBus.getInstance().post(msg).asynchronously();
+                if(address == null){
+                    address = packet.getAddress();
+                    remotePort = packet.getPort();
+                }
             } catch (IOException ex) {
                 Logger.getLogger(SocketListener.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         socket.close();
+    }
+    
+    public InetAddress getAddress(){
+        return address;
+    }
+
+    public int getRemotePort(){
+        return remotePort;
     }
 }

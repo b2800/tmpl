@@ -14,8 +14,6 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
-import java.util.ArrayList;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.engio.mbassy.listener.Handler;
@@ -72,13 +70,12 @@ public class NetworkService implements Updatable{
     
     private void sendMessage(Object msg){
         if(this.address == null){
-            this.address = socket.getInetAddress();
-            this.remotePort = socket.getPort();
+            this.address = listener.getAddress();
+            this.remotePort = listener.getRemotePort();
         }
         try {
             byte[] data = ByteUtil.toByteArray(msg);
             DatagramPacket packet = new DatagramPacket(data, data.length, address, remotePort);
-            System.out.println("Sending packet with size " + data.length);
             socket.send(packet);
         } catch (IOException ex) {
             Logger.getLogger(NetworkService.class.getName()).log(Level.SEVERE, null, ex);
