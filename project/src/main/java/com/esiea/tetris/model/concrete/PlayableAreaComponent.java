@@ -12,6 +12,7 @@ import com.esiea.tetris.communication.concrete.GridStateNotification;
 import com.esiea.tetris.communication.concrete.KeyboardInput.Direction;
 import com.esiea.tetris.communication.concrete.KeyboardInput.Type;
 import com.esiea.tetris.communication.concrete.LineNotification;
+import com.esiea.tetris.communication.concrete.NavigationIntent;
 import com.esiea.tetris.communication.concrete.NextTetriminos;
 import com.esiea.tetris.core.Updatable;
 import com.esiea.tetris.model.builder.LayoutBuilder;
@@ -261,10 +262,9 @@ public class PlayableAreaComponent extends Component
         endGame();
         JSONMessage msg = new JSONMessage().setType("gameover");
         MessageBus.getInstance().post(msg).now();
-        if(parent != null){
-            parent.setNextLayout(LayoutBuilder.buildMainMenuLayout());
-            parent.setShouldClose(true);
-        }
+        NavigationIntent nav = new NavigationIntent();
+        nav.nextLayout = LayoutBuilder.buildMainMenuLayout();
+        MessageBus.getInstance().post(nav);
     }
     
     private void updateDrawableData(){

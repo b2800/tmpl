@@ -26,7 +26,6 @@ public class CommandInterpreter {
                 return cmd.execute(args);
             }
         }
-
         return args[0] + " : Command not found, type 'help' to display"
                             + " available commands \n";
     }

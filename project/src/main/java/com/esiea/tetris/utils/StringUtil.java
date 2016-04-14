@@ -23,4 +23,12 @@ public class StringUtil {
         }
         return lines.toArray(new String[lines.size()]);
     }
+    
+    public static String insertChartAt(String line, char c, int pos){
+        return line.substring(0, pos) + c + line.substring(pos);
+    }
+    
+    public static String removeCharAt(String line, int pos){
+        return line.substring(0, pos) + line.substring(pos + 1);
+    }
 }

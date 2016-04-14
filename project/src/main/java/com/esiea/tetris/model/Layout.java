@@ -1,8 +1,10 @@
 package com.esiea.tetris.model;
 
+import com.esiea.tetris.communication.MessageBus;
 import com.esiea.tetris.graphics.Renderer;
 import com.esiea.tetris.utils.Vec2;
 import com.esiea.tetris.communication.concrete.JSONMessage;
+import com.esiea.tetris.communication.concrete.NavigationIntent;
 import com.esiea.tetris.core.Updatable;
 import com.esiea.tetris.graphics.Drawable;
 import com.esiea.tetris.graphics.TPanel;
@@ -10,6 +12,7 @@ import com.esiea.tetris.graphics.TPanel;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.engio.mbassy.listener.Handler;
 
 /* 
     Layout responsability : 
@@ -29,6 +32,13 @@ public class Layout{
     
     public Layout(){
         components = new ArrayList<>();
+        MessageBus.getInstance().subscribe(this);
+    }
+    
+    @Handler
+    public void handle(NavigationIntent msg){
+        nextLayout = msg.nextLayout;
+        shouldClose = true;
     }
     
     public void addComponent(Component _c){
@@ -52,18 +62,6 @@ public class Layout{
     
     public Layout next(){
         return this.nextLayout;
-    }
-    
-    public void setNextLayout(Layout next){
-        this.nextLayout = next;
-    }
-    
-    public ArrayList<Component> getComponents(){
-        return this.components;
-    }
-    
-    public void setShouldClose(boolean _val){
-        this.shouldClose = _val;
     }
     
     public ArrayList<TPanel> getDrawableContainers(){
