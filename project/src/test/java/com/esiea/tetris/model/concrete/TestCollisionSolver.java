@@ -236,11 +236,5 @@ public class TestCollisionSolver {
 	    */
 		
 		assertEquals(CollisionSolver.isInCollision(grid, t),true);
-		
-		
 	}
-
-	
-
-
 }

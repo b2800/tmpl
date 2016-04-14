@@ -102,8 +102,8 @@ public class InteractiveConsoleComponent extends Component
     
     public void movePromptCursor(int offset){
         cursorPosition += offset;
-        if(cursorPosition > currentInput.length() + 1 ){
-            cursorPosition = currentInput.length() + 1;
+        if(cursorPosition >= currentInput.length()){
+            cursorPosition = currentInput.length();
         } else if(cursorPosition < 0){
             cursorPosition = 0;
         }
