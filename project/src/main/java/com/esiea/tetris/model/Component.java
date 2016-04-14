@@ -9,8 +9,7 @@ import java.util.ArrayList;
 /*
  * A component defines : 
     + A position (on a grid)
-    + The 2D space occupied by the component
-    + The parent layout on which it's attached
+    + The maximum 2D space occupied by the component
 
    Concrete components defines the logic to run on each updates.
  */
@@ -18,7 +17,6 @@ import java.util.ArrayList;
 public abstract class Component{
     protected Vec2 position;
     protected Vec2 size;
-    protected Layout parent;
     
     public Component(){
         
@@ -38,14 +36,6 @@ public abstract class Component{
 
     public void setSize(Vec2 size) {
         this.size = size;
-    }
-    
-    public void setParent(Layout _parent){
-        this.parent = _parent;
-    }
-    
-    public Layout getParent(){
-        return this.parent;
     }
     
     public abstract TPanel getDrawableContainer();

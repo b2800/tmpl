@@ -25,22 +25,23 @@ public class Tetris {
         renderer = new ConsoleRenderer();
         inputService = new InputService(((ConsoleRenderer)renderer).getTerminal());
         current_layout = LayoutBuilder.buildMainMenuLayout();
+        //current_layout = LayoutBuilder.buildSoloPlayerLayout(0);
     }
     
     public void start(){
         while(!application_should_close){   // Boucle principale du jeu 
-            
             while(!current_layout.shouldClose()){   
                 inputService.update();
                 networkService.update();
                 current_layout.update();
                 renderer.process(current_layout);
             }
-            
+
             if(current_layout.next() == null){
                 application_should_close = true;
             }else{
                 current_layout = current_layout.next();
+                current_layout.setShouldClose(false);
             }
         }
         terminateServices();

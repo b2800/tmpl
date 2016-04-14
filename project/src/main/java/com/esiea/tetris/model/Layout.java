@@ -32,6 +32,7 @@ public class Layout{
     
     public Layout(){
         components = new ArrayList<>();
+        shouldClose = false;
         MessageBus.getInstance().subscribe(this);
     }
     
@@ -43,7 +44,6 @@ public class Layout{
     
     public void addComponent(Component _c){
         if(_c != null){
-            _c.setParent(this);
             this.components.add(_c);
         }
     }
@@ -60,6 +60,10 @@ public class Layout{
         return this.shouldClose;
     }
     
+    public void setShouldClose(boolean b) {
+        shouldClose = b;
+    }
+    
     public Layout next(){
         return this.nextLayout;
     }
@@ -73,4 +77,6 @@ public class Layout{
         
         return panels;
     }
+
+
 }

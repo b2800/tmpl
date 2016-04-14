@@ -24,11 +24,6 @@ public class LayoutBuilder {
         return menu_layout;
     }
     
-    public static Layout buildMultiplayerLobby(String ip){
-        
-        return null;
-    }
-    
     public static Layout buildSoloPlayerLayout(int id){
         Layout gameLayout = new Layout();
         PenaltyComponent pc = new PenaltyComponent(id);
@@ -64,6 +59,7 @@ public class LayoutBuilder {
         gameLayout.addComponent(next2);
         gameLayout.addComponent(next3);
         gameLayout.addComponent(text);
+        
         return gameLayout;
     }
     

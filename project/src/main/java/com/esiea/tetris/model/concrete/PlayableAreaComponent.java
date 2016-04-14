@@ -264,7 +264,7 @@ public class PlayableAreaComponent extends Component
         MessageBus.getInstance().post(msg).now();
         NavigationIntent nav = new NavigationIntent();
         nav.nextLayout = LayoutBuilder.buildMainMenuLayout();
-        MessageBus.getInstance().post(nav);
+        MessageBus.getInstance().post(nav).asynchronously();
     }
     
     private void updateDrawableData(){
