@@ -58,13 +58,14 @@ public class InteractiveConsoleComponentTest {
         
         // When the user press the left key
         InputHelper.sendArrowKey(Direction.LEFT).now();
+        output = shell.getDrawableText()[0];
         
-        System.out.println(output);
         // Then it should moves the cursor one character to the left
         assertTrue(output.contains("star|t") || output.contains("star.t"));
         
         // When the user press the right key
         InputHelper.sendArrowKey(Direction.RIGHT).now();
+        output = shell.getDrawableText()[0];
         
         // Then it should moves the cursor one character to the right
         assertTrue(output.contains("start|") || output.contains("start."));
@@ -97,6 +98,29 @@ public class InteractiveConsoleComponentTest {
         // Then it should have delete the 'r' character
         String output = shell.getDrawableText()[0];
         assertTrue(output.contains("sta|t") || output.contains("sta.t"));
+    }
+    
+    @Test
+    public void itShouldDisplayErrorMessageUponInvalidCommand(){
+        // When the user type a invalid command and press Enter key
+        InputHelper.sendString("fakeCommand");
+        InputHelper.sendSpecialCharacter(Type.ENTER).now();
+        
+        // Then it should display an error message
+        String output = shell.getDrawableText()[0];
+        assertTrue(output.contains("Command not found"));
+    }
+    
+    @Test
+    public void itShouldExecuteACommand(){
+        // When the user type a valid command and press the enter key
+        InputHelper.sendString("help");
+        InputHelper.sendSpecialCharacter(Type.ENTER).now();
+        
+        // Then it should display the command output
+        String[] outputLines = shell.getDrawableText();
+        assertTrue(outputLines.length > 2);
+        assertTrue(outputLines[1].contains("help : display this message"));
     }
     
 }

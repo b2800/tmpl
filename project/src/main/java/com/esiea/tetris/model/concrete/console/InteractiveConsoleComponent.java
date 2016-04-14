@@ -49,10 +49,10 @@ public class InteractiveConsoleComponent extends Component
                 executeCommand();
                 break;
             case BACKSPACE:
-                removePostCharacter();
+                removePreCharacter();
                 break;
             case DELETE:
-                removePreCharacter();
+                removePostCharacter();
                 break;
             default:
         }
@@ -91,13 +91,12 @@ public class InteractiveConsoleComponent extends Component
     }
     
     public void removePostCharacter(){
-        currentInput = currentInput.substring(0, cursorPosition - 1) + currentInput.substring(cursorPosition);
-        cursorPosition--;
+        currentInput = currentInput.substring(0, cursorPosition) + currentInput.substring(cursorPosition + 1);
     }
     
     public void removePreCharacter(){
-        currentInput = currentInput.substring(0, cursorPosition) + currentInput.substring(cursorPosition + 1);
-        cursorPosition++;
+        currentInput = currentInput.substring(0, cursorPosition - 1) + currentInput.substring(cursorPosition);
+        cursorPosition--;
     }
     
     public void movePromptCursor(int offset){

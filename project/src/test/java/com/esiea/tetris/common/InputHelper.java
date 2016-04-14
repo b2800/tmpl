@@ -37,8 +37,8 @@ public class InputHelper {
     
     public static SyncAsyncPostCommand sendArrowKey(Direction direction) {
         KeyboardInput input = new KeyboardInput();
-        input.setKeyType(Type.ARROW_KEY);
         input.setDirection(direction);
+        input.setKeyType(Type.ARROW_KEY);
         return MessageBus.getInstance().post(input);
     }
 }

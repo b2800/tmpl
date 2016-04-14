@@ -6,6 +6,10 @@ import com.esiea.tetris.utils.Vec2;
 
 // Classe qui se contente d'effectuer les déplacements. Tous les problèmes de collisions seront gérés en amont.
 // Aucune de ces méthodes ne pourra être appelé si elle engendre une collision.
+// Coordonées : 
+//  0,0 en haut a gauche
+//  y+ orienté vers le bas
+//  x+ orienté vers la droite
 public class TetriminoMover {
 	
 	private TetriminoMover(){}
