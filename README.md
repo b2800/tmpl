@@ -15,6 +15,8 @@ Note : Sur certains environements, le jar est créé dans le dossier target,dans
 mvn clean install && java -jar target/*.jar
 ```
 
+A noter également que cette commande produit deux jar, et que le jar nommé avec le format "original-xx.jar" ne fonctionne pas. Lancez plutot l'autre. 
+
 Note : Sur les systémes UNIX, dans certains cas, la configuration du jeu de couleurs du terminal prends le dessus.
 Il est recommandé d'executer ce programme dans un terminal à fond sombre. 
 
@@ -25,6 +27,12 @@ Lorsque vous lancez le jeu, vous arriverez directement sur le shell intégré. V
 - **host [port]** : Héberger une partie multijoueur (le port est optionnel, par défault le port 4000 est utilisé)
 - **join [ip] [port]** : Rejoindre une partie multijoueur. (ex : ```join 192.168.0.14 4000``` )
 - **scores** : Affiche les 5 meilleurs scores
+
+- Une fois en jeu, vous pouvez jouer une partie normalement. Cependant, aucun message n'indique la fin de partie mais le score est quand même comptabilisé.
+- Exemple pour lancer une partie en multijoueur 
+  + tapez ``` host ``` sur le poste qui héberge la partie
+  + tapez ``` join 192.168.0.14 ``` pour le rejoindre 
+  + Il y a un peu de latence au début de la partie mais la syncrhonisation fonctionne.
 
 ### En jeu
 - Utilisez les **fléches** pour déplacer votre tétrimino a l'écran.
@@ -49,11 +57,18 @@ Lorsque vous lancez le jeu, vous arriverez directement sur le shell intégré. V
   - Graphique : *En cours*
 
 ## Exercice Architecture
-L'architecture utilisée à été pensée pour limiter au maximum le couplage inter-composants.
++ L'architecture utilisée à été pensée pour limiter au maximum le couplage inter-composants.
 La plupart des classes fontionnent en isolation et peuvent être replacées avec un minimum de contraintes.
 La communication inter-composants se fait par le biais d'un **bus de messages** (Synchrone et Asynchrone) qui est l'élément central de l'architecture.
 
-[Insérer un schéma ici]
++ La classe principale "Tetris" instancie les services Network, Input et Renderer. Ces services sont mis a jour a tour de role. 
++ Chaque écran du jeu est appelé un "Layout". Un Layout contient plusieurs "Component" qui représentent le code métier du jeu. Le Layout est un objet simple qui n'a pas connaissance des composants qui le composent. Il ne fait qu'appeler la méthode "Update" des composants à chaque tour de boucle. 
+
++ Les composants sont des objets indépendants qui communiquent avec le reste de l'application en envoyant des messages (asynchrones pour la plupart) sans jamais attendre de retour. De cette façon, il est facile de les combiner dans un Layout, de coder de nouveaux composants, et de rajouter de nouvelles fonctionnalités sans avoir besoin de connaitre l'intégralité du reste du code, et en limitant fortement le couplage. 
+
++ Cette architecture nous permet de respecter facilement les principes SOLID. Chaque composant a sa propre responsabilité, et les composants trop importants peuvent être découpés en sous composants. L'ajout de nouveaux composants ne nécessite pas de modifier le code déja existant.
+
+
 
 ## Exercice Design Pattern / Solid
 
