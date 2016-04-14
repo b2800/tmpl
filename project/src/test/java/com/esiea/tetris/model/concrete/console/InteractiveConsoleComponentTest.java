@@ -114,13 +114,39 @@ public class InteractiveConsoleComponentTest {
     @Test
     public void itShouldExecuteACommand(){
         // When the user type a valid command and press the enter key
-        InputHelper.sendString("help");
+        InputHelper.sendString("help", true);
         InputHelper.sendSpecialCharacter(Type.ENTER).now();
         
         // Then it should display the command output
         String[] outputLines = shell.getDrawableText();
         assertTrue(outputLines.length > 2);
         assertTrue(outputLines[1].contains("help : display this message"));
+    }
+    
+    @Test
+    public void itShouldMoveThroughHistory(){
+        // Given a state where the user typed commands
+        InputHelper.sendString("cmd1", true);
+        InputHelper.sendSpecialCharacter(Type.ENTER);
+        InputHelper.sendString("cmd2", true);
+        InputHelper.sendSpecialCharacter(Type.ENTER);
+        
+        // When the user press the up arrow key
+        InputHelper.sendArrowKey(Direction.UP);
+        
+        // Then the prompt should change to the last used command
+        String[] output = shell.getDrawableText();
+        String prompt = output[output.length-1];
+        
+        assertTrue(prompt.contains("cmd2"));
+        
+        // When the user press the up key again
+        InputHelper.sendArrowKey(Direction.UP);
+        
+        // Then it should move the the previous command again
+        output = shell.getDrawableText();
+        prompt = output[output.length-1];
+        assertTrue(prompt.contains("cmd1"));
     }
     
 }
