@@ -10,6 +10,12 @@ import com.esiea.tetris.communication.concrete.KeyboardInput;
 import com.esiea.tetris.communication.concrete.KeyboardInput.Type;
 import com.esiea.tetris.communication.concrete.KeyboardInput.Direction;
 import com.esiea.tetris.communication.concrete.NavigationIntent;
+import com.esiea.tetris.model.concrete.console.command.HelpCommand;
+import com.esiea.tetris.model.concrete.console.command.HighScoresCommand;
+import com.esiea.tetris.model.concrete.console.command.HostCommand;
+import com.esiea.tetris.model.concrete.console.command.JoinCommand;
+import com.esiea.tetris.model.concrete.console.command.QuitCommand;
+import com.esiea.tetris.model.concrete.console.command.StartCommand;
 import com.esiea.tetris.utils.KeyUtil;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -26,7 +32,7 @@ public class InteractiveConsoleComponent extends Component
     private int historyPosition;
 
     public InteractiveConsoleComponent() {
-        interpreter = new CommandInterpreter();
+        initializeCommandInterpreter();
         consoleOutput = new ArrayDeque<>();
         history = new ArrayDeque<>();
         cursorPosition = 0;
@@ -120,7 +126,7 @@ public class InteractiveConsoleComponent extends Component
     }
     
     private void executeCommand(){
-        String[] output = interpreter.execute(currentInput);
+        String[] output = interpreter.process(currentInput);
         for(int i = 0; i < output.length; i++){
             consoleOutput.addFirst(output[i]);
         }
@@ -180,5 +186,19 @@ public class InteractiveConsoleComponent extends Component
     @Override
     public int[][] getColorMap() {
         return null;
+    }
+
+    /*
+        Permet d'indiquer a l'interpreteur de commandes les differentes
+        actions disponibles.
+    */
+    private void initializeCommandInterpreter() {
+        interpreter = new CommandInterpreter();
+        interpreter.registerNewCommand(new HelpCommand());
+        interpreter.registerNewCommand(new HighScoresCommand());
+        interpreter.registerNewCommand(new HostCommand());
+        interpreter.registerNewCommand(new JoinCommand());
+        interpreter.registerNewCommand(new StartCommand());
+        interpreter.registerNewCommand(new QuitCommand());
     }
 }
